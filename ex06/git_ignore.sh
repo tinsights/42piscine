@@ -1,4 +1,1 @@
-while read line;
-do
-	echo "$line"
-done < ../.gitignore
+git ls-files --others --ignored --exclude-standard
