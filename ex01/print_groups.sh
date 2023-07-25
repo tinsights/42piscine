@@ -1,0 +1,1 @@
+echo $FT_USER
