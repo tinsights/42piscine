@@ -1,1 +1,3 @@
-echo $FT_USER
+#!/bin/bash
+STR=$(id -Gn $FT_USER)
+echo ${STR// /,}
