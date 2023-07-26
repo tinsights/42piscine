@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_ft.c                                   :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 20:48:54 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/26 21:13:37 by tjegades         ###   ########.fr       */
+/*   Created: 2023/07/26 20:56:54 by tjegades          #+#    #+#             */
+/*   Updated: 2023/07/26 21:12:35 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-void	ft_ultimate_ft(int *********nbr)
+
+void	ft_swap(int *a, int*b)
 {
-	*********nbr = 42;
+	int	temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }
 
 /*int	main(void)
 {
-	int	i = 0;
-	int	*p1 = &i;
-	int	**p2 = &p1;
-	int	***p3 = &p2;
-	int	****p4 = &p3;
-	int	*****p5 = &p4;
-	int	******p6 = &p5;
-	int	*******p7 = &p6;
-	int	********p8 = &p7;
-	int	*********p9 = &p8;
-	printf("%i\n", i);
-	ft_ultimate_ft(p9);
-	printf("%i\n", i);
-}
-*/
+	int a = 1;
+	int b = 42;
+	printf("before swapping a is %i, b is %i\n", a, b);
+	ft_swap(&a, &b);
+	printf("after swapping a is %i, b is %i\n", a, b);
+}*/

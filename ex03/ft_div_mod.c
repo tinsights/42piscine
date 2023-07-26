@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_ft.c                                   :+:      :+:    :+:   */
+/*   ft_div_mod.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 20:48:54 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/26 21:13:37 by tjegades         ###   ########.fr       */
+/*   Created: 2023/07/26 21:14:56 by tjegades          #+#    #+#             */
+/*   Updated: 2023/07/26 21:20:17 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-void	ft_ultimate_ft(int *********nbr)
+
+void	ft_div_mod(int a, int b, int *div, int *mod)
 {
-	*********nbr = 42;
+	*div = a / b;
+	*mod = a % b;
 }
 
 /*int	main(void)
 {
-	int	i = 0;
-	int	*p1 = &i;
-	int	**p2 = &p1;
-	int	***p3 = &p2;
-	int	****p4 = &p3;
-	int	*****p5 = &p4;
-	int	******p6 = &p5;
-	int	*******p7 = &p6;
-	int	********p8 = &p7;
-	int	*********p9 = &p8;
-	printf("%i\n", i);
-	ft_ultimate_ft(p9);
-	printf("%i\n", i);
-}
-*/
+	int result = 0;
+	int remainder = 0;
+	ft_div_mod(5,2, &result, &remainder);
+}*/
