@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_comb.c                                    :+:      :+:    :+:   */
+/*   ft_print_numbers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 15:40:05 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/26 17:07:43 by tjegades         ###   ########.fr       */
+/*   Created: 2023/07/26 14:41:24 by tjegades          #+#    #+#             */
+/*   Updated: 2023/07/26 14:50:31 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
 
-void	ft_print_comb(void)
+void	ft_print_numbers(void)
 {
-	char	comb[3];
+	int	i;
 
-	comb[0] = 48;
-	while (comb[0] <= 55)
+	i = 48;
+	while (i < 58)
 	{
-		comb[1] = comb[0] + 1;
-		while (comb[1] <= 56)
-		{
-			comb[2] = comb[1] + 1;
-			while (comb[2] <= 57)
-			{
-				write(1, comb, 3);
-				if (comb[0] != 55)
-				{
-					write(1, ", ", 2);
-				}
-				comb[2]++;
-			}
-			comb[1]++;
-		}
-		comb[0]++;
+		write(1, &i, 1);
+		i++;
 	}
 }
