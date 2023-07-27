@@ -15,23 +15,35 @@
 void	ft_putnbr(int nb)
 {
 	char	digit;
+	int		copy;
+	int		count;
 
 	if (nb < 0)
 	{
 		nb *= -1;
 		write(1, "-", 1);
 	}
-	while (nb > 9)
+	while (nb > 0)
 	{
-		digit = nb / 10 + 48;
+		copy = nb;
+		count = 0;
+		while (copy > 9)
+		{
+			copy /= 10;
+			count++;
+		}
+
+		digit = copy + 48;
 		write(1, &digit, 1);
-		nb -= (digit % 48) * 10;
+		while (count > 0)
+		{
+			copy *= 10;
+			count--;
+		}
+		nb -= copy;
 	}
-	digit = nb % 10 + 48;
-	write(1, &digit, 1);
 }
-/*int	main(void)
-{
-	ft_putnbr(-42);
-}
-*/
+// int	main(void)
+// {
+// 	ft(-42);
+// }
