@@ -14,13 +14,13 @@ void	ft_rev_int_tab(int *tab, int size)
 	int	temp;
 	int	num_swaps;
 
-	numSwaps = size / 2;
-	while (numSwaps > 0)
+	num_swaps = size / 2;
+	while (num_swaps >= 0)
 	{
-		temp = *tab;
-		*tab = *(tab + size - numSwaps);
-		*(tab + size - numSwaps) = temp;
-		numSwaps--;
+		temp = *(tab + num_swaps);
+		*(tab + num_swaps) = *(tab + size - 1 - num_swaps);
+		*(tab + size - 1 - num_swaps) = temp;
+		num_swaps--;
 	}
 }
 /*
@@ -42,4 +42,5 @@ int	main(void)
 		i++;
 	}
 
-}*/
+}
+*/
