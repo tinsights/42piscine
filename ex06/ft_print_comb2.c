@@ -33,7 +33,7 @@ void	ft_print_comb2(void)
 			write(1, left_char, 3);
 			write(1, right_char, 2);
 			if (left_num != 98)
-				write(1, ",", 1);
+				write(1, ", ", 2);
 			right_num++;
 		}
 		left_num++;
