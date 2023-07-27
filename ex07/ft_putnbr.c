@@ -37,9 +37,10 @@ void	ft_putnbr(int nb)
 		nb -= copy * count;
 	}
 }
-
-// int	main(void)
-// {
-// 	ft_putnbr(-42);
-// 	ft_putnbr(123);	
-// }
+/*
+int	main(void)
+{
+	ft_putnbr(-42);
+	ft_putnbr(123);	
+}
+*/
