@@ -30,7 +30,8 @@ void	ft_putnbr(int nb)
 	digit = nb % 10 + 48;
 	write(1, &digit, 1);
 }
-// int	main(void)
-// {
-// 	ft_putnbr(-42);
-// }
+/*int	main(void)
+{
+	ft_putnbr(-42);
+}
+*/

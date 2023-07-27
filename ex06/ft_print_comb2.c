@@ -39,7 +39,7 @@ void	ft_print_comb2(void)
 		left_num++;
 	}
 }
-// int	main(void)
-// {
-// 	ft_print_comb2();
-// }
+/*int	main(void)
+{
+	ft_print_comb2();
+}*/
