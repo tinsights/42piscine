@@ -6,7 +6,7 @@
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:40:05 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/26 17:07:43 by tjegades         ###   ########.fr       */
+/*   Updated: 2023/07/27 09:54:06 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -36,3 +36,9 @@ void	ft_print_comb(void)
 		comb[0]++;
 	}
 }
+/*
+int	main(void)
+{
+	ft_print_comb();
+}
+*/

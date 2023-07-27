@@ -6,14 +6,14 @@
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 20:19:09 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/26 14:37:12 by tjegades         ###   ########.fr       */
+/*   Updated: 2023/07/27 09:49:48 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
 
 void	ft_print_reverse_alphabet(void)
 {
-	int	i;
+	char	i;
 
 	i = 122;
 	while (i > 96)
@@ -22,3 +22,9 @@ void	ft_print_reverse_alphabet(void)
 		i--;
 	}
 }
+/*
+int	main(void)
+{
+	ft_print_reverse_alphabet();
+}
+*/

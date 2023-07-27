@@ -6,14 +6,14 @@
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:20:08 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/26 14:23:21 by tjegades         ###   ########.fr       */
+/*   Updated: 2023/07/27 09:46:55 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
 
 void	ft_print_alphabet(void)
 {
-	int	i;
+	char	i;
 
 	i = 97;
 	while (i < 123)
@@ -22,3 +22,9 @@ void	ft_print_alphabet(void)
 		i++;
 	}
 }
+/*
+int	main(void)
+{
+	ft_print_alphabet();
+}
+*/
