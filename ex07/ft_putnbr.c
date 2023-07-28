@@ -11,36 +11,39 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 
 void	ft_putnbr(int nb)
 {
-	int		copy;
 	int		count;
-	char	digit;
+	char	digit[10];
 
 	if (nb < 0)
 	{
-		nb *= -1;
 		write(1, "-", 1);
+		if (nb == -2147483648)
+			write(1, "2147483648", 10);
+		nb *= -1;
 	}
+	if (nb == 0)
+		write(1, "0", 1);
+	count = 0;
 	while (nb > 0)
 	{
-		copy = nb;
-		count = 1;
-		while (copy > 9)
-		{
-			copy /= 10;
-			count *= 10;
-		}
-		digit = copy + 48;
-		write(1, &digit, 1);
-		nb -= copy * count;
+		digit[9 - count] = nb % 10 + 48;
+		nb /= 10;
+		count++;
 	}
+	write(1, digit + 10 - count, count);
 }
 /*
 int	main(void)
 {
-	ft_putnbr(-42);
-	ft_putnbr(123);	
+	ft_putnbr(0);
+	// ft_putnbr(42);
+	// ft_putnbr(-42);
+	// ft_putnbr(123);
+	// ft_putnbr(2147483647);
+	ft_putnbr(-2147483648);
 }
 */
