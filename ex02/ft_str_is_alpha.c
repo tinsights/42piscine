@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   ft_str_is_alpha.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/28 14:30:32 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/28 14:31:45 by tjegades         ###   ########.fr       */
+/*   Created: 2023/07/28 14:50:31 by tjegades          #+#    #+#             */
+/*   Updated: 2023/07/28 14:51:16 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
+int	ft_str_is_alpha(char *str)
 {
-	unsigned int	i;
+	int		i;
+	char	c;
 
 	i = 0;
-	while (src[i] != '\0' && i++ < n)
-		dest[i - 1] = src[i - 1];
-	if (i < n)
-		dest[i] = '\0';
-	return (dest);
+	while (str[i] != '\0')
+	{
+		c = str[i];
+		if (c < 65 || c > 122 || (c > 90 && c < 97))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 /*
 #include <stdio.h>
 int	main(void)
 {
-	char	*c = "hello";
-	char	d[5] = "world";
-	ft_strncpy(d, c, 5);
-	printf("%s", d);
+	printf("%i\n", ft_str_is_alpha("abcDEF"));
+	printf("%i\n", ft_str_is_alpha("a@"));
+	printf("%i\n", ft_str_is_alpha(""));
+	printf("%i\n", ft_str_is_alpha("["));
+	printf("%i\n", ft_str_is_alpha("`"));
+	printf("%i\n", ft_str_is_alpha("{"));
 }
 */

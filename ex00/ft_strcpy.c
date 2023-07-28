@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/28 14:30:32 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/28 14:31:45 by tjegades         ###   ########.fr       */
+/*   Created: 2023/07/27 20:27:07 by tjegades          #+#    #+#             */
+/*   Updated: 2023/07/28 13:28:50 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
+char	*ft_strcpy(char *dest, char *src)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
-	while (src[i] != '\0' && i++ < n)
-		dest[i - 1] = src[i - 1];
-	if (i < n)
-		dest[i] = '\0';
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
 	return (dest);
 }
 /*
@@ -27,7 +28,7 @@ int	main(void)
 {
 	char	*c = "hello";
 	char	d[5] = "world";
-	ft_strncpy(d, c, 5);
+	ft_strcpy(d, c);
 	printf("%s", d);
 }
 */
