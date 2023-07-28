@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
 
 void	ft_putnbr(int nb)
 {
@@ -37,6 +36,7 @@ void	ft_putnbr(int nb)
 	write(1, digit + 10 - count, count);
 }
 /*
+#include <stdio.h>
 int	main(void)
 {
 	ft_putnbr(0);
