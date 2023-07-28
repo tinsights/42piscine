@@ -19,7 +19,7 @@ int	ft_str_is_printable(char *str)
 	while (str[i] != '\0')
 	{
 		c = str[i];
-		if (c < 33 || c > 126)
+		if (c < 32 || c > 126)
 			return (0);
 		i++;
 	}
