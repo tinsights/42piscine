@@ -1,37 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   rush03.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/29 12:54:22 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/29 12:58:28 by tjegades         ###   ########.fr       */
+/*   Created: 2023/07/29 16:39:05 by tjegades          #+#    #+#             */
+/*   Updated: 2023/07/29 16:39:07 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	rush(int x, int y);
-int		atoi(char *str);
+void	ft_putchar(char c);
 
-int	main(int argc, char **argv)
-{
-	if (argc != 3)
-		return (-1);
-	rush (atoi(argv[1]), atoi(argv[2]));
-}
-
-int	atoi(char *str)
+void	rush(int x, int y)
 {
 	int	i;
-	int	result;
+	int	j;
 
-	i = 0;
-	result = 0;
-	while (str[i] >= 48 && str[i] <= 57)
+	j = 1;
+	while (j <= y)
 	{
-		result *= 10;
-		result += str[i] - 48;
-		i++;
+		i = 1;
+		while (i <= x)
+		{
+			if ((i == 1 && j == 1) || (i == 1 && j == y))
+				ft_putchar('A');
+			else if ((i == x && j == 1) || (i == x && j == y))
+				ft_putchar('C');
+			else if ((i == x || i == 1) || (j == 1 || j == y))
+				ft_putchar('B');
+			else
+				ft_putchar(' ');
+			i++;
+		}
+		ft_putchar('\n');
+		j++;
 	}
-	return (result);
 }
