@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/29 12:54:39 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/29 12:54:47 by tjegades         ###   ########.fr       */
+/*   Created: 2023/07/29 16:22:16 by tjegades          #+#    #+#             */
+/*   Updated: 2023/07/29 16:22:17 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,12 @@ void	rush(int x, int y)
 		i = 1;
 		while (i <= x)
 		{
-			if ((i == 1 && j == 1) || (i == x && j == 1)
-				|| (i == 1 && j == y) || (i == x && j == y))
-				ft_putchar('o');
-			else if ((i == x || i == 1))
-				ft_putchar('|');
-			else if (j == 1 || j == y)
-				ft_putchar('-');
+			if ((i == 1 && j == 1) || (i == x && j == 1))
+				ft_putchar('A');
+			else if ((i == 1 && j == y) || (i == x && j == y))
+				ft_putchar('C');
+			else if ((i == x || i == 1) || (j == 1 || j == y))
+				ft_putchar('B');
 			else
 				ft_putchar(' ');
 			i++;
