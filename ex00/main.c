@@ -10,43 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+void	rush(int x, int y);
+int		atoi(char *str);
 
-void	rush(int x, int y)
+int	main(int argc, char **argv)
+{
+	if (argc != 3)
+		return (-1);
+
+	rush(atoi(argv[1]), atoi(argv[2]));
+}
+
+int		atoi(char *str)
 {
 	int	i;
-	int	j;
+	int	result;
 
-	j = 1;
-	while (j <= y)
+	i = 0;
+	result = 0;
+	while(str[i] >= 48 && str[i] <= 57)
 	{
-		i = 1;
-		while (i <= x)
-		{
-			// if corner, print o
-			if ((i == 1 && j == 1) ||
-				(i == x && j == 1) || 
-				(i == 1 && j == y) ||
-				(i == x && j == y))
-				write (1, "o", 1);
-			// else (not a corner and) if first or last column
-			else if ((j != 1 || j != y) && (i == x || i == 1))
-				write (1, "|", 1);
-			// else (not a corner and) if first or last row
-			else if (j == 1 || j == y)
-				write (1, "-", 1);
-			// inner box
-			else
-				write (1, " ", 1);
-			i++;
-		}
-		write (1, "\n", 1);
-		j++;
+		result *= 10;
+		result += str[i] - 48;
+		i++;
 	}
+	return result;
 }
 
-
-int	main(void)
-{
-	rush(6, 5);
-}
