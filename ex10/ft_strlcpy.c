@@ -18,7 +18,7 @@ unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
 	while (src[i] != '\0' && i++ < size - 1)
 		dest[i - 1] = src[i - 1];
 	src[i] = '\0';
-	return i;
+	return (i);
 }
 /*
 #include <stdio.h>
