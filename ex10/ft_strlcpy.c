@@ -20,12 +20,13 @@ unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
 	src[i] = '\0';
 	return i;
 }
-
+/*
 #include <stdio.h>
 int	main(void)
 {
 	char	c[] = "hello";
 	char	d[100];
-	ft_strlcpy(d, c, 3);
+	ft_strlcpy(d, c, 6);
 	printf("%s", d);
 }
+*/
