@@ -6,7 +6,7 @@
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 21:46:34 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/26 22:10:45 by tjegades         ###   ########.fr       */
+/*   Updated: 2023/07/29 17:09:57 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 void	ft_rev_int_tab(int *tab, int size)
@@ -19,7 +19,6 @@ void	ft_rev_int_tab(int *tab, int size)
 	*tab = *(tab + (size - 1));
 	*(tab + (size - 1)) = temp;
 	ft_rev_int_tab(tab + 1, size - 2);
-
 }
 /*
 #include <stdio.h>
