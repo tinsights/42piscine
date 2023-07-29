@@ -12,31 +12,29 @@
 void	ft_rev_int_tab(int *tab, int size)
 {
 	int	temp;
-	int	num_swaps;
 
-	num_swaps = size / 2;
-	while (num_swaps >= 0)
-	{
-		temp = *(tab + num_swaps);
-		*(tab + num_swaps) = *(tab + size - 1 - num_swaps);
-		*(tab + size - 1 - num_swaps) = temp;
-		num_swaps--;
-	}
+	if (size <= 1)
+		return ;
+	temp = *tab;
+	*tab = *(tab + (size - 1));
+	*(tab + (size - 1)) = temp;
+	ft_rev_int_tab(tab + 1, size - 2);
+
 }
 /*
 #include <stdio.h>
 int	main(void)
 {
-	int	arr[5] = {3, 6, 9, 12, 15};
+	int	arr[] = {1, 2};
 	int	i  = 0;
-	while (i < 5)
+	while (i < 2)
 	{
 		printf("%i\n", arr[i]);
 		i++;
 	}
-	ft_rev_int_tab(arr, 5);
+	ft_rev_int_tab(arr, 2);
 	i = 0;
-	while (i < 5)
+	while (i < 2)
 	{
 		printf("%i\n", arr[i]);
 		i++;
