@@ -17,8 +17,8 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 	i = 0;
 	while (src[i] != '\0' && i++ < n)
 		dest[i - 1] = src[i - 1];
-	if (i < n)
-		dest[i] = '\0';
+	while (i < n)
+		dest[i++] = '\0';
 	return (dest);
 }
 /*
@@ -26,8 +26,8 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 int	main(void)
 {
 	char	*c = "hello";
-	char	d[5] = "world";
-	ft_strncpy(d, c, 5);
+	char	d[100] = "world";
+	ft_strncpy(d, c, 50);
 	printf("%s", d);
 }
 */
