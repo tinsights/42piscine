@@ -10,4 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+char	*ft_strcat(char *dest, char *src)
+{
+	char *original;
 
+	original = dest;
+	while (*dest)
+		dest++;
+	while (*src)
+		*dest++ = *src++;
+	*dest = '\0';
+	return original;
+}
+
+/*
+#include <stdio.h>
+int	main(void)
+{
+	char dest[100] = "tell me why ";
+	char src[] = " world";
+	printf("%s\n", ft_strcat(dest, src));
+}*/
