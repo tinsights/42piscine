@@ -12,12 +12,12 @@
 
 char	*ft_strcapitalize(char *str)
 {
-	int		i;
+	int	i;
 	int	flag;
 
 	i = 0;
 	flag = 1;
-	while(str[i])
+	while (str[i])
 	{
 		if (flag)
 		{
@@ -25,7 +25,7 @@ char	*ft_strcapitalize(char *str)
 				str[i] -= 32;
 			flag = 0;
 			i++;
-			continue;
+			continue ;
 		}
 		if (str[i] > 64 && str[i] < 91)
 			str[i] += 32;
@@ -33,12 +33,13 @@ char	*ft_strcapitalize(char *str)
 			flag = 1;
 		i++;
 	}
-	return str;
+	return (str);
 }
-
+/*
 #include <stdio.h>
 int	main(void)
 {
 	char	c[27] = "HELLO. nICe to MEET you! :)";
 	printf("%s\n", ft_strcapitalize(c));
 }
+*/
