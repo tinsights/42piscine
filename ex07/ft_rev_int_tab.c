@@ -25,20 +25,14 @@ void	ft_rev_int_tab(int *tab, int size)
 #include <stdio.h>
 int	main(void)
 {
-	int	arr[] = {1, 2};
+	int	arr[] = {1, 2, 3, 4, 5};
 	int	i  = 0;
-	while (i < 2)
-	{
-		printf("%i\n", arr[i]);
-		i++;
-	}
-	ft_rev_int_tab(arr, 2);
+	while (i < 5)
+		printf("%i, ", arr[i++]);
+	printf("\n");
+	ft_rev_int_tab(arr, 5);
 	i = 0;
-	while (i < 2)
-	{
-		printf("%i\n", arr[i]);
-		i++;
-	}
-
+	while (i < 5)
+		printf("%i, ", arr[i++]);
 }
 */
