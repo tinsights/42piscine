@@ -12,14 +12,7 @@
 
 int	ft_strcmp(char *s1, char*s2)
 {
-	int	total1;
-	int	total2;
-
-	total1 = 0;
-	total2 = 0;
-	while (*s1++)
-		total1 += *(s1 - 1);
-	while (*s2++)
-		total2 += *(s2 - 1);
-	return (total1 - total2);
+	while (*s1 && *s2 && *s1++ == *s2++)
+		continue ;
+	return (s1[-1] - s2[-1]);
 }
