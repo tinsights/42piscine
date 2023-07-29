@@ -10,4 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+int	ft_strncmp(char *s1, char*s2, unsigned int n)
+{
+	unsigned int	counter;
 
+	counter = 0;
+	while (*s1 && *s2 && counter++ < n && *s1++ == *s2++)
+		continue ;
+	return (s1[-1] - s2[-1]);
+}
