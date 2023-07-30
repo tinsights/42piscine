@@ -1,45 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcapitalize.c                                 :+:      :+:    :+:   */
+/*   ft_putstr_non_printable.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/28 15:45:56 by tjegades          #+#    #+#             */
-/*   Updated: 2023/07/28 15:45:58 by tjegades         ###   ########.fr       */
+/*   Created: 2023/07/30 13:05:54 by tjegades          #+#    #+#             */
+/*   Updated: 2023/07/30 13:05:55 by tjegades         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcapitalize(char *str)
-{
-	int	i;
-	int	flag;
+#include <unistd.h>
 
+char	*atohex(char c)
+{
+	char	*hex;
+	int		i;
+
+	hex[0] = c / 16;
+	hex[1] = c % 16;
 	i = 0;
-	flag = 1;
-	while (str[i])
+	while (i < 2)
 	{
-		if (flag)
-		{
-			if (str[i] > 96 && str[i] < 123)
-				str[i] -= 32;
-			flag = 0;
-			i++;
-			continue ;
-		}
-		if (str[i] > 64 && str[i] < 91)
-			str[i] += 32;
-		if (str[i] == ' ' || str[i] == '-' || str[i] == '+')
-			flag = 1;
+		if (hex[i] <= 9)
+			hex[i] += 48;
+		else
+			hex[i] += 87;
 		i++;
 	}
-	return (str);
+	return (hex);
+}
+
+void	ft_putstr_non_printable(char *str)
+{
+	while (*str)
+	{
+		if ((*str < 32 || *str > 126))
+		{
+			write(1, "\\", 1);
+			write(1, atohex(*str), 2);
+		}
+		else
+			write(1, str, 1);
+		str++;
+	}
 }
 /*
-#include <stdio.h>
 int	main(void)
 {
-	char	c[27] = "HELLO. nICe-to MEET+you! :)";
-	printf("%s\n", ft_strcapitalize(c));
-}
-*/
+	char c[5] = "hello";
+
+	c[3] = 127;
+	ft_putstr_non_printable(c);
+}*/
