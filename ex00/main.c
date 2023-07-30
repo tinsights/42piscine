@@ -13,16 +13,6 @@
 void	rush(int x, int y);
 int		atoi(char *str);
 
-/**
-* Defining main like this allows
-* the compiled program to take in
-* input from the command line when run.
-* argc is an integer that contains the number of
-* commands typed into the terminal,
-* and argv is an array of strings, containing the commands typed in.
-* i.e. if the program is run with ./a.out 5 3,
-* then argc = 3, and argv = ["a.out", "5", "3"]
-**/
 int	main(int argc, char **argv)
 {
 	if (argc != 3)
