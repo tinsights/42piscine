@@ -23,7 +23,7 @@ void	rush(int x, int y)
 		i = 1;
 		while (i <= x)
 		{
-			if ((i == 1 && j == 1) || (i == x && j == y && x != 1))
+			if ((i == 1 && j == 1) || (i == x && j == y && y != 1 && x != 1))
 				ft_putchar('/');
 			else if ((i == 1 && j == y) || (i == x && j == 1))
 				ft_putchar('\\');
@@ -37,4 +37,3 @@ void	rush(int x, int y)
 		j++;
 	}
 }
-
