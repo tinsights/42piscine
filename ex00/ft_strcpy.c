@@ -17,14 +17,15 @@ char	*ft_strcpy(char *dest, char *src)
 	i = 0;
 	while (src[i++])
 		dest[i - 1] = src[i - 1];
+	dest[i - 1] = '\0';
 	return (dest);
 }
 /*
 #include <stdio.h>
 int	main(void)
 {
-	char	*c = "hello";
-	char	d[5] = "world";
+	char	*c = "hello!";
+	char	d[12] = "hello, world";
 	ft_strcpy(d, c);
 	printf("%s", d);
 }
