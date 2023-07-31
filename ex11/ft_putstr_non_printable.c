@@ -12,9 +12,27 @@
 
 #include <unistd.h>
 
-char	*atohex(char c)
+char	*atohex(char *hex, char c);
+
+void	ft_putstr_non_printable(char *str)
 {
-	char	*hex;
+	char	hex[2];
+
+	while (*str)
+	{
+		if ((*str < 32 || *str > 126))
+		{
+			write(1, "\\", 1);
+			write(1, atohex(hex, *str), 2);
+		}
+		else
+			write(1, str, 1);
+		str++;
+	}
+}
+
+char	*atohex(char *hex, char c)
+{
 	int		i;
 
 	hex[0] = c / 16;
@@ -31,25 +49,12 @@ char	*atohex(char c)
 	return (hex);
 }
 
-void	ft_putstr_non_printable(char *str)
-{
-	while (*str)
-	{
-		if ((*str < 32 || *str > 126))
-		{
-			write(1, "\\", 1);
-			write(1, atohex(*str), 2);
-		}
-		else
-			write(1, str, 1);
-		str++;
-	}
-}
 /*
 int	main(void)
 {
 	char c[5] = "hello";
 
-	c[3] = 127;
+	c[3] = '\n';
 	ft_putstr_non_printable(c);
-}*/
+}
+*/
