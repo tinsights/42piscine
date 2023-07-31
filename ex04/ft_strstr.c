@@ -14,16 +14,28 @@ char	*ft_strstr(char *str, char *to_find)
 {
 	int	i;
 
-	while (*str && *str != *to_find)
+	while (*str)
 	{
-		i = 0;
-		while (str[i] && to_find[i] && str[i] == to_find[i])
+		if (*str == *to_find)
 		{
+			i = 0;
+			while (to_find[i])
+			{
+				if (str[i] != to_find[i])
+					break ;
+				i++;
+			}
 			if (to_find[i] == '\0')
 				return (str);
-			i++;
 		}
 		str++;
 	}
 	return (str);
 }
+/*
+#include <stdio.h>
+int	main(void)
+{
+	printf("%s\n", ft_strstr("hellloo, world", "llo"));
+}
+*/
