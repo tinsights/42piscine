@@ -21,21 +21,21 @@ int	ft_strncmp(char *s1, char*s2, unsigned int n)
 		s2++;
 		counter++;
 	}
-	return (*s1 - *s2);
+	return (!!n * (*s1 - *s2));
 }
 
-/*
-#include <stdio.h>
-#include <string.h>
-int	main(void)
-{
-	printf("%i\n", ft_strncmp("hello", "world", 5));
-	printf("%i\n", strncmp("hello", "world", 5));
-	printf("%i\n", ft_strncmp("hello", "hello", 5));
-	printf("%i\n", strncmp("hello", "hello", 5));
-	printf("%i\n", ft_strncmp("hello, world", "hello", 5));
-	printf("%i\n", strncmp("hello, world", "hello", 5));
-	printf("%i\n", ft_strncmp("hello, world", "wello", 5));
-	printf("%i\n", strncmp("hello, world", "wello", 5));
-}
-*/
+// #include <stdio.h>
+// #include <string.h>
+// int	main(void)
+// {
+// 	printf("%i\n", ft_strncmp("hello", "world", 5));
+// 	printf("%i\n", strncmp("hello", "world", 5));
+// 	printf("%i\n", ft_strncmp("hello", "hello", 5));
+// 	printf("%i\n", strncmp("hello", "hello", 5));
+// 	printf("%i\n", ft_strncmp("hello, world", "hello", 5));
+// 	printf("%i\n", strncmp("hello, world", "hello", 5));
+// 	printf("%i\n", ft_strncmp("hello, world", "wello", 5));
+// 	printf("%i\n", strncmp("hello, world", "wello", 5));
+// 	printf("%i\n", ft_strncmp("hello, world", "wello", 0));
+// 	printf("%i\n", strncmp("hello, world", "wello", 0));
+// }

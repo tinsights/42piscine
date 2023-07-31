@@ -37,8 +37,8 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 int	main(void)
 {
 	char	c[] = "world. nice to meet you! happy to be here.";
-	char	d[70] = "hello ";
-	printf("%i\n", ft_strlcat(d, c, 70));
+	char	d[7] = "hello ";
+	printf("%i\n", ft_strlcat(d, c, 7));
 	printf("%s\n", d);
 }
 */

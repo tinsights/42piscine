@@ -14,6 +14,8 @@ char	*ft_strstr(char *str, char *to_find)
 {
 	int	i;
 
+	if (!(*to_find))
+		return (str);
 	while (*str)
 	{
 		if (*str == *to_find)
@@ -32,10 +34,13 @@ char	*ft_strstr(char *str, char *to_find)
 	}
 	return (str);
 }
+
 /*
 #include <stdio.h>
+#include <string.h>
 int	main(void)
 {
-	printf("%s\n", ft_strstr("hellloo, world", "llo"));
+	printf("%s\n", ft_strstr("hellloo, world", ""));
+	printf("%s\n", strstr("hellloo, world", ""));
 }
 */
