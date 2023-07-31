@@ -18,7 +18,7 @@ char	*atohex(char *hex, char c)
 	int		i;
 
 	hex[0] = (unsigned char)c / 0x10;
-    hex[1] = (unsigned char)c % 0x10;
+	hex[1] = (unsigned char)c % 0x10;
 	i = 0;
 	while (i < 2)
 	{
@@ -31,38 +31,70 @@ char	*atohex(char *hex, char c)
 	return (hex);
 }
 
-void	*ft_print_memory(void *addr, unsigned int size)
+void	init_line(char *line)
 {
-	void	**ptr;
-	char 	*c;
-	char	hex[2];
-	int		rows;
+	int	i;
 
-	ptr = &addr;
-	c = (char *) ptr;
-	rows = 1 + size / 16;
-	while(rows > 0)
+	i = 0;
+	while (i < 74)
 	{
-		for (int i = 7; i >= 0; i--)
-			write(1, atohex(hex,*(c+i)), 2);
-		write(1, ": ", 2);
-		for (int i = 0; i < 16; i++)
-		{
-			write(1, atohex(hex, *(char *) (addr + i)), 2);
-			if (i % 2 == 1)
-				write(1, " ", 1);
-		}
-		for (int i = 0; i < 16; i++)
-			write(1, (char *) (addr + i), 1);
-		write(1, "\n", 1);
-		addr += 16;
-		rows--;
+		if (i == 16)
+			line[i] = ':';
+		else
+			line[i] = ' ';
+		i++;
 	}
 }
 
+void	print_line(char *line, unsigned int size)
+{
+	if (size >= 16)
+		write(1, line, 74);
+	else
+		write(1, line, 74 - (16 - size));
+	write(1, "\n", 1);
+}
+
+void	write_if_printable(char *line, char c)
+{
+	if ((c < 32 || c > 126))
+		*line = '.';
+	else
+		*line = c;
+}
+
+void	*ft_print_memory(void *addr, unsigned int size)
+{
+	char				line[74];
+	unsigned int		i;
+	void				*orig;
+
+	orig = addr;
+	while (size != 0)
+	{
+		i = -1;
+		init_line(line);
+		while (++i < 16)
+		{
+			if (i % 2 == 0)
+				atohex(line + i, *((char *) &addr + 7 - i / 2));
+			if (i <= size - 1)
+			{
+				atohex(line + 18 + 2 * i + i / 2, *(char *)(addr + i));
+				write_if_printable(line + i + 58, *(char *)(addr + i));
+			}
+		}
+		print_line(line, size);
+		addr += 16;
+		size = size - !!(size / 16) * 16 - !(size / 16) * size;
+	}
+	return (orig);
+}
+/*
 int	main(void)
 {
-	char *c = "Lorem ipsum dolor sit amet, consectetur cras amet.";
+	char *c = "Lorem ipsum dolor sit amet, consectetur cras \nameteris.";
 
-	ft_print_memory(c, 50);
+	ft_print_memory(c, 55);
 }
+*/
