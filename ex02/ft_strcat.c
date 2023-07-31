@@ -12,7 +12,7 @@
 
 char	*ft_strcat(char *dest, char *src)
 {
-	char *original;
+	char	*original;
 
 	original = dest;
 	while (*dest)
@@ -20,14 +20,15 @@ char	*ft_strcat(char *dest, char *src)
 	while (*src)
 		*dest++ = *src++;
 	*dest = '\0';
-	return original;
+	return (original);
 }
 
 /*
 #include <stdio.h>
 int	main(void)
 {
-	char dest[100] = "tell me why ";
-	char src[] = " world";
+	char dest[12] = "tell me why ";
+	char src[] = "aint nothing but a heartache";
 	printf("%s\n", ft_strcat(dest, src));
-}*/
+}
+*/
