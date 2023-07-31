@@ -35,8 +35,8 @@ char	*atohex(char *hex, char c)
 {
 	int		i;
 
-	hex[0] = c / 16;
-	hex[1] = c % 16;
+	hex[0] = (unsigned char)c / 0x10;
+	hex[1] = (unsigned char)c % 0x10;
 	i = 0;
 	while (i < 2)
 	{
@@ -49,12 +49,11 @@ char	*atohex(char *hex, char c)
 	return (hex);
 }
 
-/*
+
 int	main(void)
 {
 	char c[5] = "hello";
 
-	c[3] = '\n';
+	c[3] = 127;
 	ft_putstr_non_printable(c);
 }
-*/
