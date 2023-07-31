@@ -10,6 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
+int	ft_str_is_alpha(char c)
+{
+	if (c < 65 || c > 122 || (c > 90 && c < 97))
+		return (0);
+	return (1);
+}
+
+int	ft_str_is_lowercase(char c)
+{
+	if (c > 122 || c < 97)
+		return (0);
+	return (1);
+}
+
 char	*ft_strcapitalize(char *str)
 {
 	int	i;
@@ -19,27 +34,27 @@ char	*ft_strcapitalize(char *str)
 	flag = 1;
 	while (str[i])
 	{
-		if (flag)
+		if (flag && ft_str_is_alpha(str[i]))
 		{
-			if (str[i] > 96 && str[i] < 123)
-				str[i] -= 32;
 			flag = 0;
-			i++;
-			continue ;
+			if (ft_str_is_lowercase(str[i]))
+				str[i] -= 32;
 		}
-		if (str[i] > 64 && str[i] < 91)
-			str[i] += 32;
-		if (str[i] == ' ' || str[i] == '-' || str[i] == '+')
+		else if (!flag && ft_str_is_alpha(str[i]))
+		{
+			if (!(ft_str_is_lowercase(str[i])))
+				str[i] += 32;
+		}
+		else
 			flag = 1;
 		i++;
 	}
 	return (str);
 }
-/*
+
 #include <stdio.h>
 int	main(void)
 {
-	char	c[27] = "HELLO. nICe-to MEET+you! :)";
+	char	c[] = "!@#!@#as;z;cXc/.=-qw)";
 	printf("%s\n", ft_strcapitalize(c));
 }
-*/
