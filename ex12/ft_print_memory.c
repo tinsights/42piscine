@@ -24,14 +24,13 @@ void	init_line(char *line)
 {
 	int	i;
 
-	i = 0;
-	while (i < 74)
+	i = -1;
+	while (++i < 74)
 	{
 		if (i == 16)
 			line[i] = ':';
 		else
 			line[i] = ' ';
-		i++;
 	}
 }
 
@@ -86,4 +85,4 @@ int	main(void)
 
 	ft_print_memory(c, 55);
 }
-*/
+/*
