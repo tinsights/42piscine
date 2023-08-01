@@ -49,11 +49,10 @@ char	*atohex(char *hex, char c)
 	return (hex);
 }
 
+// int	main(void)
+// {
+// 	char c[5] = "hello";
 
-int	main(void)
-{
-	char c[5] = "hello";
-
-	c[3] = 127;
-	ft_putstr_non_printable(c);
-}
+// 	c[3] = 127;
+// 	ft_putstr_non_printable(c);
+// }
