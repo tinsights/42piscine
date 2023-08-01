@@ -13,12 +13,12 @@
 #include <unistd.h>
 #include <stdio.h>
 
-char	*atohex(char *hex, char c)
+char	*atohex(char *hex, unsigned char c)
 {
 	int		i;
 
-	hex[0] = (unsigned char)c / 0x10;
-	hex[1] = (unsigned char)c % 0x10;
+	hex[0] = c / 0x10;
+	hex[1] = c % 0x10;
 	i = 0;
 	while (i < 2)
 	{

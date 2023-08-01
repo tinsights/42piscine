@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-char	*atohex(char *hex, char c);
+char	*atohex(char *hex, unsigned char c);
 
 void	ft_putstr_non_printable(char *str)
 {
@@ -31,12 +31,12 @@ void	ft_putstr_non_printable(char *str)
 	}
 }
 
-char	*atohex(char *hex, char c)
+char	*atohex(char *hex, unsigned char c)
 {
 	int		i;
 
-	hex[0] = (unsigned char)c / 0x10;
-	hex[1] = (unsigned char)c % 0x10;
+	hex[0] = c / 0x10;
+	hex[1] = c % 0x10;
 	i = 0;
 	while (i < 2)
 	{
@@ -53,6 +53,6 @@ char	*atohex(char *hex, char c)
 // {
 // 	char c[5] = "hello";
 
-// 	c[3] = 127;
+// 	c[3] = 255;
 // 	ft_putstr_non_printable(c);
 // }
