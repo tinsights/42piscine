@@ -35,10 +35,17 @@ char	*ft_strstr(char *str, char *to_find)
 	return (str);
 }
 
-// #include <stdio.h>
-// #include <string.h>
-// int	main(void)
-// {
-// 	printf("%s\n", ft_strstr("hellloo, world", "worldw"));
-// 	printf("%s\n", strstr("hellloo, world", ""));
-// }
+/*
+#include <stdio.h>
+#include <string.h>
+int	main(void)
+{
+	printf("%s\n", ft_strstr("hellloo, world", "world"));
+	printf("%s\n", strstr("hellloo, world", "world"));
+	printf("%s\n", ft_strstr("hellloo, world", "worldw"));
+	// printf("%s\n", strstr("hellloo, world", "worldw"));
+	// printf("%s\n", strstr("hellloo, world", "llo"));
+	printf("%s\n", ft_strstr("hellloo, world", ""));
+	printf("%s\n", ft_strstr("", "asd"));
+}
+*/
