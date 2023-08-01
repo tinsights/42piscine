@@ -15,19 +15,8 @@
 
 char	*atohex(char *hex, unsigned char c)
 {
-	int		i;
-
-	hex[0] = c / 0x10;
-	hex[1] = c % 0x10;
-	i = 0;
-	while (i < 2)
-	{
-		if (hex[i] <= 9)
-			hex[i] += 48;
-		else
-			hex[i] += 87;
-		i++;
-	}
+	hex[0] = *(&"0123456789abcdef"[c / 16]);
+	hex[1] = *(&"0123456789abcdef"[c % 16]);
 	return (hex);
 }
 
