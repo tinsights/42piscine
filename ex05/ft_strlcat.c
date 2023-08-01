@@ -26,13 +26,11 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 	if (size <= length)
 		maxcopy = 0;
 	else
-	{
 		maxcopy = size - length - 1;
-		while (src[i] != '\0' && i < maxcopy)
-		{
-			dest[i] = src[i];
-			i++;
-		}
+	while (src[i] != '\0' && i < maxcopy)
+	{
+		dest[i] = src[i];
+		i++;
 	}
 	dest[i] = '\0';
 	return (length + maxcopy);
@@ -47,5 +45,4 @@ int	main(void)
 	char	d[120] = "hello world. nice to";
 	printf("%i\n", ft_strlcat(d, c, 31));
 	printf("%s\n", d);
-}
-/*
+}*/
