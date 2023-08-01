@@ -21,7 +21,7 @@ char	*ft_strstr(char *str, char *to_find)
 		if (*str == *to_find)
 		{
 			i = 0;
-			while (to_find[i])
+			while (to_find[i] && str[i])
 			{
 				if (str[i] != to_find[i])
 					break ;
@@ -35,12 +35,11 @@ char	*ft_strstr(char *str, char *to_find)
 	return (str);
 }
 
-/*
-#include <stdio.h>
-#include <string.h>
-int	main(void)
-{
-	printf("%s\n", ft_strstr("hellloo, world", ""));
-	printf("%s\n", strstr("hellloo, world", ""));
-}
-*/
+
+// #include <stdio.h>
+// #include <string.h>
+// int	main(void)
+// {
+// 	printf("%s\n", ft_strstr("hellloo, world", "worldw"));
+// 	printf("%s\n", strstr("hellloo, world", ""));
+// }
