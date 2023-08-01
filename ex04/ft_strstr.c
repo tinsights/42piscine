@@ -35,7 +35,6 @@ char	*ft_strstr(char *str, char *to_find)
 	return (str);
 }
 
-
 // #include <stdio.h>
 // #include <string.h>
 // int	main(void)
