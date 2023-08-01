@@ -33,7 +33,7 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 		i++;
 	}
 	dest[i] = '\0';
-	return (length + maxcopy);
+	return (length + i);
 }
 
 /*
@@ -43,6 +43,7 @@ int	main(void)
 {
 	char	c[] = " meet you! happy to be here.";
 	char	d[120] = "hello world. nice to";
-	printf("%i\n", ft_strlcat(d, c, 31));
+	printf("%i\n", ft_strlcat(d, c, 5));
 	printf("%s\n", d);
-}*/
+}
+*/
