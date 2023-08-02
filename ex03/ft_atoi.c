@@ -20,11 +20,8 @@ int	ft_atoi(char *str)
 	while (*str == 32)
 		str++;
 	while (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
+		if (*str++ == '-')
 			polarity *= -1;
-		str++;
-	}
 	while (*str > 47 && *str < 58)
 		nb = nb * 10 + *str++ - 48;
 	return (polarity * (int)nb);
