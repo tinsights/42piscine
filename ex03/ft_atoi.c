@@ -12,8 +12,8 @@
 
 int	ft_atoi(char *str)
 {
-	int	polarity;
-	int	nb;
+	int		polarity;
+	long	nb;
 
 	nb = 0;
 	polarity = 1;
@@ -27,18 +27,18 @@ int	ft_atoi(char *str)
 	}
 	while (*str > 47 && *str < 58)
 		nb = nb * 10 + *str++ - 48;
-	return (polarity * nb);
+	return (polarity * (int)nb);
 }
 
 /*
 #include <stdio.h>
-
 int	main(void)
 {
-	printf("%i\n", ft_atoi("-123"));
+	printf("%i\n", ft_atoi("   +---2147483648"));
 	printf("%i\n", ft_atoi("    -+-123"));
-	printf("%i\n", ft_atoi("    -+-123"));
+	printf("%i\n", ft_atoi("    -+-0123"));
 	printf("%i\n", ft_atoi("---+-+-412a3"));
 	printf("%i\n", ft_atoi("---+ -+-412a3"));
+	printf("%i\n", ft_atoi("---+-+-41 2a3"));
 }
 */
