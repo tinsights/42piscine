@@ -18,13 +18,6 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size);
 char			*ft_strjoin(int size, char **strs, char *sep);
 int				ft_strlen(char *str);
 
-// int	main(void)
-// {
-// 	char *src[3] = {"hello", "world", "howdy"};
-// 	char *str = ft_strjoin(3, src, ", ");
-// 	printf("%s\n", str);
-// }
-
 char	*ft_strjoin(int size, char **strs, char *sep)
 {
 	int		total_length;
@@ -87,3 +80,12 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 		return (src_length + size);
 	return (dest_length);
 }
+
+/*
+int	main(void)
+{
+	char *src[3] = {"hello", "world", "howdy"};
+	char *str = ft_strjoin(3, src, ", ");
+	printf("%s\n", str);
+}
+*/
