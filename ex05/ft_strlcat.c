@@ -13,37 +13,36 @@
 unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 {
 	unsigned int	i;
-	unsigned int	length;
-	unsigned int	maxcopy;
+	unsigned int	dest_length;
+	unsigned int	src_length;
 
-	length = 0;
-	while (*dest)
-	{
-		dest++;
-		length++;
-	}
+	dest_length = 0;
+	src_length = 0;
+	while (dest[dest_length])
+		dest_length++;
+	while (src[src_length])
+		src_length++;
 	i = 0;
-	if (size <= length)
-		maxcopy = 0;
-	else
-		maxcopy = size - length - 1;
-	while (src[i] != '\0' && i < maxcopy)
+	while (src[i] != '\0' && dest_length + 1 < size)
 	{
-		dest[i] = src[i];
+		dest[dest_length] = src[i];
+		dest_length++;
 		i++;
 	}
-	dest[i] = '\0';
-	return (length + i);
+	dest[dest_length] = '\0';
+	if (size < dest_length)
+		return (src_length + size);
+	return (dest_length);
 }
 
 /*
 #include <stdio.h>
-#include <string.h>
+#include <bsd/string.h>
 int	main(void)
 {
 	char	c[] = " meet you! happy to be here.";
 	char	d[120] = "hello world. nice to";
-	printf("%i\n", ft_strlcat(d, c, 5));
+	printf("%li\n", strlcat(d, c, 5));
 	printf("%s\n", d);
 }
 */

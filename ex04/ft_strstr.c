@@ -44,11 +44,12 @@ int	main(void)
 	printf("%s\n", strstr("hellloo, world", "world"));
 	printf("%s\n", ft_strstr("hellloo, world", "h"));
 	printf("%s\n", strstr("hellloo, world", "h"));
-	printf("%s\n", ft_strstr("hellloo, world", "d"));
-	printf("%s\n", strstr("hellloo, world", "d"));
+	//printf("%s\n", ft_strstr("hellloo, world", "rldez"));
+	printf("%s\n", strstr("hellloo, world", ""));
 	// printf("%s\n", ft_strstr("hellloo, world", "worldw"));
 	// printf("%s\n", strstr("hellloo, world", "worldw"));
-	// printf("%s\n", strstr("hellloo, world", "llo"));
+	printf("%s\n", strstr("hellloo, world", "llo"));
+	printf("%s\n", ft_strstr("hellloo, world", "llo"));
 	printf("%s\n", ft_strstr("hellloo, world", ""));
 	// printf("%s\n", ft_strstr("", "asd"));
 }
