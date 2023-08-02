@@ -10,4 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 
+int	ft_ultimate_range(int **range, int min, int max)
+{
+	int	length;
+	int	i;
+
+	length = max - min;
+	if (length <= 0)
+		*range = NULL;
+	else
+		*range = (int *)malloc(sizeof(int) * length);
+	i = -1;
+	while (++i < length)
+		(*range)[i] = min++;
+	if (*range)
+		return (length);
+	return (0);
+}
+
+/*
+#include <stdio.h>
+int	main(void)
+{
+	int *t;
+	int start = -3;
+	int end = 5;
+	int i = ft_ultimate_range(&t, start, end);
+	printf("%i\n", i);
+	for (i = 0; i < (end - start); i++)
+		printf("%i, ", t[i]);
+	free(t);
+}
+*/
