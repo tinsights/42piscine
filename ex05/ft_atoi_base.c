@@ -12,6 +12,7 @@
 
 int	is_valid(char *base);
 int	is_digit(char c, char *base, int length);
+int	ft_isspace(char c);
 
 int	ft_atoi_base(char *str, char *base)
 {
@@ -24,7 +25,7 @@ int	ft_atoi_base(char *str, char *base)
 	if (length <= 1)
 		return (0);
 	polarity = 1;
-	while (*str == 32)
+	while (ft_isspace(*str))
 		str++;
 	while (*str == '-' || *str == '+')
 		if (*str++ == '-')
@@ -39,6 +40,13 @@ int	ft_atoi_base(char *str, char *base)
 		digit = is_digit(*str, base, length);
 	}
 	return (polarity * (int) nb);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == 32 || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
 }
 
 int	is_digit(char c, char *base, int length)
@@ -64,7 +72,7 @@ int	is_valid(char *base)
 	i = -1;
 	while (++i < length)
 	{
-		if (base[i] == '+' || base[i] == '-')
+		if (base[i] == '+' || base[i] == '-' || ft_isspace(base[i]))
 			return (0);
 		j = i;
 		while (++j < length)
@@ -78,6 +86,8 @@ int	is_valid(char *base)
 #include <stdio.h>
 int	main(void)
 {
-	printf("%i\n", ft_atoi_base("   -10101001", "01"));
+	printf("%i\n", ft_atoi_base("  \n -255", "0123456789"));
+	printf("%i\n", ft_atoi_base("  \r -11111111", "01"));
+	printf("%i\n", ft_atoi_base("  \t -ff", "0123456789abcdef"));
 }
 */

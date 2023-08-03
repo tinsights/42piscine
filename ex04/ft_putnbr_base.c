@@ -11,29 +11,9 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
 
-int	is_valid(char *base)
-{
-	int	length;
-	int	i;
-	int	j;
-
-	length = 0;
-	while (base[length])
-		length++;
-	i = -1;
-	while (++i < length)
-	{
-		if (base[i] == '+' || base[i] == '-')
-			return (0);
-		j = i;
-		while (++j < length)
-			if (base[i] == base[j])
-				return (0);
-	}
-	return (length);
-}
+int	ft_isspace(char c);
+int	is_valid(char *base);
 
 void	ft_putnbr_base(int nbr, char *base)
 {
@@ -61,18 +41,48 @@ void	ft_putnbr_base(int nbr, char *base)
 	return ;
 }
 
+int	ft_isspace(char c)
+{
+	if (c == 32 || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
+}
+
+int	is_valid(char *base)
+{
+	int	length;
+	int	i;
+	int	j;
+
+	length = 0;
+	while (base[length])
+		length++;
+	i = -1;
+	while (++i < length)
+	{
+		if (base[i] == '+' || base[i] == '-' || ft_isspace(base[i]))
+			return (0);
+		j = i;
+		while (++j < length)
+			if (base[i] == base[j])
+				return (0);
+	}
+	return (length);
+}
+
 /*
+#include <stdio.h>
 int	main(void)
 {
-	ft_putnbr_base(-12, "012345678ABCDEF");
+	ft_putnbr_base(-12, "0123456789ABCDEF");
 	printf("\n");
-	ft_putnbr_base(12, "012345678ABCDEF");
+	ft_putnbr_base(12, "01");
 	printf("\n");
 	ft_putnbr_base(0, "012345678ABCDEF");
 	printf("\n");
-	ft_putnbr_base(-2147483648, "012345678ABCDEF");
+	ft_putnbr_base(-2147483648, "0123456789ABCDEF");
 	printf("\n");
-	ft_putnbr_base(2147483647, "012345678ABCDEF");
+	ft_putnbr_base(2147483647, "0123456789ABCDEF");
 	printf("\n");
 }
 */
