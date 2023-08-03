@@ -12,47 +12,50 @@
 
 #include <stdlib.h>
 
-int	is_valid(char *base);
-int	ft_atoi_base(char *str, char *base);
-int	is_digit(char c, char *base, int length);
+int		is_valid(char *base);
+int		ft_atoi_base(char *str, char *base);
+int		is_digit(char c, char *base, int length);
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to);
 
 #include <stdio.h>
 int	main(void)
 {
-	printf("%s\n", ft_convert_base("-+-0", "0123456789abcdef", "0123456789"));
+	char *result = ft_convert_base("-fff", "0123456789abcdef", "0123456789");
+	printf("%s\n", result);
+
 }
 
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 {
+	char	temp[33];
 	char	*result;
 	int		num_of_digits;
 	long	copy;
-	int		length_from;
-	int		length_to;
+	int		base_lengths[2];
 	int		polarity;
+	int		i;
 
-	length_from = is_valid(base_from);
-	length_to = is_valid(base_to);
-	result = (char *) malloc(33);
+	base_lengths[0] = is_valid(base_from);
+	base_lengths[1] = is_valid(base_to);
 	copy = (long) ft_atoi_base(nbr, base_from);
 	num_of_digits = 0;
+	if (!copy)
+		temp[num_of_digits++] = base_to[0];
 	if (copy < 0)
-	{
 		polarity = -1;
-		copy *= -1;
-	}
+	copy *= ((copy < 0) * -1 + (copy > 0) * 1);
 	while (copy > 0)
 	{
-		result[32 - num_of_digits] = base_to[copy % length_to];
-		num_of_digits++;
-		copy = copy / length_to;
+		temp[num_of_digits++] = base_to[copy % base_lengths[1]];
+		copy /= base_lengths[1];
 	}
-	if (!copy)
-		result[32 - num_of_digits++] = base_to[0];
 	if (polarity < 0)
-		result[32 - num_of_digits++] = '-';
-	return (result + (33 - num_of_digits));
+		temp[num_of_digits++] = '-';
+	result = (char *)malloc(num_of_digits + 1);
+	i = -1;
+	while(++i < num_of_digits)
+		result[i] = temp[num_of_digits - i - 1];
+	return (result);
 }
 
 int	ft_atoi_base(char *str, char *base)
