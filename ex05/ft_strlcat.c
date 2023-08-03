@@ -18,21 +18,22 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 
 	dest_length = 0;
 	src_length = 0;
-	while (dest[dest_length])
+	while (dest[dest_length] && dest_length < size)
 		dest_length++;
 	while (src[src_length])
 		src_length++;
 	i = 0;
-	while (src[i] != '\0' && dest_length + 1 < size)
+	if (dest_length < size)
 	{
-		dest[dest_length] = src[i];
-		dest_length++;
-		i++;
+		while (src[i] != '\0' && dest_length + 1 < size)
+		{
+			dest[dest_length] = src[i];
+			dest_length++;
+			i++;
+		}
+		dest[dest_length] = '\0';
 	}
-	dest[dest_length] = '\0';
-	if (size < dest_length)
-		return (src_length + size);
-	return (dest_length);
+	return (dest_length + src_length);
 }
 
 /*
@@ -43,6 +44,7 @@ int	main(void)
 	char	c[] = " meet you! happy to be here.";
 	char	d[120] = "hello world. nice to";
 	printf("%li\n", strlcat(d, c, 5));
+	// printf("%i\n", ft_strlcat(d, c, 5));
 	printf("%s\n", d);
 }
 */
