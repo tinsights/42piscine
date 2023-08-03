@@ -36,10 +36,10 @@ unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
 #include <bsd/string.h>
 int	main(void)
 {
-	char	c[] = "hello";
+	char	c[] = "hello, world!";
 	char	d[10] = "abcdefg";
-	// printf("%i\n", ft_strlcpy(d, c, 0));
-	// printf("%li\n", strlcpy(d, c, 0));
+	// printf("%i\n", ft_strlcpy(d, c, 10));
+	printf("%li\n", strlcpy(d, c, 10));
 	printf("%s", d);
 }
 */
