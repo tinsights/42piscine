@@ -15,15 +15,7 @@
 int		is_valid(char *base);
 int		ft_atoi_base(char *str, char *base);
 int		is_digit(char c, char *base, int length);
-char	*ft_convert_base(char *nbr, char *base_from, char *base_to);
-
-// #include <stdio.h>
-// int	main(void)
-// {
-// 	char *result = ft_convert_base("-100", "0123456789ABCDEF", "0123456789" );
-// 	printf("%s\n", result);
-// 	free(result);
-// }
+int		prepare_temp(char *temp, long *copy, char *base_to);
 
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 {
@@ -31,28 +23,36 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 	char	*result;
 	int		num_of_digits;
 	long	copy;
-	short	negative;
 
 	if (is_valid(base_to) <= 1 || is_valid(base_from) <= 1)
 		return (NULL);
 	copy = (long) ft_atoi_base(nbr, base_from);
-	num_of_digits = 0;
-	negative = (copy < 0);
-	if (!copy)
-		temp[num_of_digits++] = base_to[0];
-	copy *= ((copy < 0) * -1 + (copy > 0) * 1);
-	while (copy > 0)
-	{
-		temp[num_of_digits++] = base_to[copy % is_valid(base_to)];
-		copy /= is_valid(base_to);
-	}
+	num_of_digits = prepare_temp(temp, &copy, base_to);
 	result = (char *)malloc(num_of_digits + 1);
-	if (negative)
-		temp[num_of_digits++] = '-';
 	while (copy++ < num_of_digits + 1)
 		result[copy - 1] = temp[num_of_digits - copy];
 	result[copy] = '\0';
 	return (result);
+}
+
+int	prepare_temp(char *temp, long *copy, char *base_to)
+{
+	int		num_of_digits;
+	short	negative;
+
+	num_of_digits = 0;
+	negative = (*copy < 0);
+	if (!*copy)
+		temp[num_of_digits++] = base_to[0];
+	*copy *= ((*copy < 0) * -1 + (*copy > 0) * 1);
+	while (*copy > 0)
+	{
+		temp[num_of_digits++] = base_to[*copy % is_valid(base_to)];
+		*copy /= is_valid(base_to);
+	}
+	if (negative)
+		temp[num_of_digits++] = '-';
+	return (num_of_digits);
 }
 
 int	ft_atoi_base(char *str, char *base)
@@ -115,3 +115,32 @@ int	is_digit(char c, char *base, int length)
 			return (i);
 	return (-1);
 }
+
+/*
+#include <stdio.h>
+int	main(void)
+{
+	char *result;
+
+	result = ft_convert_base("7FFFFFFF", "0123456789ABCDEF", "0123456789" );
+	printf("%s\n", result);
+	free(result);
+
+	result = ft_convert_base("-80000000", "0123456789ABCDEF", "0123456789" );
+	printf("%s\n", result);
+	free(result);
+
+	result = ft_convert_base("12", "0123456789", "01" );
+	printf("%s\n", result);
+	free(result);
+
+	result = ft_convert_base("-1100", "01", "0123456789" );
+	printf("%s\n", result);
+	free(result);
+
+	result = ft_convert_base("32", "0123456789", "01234567" );
+	printf("%s\n", result);
+	free(result);
+
+}
+*/
