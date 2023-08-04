@@ -39,7 +39,7 @@ int	ft_atoi_base(char *str, char *base)
 		str++;
 		digit = is_digit(*str, base, length);
 	}
-	return (polarity * (int) nb);
+	return ((int)(polarity * nb));
 }
 
 int	ft_isspace(char c)

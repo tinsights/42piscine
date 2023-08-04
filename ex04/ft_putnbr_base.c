@@ -25,9 +25,9 @@ void	ft_putnbr_base(int nbr, char *base)
 	length = is_valid(base);
 	if (length <= 1)
 		return ;
-	copy = (nbr < 0) * -1 * (long) nbr + (nbr > 0) * (long) nbr;
 	if (nbr < 0)
 		write(1, "-", 1);
+	copy = (nbr < 0) * -1 * (long) nbr + (nbr > 0) * (long) nbr;
 	num_of_digits = 0;
 	while (copy > 0)
 	{
