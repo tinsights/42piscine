@@ -1,2 +1,3 @@
 a.out
-*.c
+ft_point.c
+ft_boolean.c
