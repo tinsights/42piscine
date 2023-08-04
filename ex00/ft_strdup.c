@@ -32,7 +32,7 @@ char	*ft_strdup(char *src)
 #include <stdio.h>
 int	main(void)
 {
-	char *s = ft_stdup("Hello, world");
+	char *s = ft_strdup("Hello, world");
 	printf("%s\n", s);
 	free(s);
 }
