@@ -43,8 +43,8 @@ int	main(void)
 {
 	char	c[] = " meet you! happy to be here.";
 	char	d[120] = "hello world. nice to";
-	printf("%li\n", strlcat(d, c, 5));
-	// printf("%i\n", ft_strlcat(d, c, 5));
+	// printf("%li\n", strlcat(d, c, 0));
+	printf("%i\n", ft_strlcat(d, c, 0));
 	printf("%s\n", d);
 }
 */
