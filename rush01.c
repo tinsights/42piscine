@@ -12,7 +12,8 @@
 
 #include <unistd.h>
 #include <stdio.h>
-void	solve_row(int *row, int box, int lv, int rv);
+int	solve_row(int *row, int box, int lv, int rv);
+int is_valid(int *row, int lv, int rv);
 
 int ft_strlen(char *str)
 {
@@ -67,29 +68,140 @@ int	main(int argc, char **argv)
 	// this box will go to the first available square
 	// starting from the left
 	// which is the square of left_view.
-	solve_row(row, 4, left_view, right_view);
+	if (!solve_row(row, 4, left_view, right_view))
+		printf("ERROR\n");
 
 	return (0);
 }
 
-void	solve_row(int *row, int box, int lv, int rv)
+int is_valid_row(int *row, int lv, int rv)
+{
+	int count;
+	int peak;
+
+	count = 0;
+	peak = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		if (row[i] > peak)
+		{
+			count++;
+			peak = row[i];
+		}
+	}
+	if (count != lv)
+		return (0);
+	// printf("for the row ");
+	// for (int j = 0; j < 4; j++)
+	// 	printf("%i, ", row[j]);
+	// printf("\n");
+	// printf("lv limit is %i and currently %i boxes can be seen\n", lv, count);
+	count = 0;
+	peak = 0;
+	for (int i = 3; i >= 0; i--)
+	{
+		if (row[i] > peak)
+		{
+			count++;
+			peak = row[i];
+		}
+	}
+	if (count != rv)
+		return (0);
+	// printf("for the row ");
+	// for (int j = 0; j < 4; j++)
+	// 	printf("%i, ", row[j]);
+	// printf("\n");
+	// printf("rv limit is %i and currently %i boxes can be seen\n", rv, count);
+	return (1);
+}
+
+int	solve_row(int *row, int box, int lv, int rv)
 {
 	if (box == 0)
 	{
-		printf("Solution found.\n");
-		printf("Row: ");
-		for (int j = 0; j < 4; j++)
-			printf("%i, ", row[j]);
-		printf("\n");
-		return ;
+		if (is_valid_row(row, lv, rv))
+		{
+			printf("~~~~~~SOLUTION FOUND!!~~~~~~.\n");
+			printf("Row: ");
+			for (int j = 0; j < 4; j++)
+				printf("%i, ", row[j]);
+			printf("\n");
+			return (1);
+		}
+		return (0);
 	}
+	int tries = 0;
+	while (tries < box)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			// printf("Box: %i, col: %i\n", box, i+1);
+			if (!row[i])
+			{
+				row[i] = box;
+				if (is_valid(row, lv, rv))
+				{
+					// printf("Valid Box Placed.\nRow: ");
+					// for (int j = 0; j < 4; j++)
+					// 	printf("%i, ", row[j]);
+					// printf("\n");
+					if (!solve_row(row, box - 1, lv, rv))
+						row[i] = 0;
+					else
+						return (1);
+				}
+				else
+				{
+					// printf("invalid box placement\n");
+					row[i] = 0;
+				}
+			}
+		}
+		tries++;
+		// printf("%i try for box %i\n", tries, box);
+	}
+	return (0);
+}
+
+int is_valid(int *row, int lv, int rv)
+{
+	int count;
+	int peak;
+
+	count = 0;
+	peak = 0;
 	for (int i = 0; i < 4; i++)
 	{
-		// printf("Box: %i, col: %i\n", box, i+1);
-		if (!row[i] && (box <= i + lv))
+		if (row[i] > peak)
 		{
-			row[i] = box;
-			solve_row(row, box - 1, lv, rv);
+			count++;
+			peak = row[i];
 		}
 	}
+	if (count > lv)
+		return (0);
+	// printf("for the row ");
+	// for (int j = 0; j < 4; j++)
+	// 	printf("%i, ", row[j]);
+	// printf("\n");
+	// printf("lv limit is %i and currently %i boxes can be seen\n", lv, count);
+	count = 0;
+	peak = 0;
+	for (int i = 3; i >= 0; i--)
+	{
+		if (row[i] > peak)
+		{
+			count++;
+			peak = row[i];
+		}
+	}
+	if (count > rv)
+		return (0);
+	// printf("for the row ");
+	// for (int j = 0; j < 4; j++)
+	// 	printf("%i, ", row[j]);
+	// printf("\n");
+	// printf("rv limit is %i and currently %i boxes can be seen\n", rv, count);
+	return (1);
 }
