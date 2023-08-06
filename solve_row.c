@@ -15,8 +15,9 @@ int	check_from_bottom(int **board, int col);
 int	check_from_left(int *row, int l_limit);
 int	check_from_right(int *row, int r_limit);
 
-int	no_vertical_duplicates(int **board, int **udlr, int curr_row)
+int no_vertical_duplicates(int **board, int **udlr, int curr_row)
 {
+	// check for vertical duplicates
 	int	col;
 	int	row;
 	int	i;
@@ -25,14 +26,16 @@ int	no_vertical_duplicates(int **board, int **udlr, int curr_row)
 	while (++col < 4)
 	{
 		row = -1;
-		while (++row < 4)
+		while (++row < curr_row)
 		{
 			if (!board[row][col])
 				continue ;
 			i = row;
-			while (++i < curr_row)
+			while (++i <= curr_row)
+			{
 				if (board[row][col] == board[i][col])
 					return (0);
+			}
 		}
 	}
 	return (1);
