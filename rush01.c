@@ -114,50 +114,26 @@ int	main(int argc, char **argv)
 
 int	solve_row(int **board, int box, int r, int **udlr)
 {
-	int *row = board[r];
-	int lv = udlr[2][r];
-	int rv = udlr[3][r];
-
+	int tries;
 
 	if (r == 4)
-	{
 		return (is_valid_board(board, udlr));
-	}
-	if (box == 0)
-	{
-		if (is_valid_row(row, lv, rv) && no_vertical_duplicates(board, udlr, r))
-			return ((solve_row(board, 4, r+1, udlr)));
-		return (0);
-	}
-	int tries = 0;
-	while (tries < box)
+	if (box == 0 && (is_valid_row(board[r], udlr[2][r], udlr[3][r]) && no_vertical_duplicates(board, udlr, r)))
+			return ((solve_row(board, 4, r + 1, udlr)));
+	tries = -1;
+	while (++tries < box)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			// printf("Box: %i, col: %i\n", box, i+1);
-			if (!row[i])
+			if (!board[r][i])
 			{
-				row[i] = box;
-				if (is_valid_row(row, lv, rv) >= 0)
-				{
-					// printf("Valid Box Placed.\nRow: ");
-					// for (int j = 0; j < 4; j++)
-					// 	printf("%i, ", row[j]);
-					// printf("\n");
+				board[r][i] = box;
+				if (is_valid_row(board[r], udlr[2][r], udlr[3][r]) >= 0)
 					if (solve_row(board, box - 1, r, udlr))
 						return (1);
-					else
-						row[i] = 0;
-				}
-				else
-				{
-					// printf("invalid box placement\n");
-					row[i] = 0;
-				}
+				board[r][i] = 0;
 			}
 		}
-		tries++;
-		// printf("%i try for box %i\n", tries, box);
 	}
 	return (0);
 }
