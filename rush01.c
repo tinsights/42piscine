@@ -35,7 +35,7 @@ int	valid_arg(char *str)
 	count_nums = 0;
 	while (*str)
 	{
-		if (*str >= 48 && *str <= 57)
+		if (*str > 48 && *str <= 57)
 			count_nums++;
 		else if (*str != 32)
 			return (0);

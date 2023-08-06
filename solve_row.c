@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
 int	check_from_top(int **board, int col);
 int	check_from_bottom(int **board, int col);
 int	check_from_left(int *row, int l_limit);
