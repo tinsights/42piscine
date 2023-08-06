@@ -50,7 +50,7 @@ int	check_from_bottom(int **board, int col)
 	return (down_count);
 }
 
-int	check_from_left(int *row, int l_limit)
+int	check_from_left(int *row)
 {
 	int	left_count;
 	int	peak;
@@ -70,7 +70,7 @@ int	check_from_left(int *row, int l_limit)
 	return (left_count);
 }
 
-int	check_from_right(int *row, int r_limit)
+int	check_from_right(int *row)
 {
 	int	right_count;
 	int	peak;

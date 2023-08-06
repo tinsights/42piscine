@@ -15,7 +15,7 @@ int	check_from_bottom(int **board, int col);
 int	check_from_left(int *row, int l_limit);
 int	check_from_right(int *row, int r_limit);
 
-int	no_vertical_duplicates(int **board, int **udlr, int curr_row)
+int	no_vertical_duplicates(int **board, int curr_row)
 {
 	int	col;
 	int	row;
@@ -44,8 +44,6 @@ int	is_valid_row(int *row, int l_limit, int r_limit)
 {
 	int	left_count;
 	int	right_count;
-	int	peak;
-	int	i;
 
 	left_count = check_from_left(row, l_limit);
 	if (left_count > l_limit)
@@ -89,7 +87,7 @@ int	solve_row(int **board, int box, int r, int **udlr)
 	if (r == 4)
 		return (is_valid_board(board, udlr));
 	if (box == 0 && (is_valid_row(board[r], udlr[2][r], udlr[3][r])
-		&& no_vertical_duplicates(board, udlr, r)))
+		&& no_vertical_duplicates(board, r)))
 		return ((solve_row(board, 4, r + 1, udlr)));
 	tries = -1;
 	while (++tries < box)
