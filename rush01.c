@@ -14,10 +14,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int solve_board(int **board, int size, int **udlr);
-int	solve_row(int **board, int size, int row, int **udlr);
+int	solve_row(int **board, int box, int row, int **udlr);
 int is_valid_row(int *row, int lv, int rv);
-int is_valid_board(int **board, int **udlr, int curr_row);
+int no_vertical_duplicates(int **board, int **udlr, int curr_row);
+int is_valid_col(int **board, int col, int **udlr);
+int is_valid_board(int **board, int **udlr);
+
 
 int ft_strlen(char *str)
 {
@@ -94,30 +96,20 @@ int	main(int argc, char **argv)
 	// this box will go to the first available square
 	// starting from the left
 	// which is the square of left_view.
-	solve_board(board, 4, udlr_limits);
+	if (solve_row(board, 4, 0, udlr_limits))
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+				printf("%i ", board[i][j]);
+			printf("\n");
+		}
+	}
+	else
+		printf("No solution found :(\n");
 
 
 	return (0);
-}
-
-int solve_board(int **board, int size, int **udlr)
-{
-	for (int i = 0; i < size; i++)
-	{	
-		solve_row(board, size, i, udlr);
-	}
-}
-
-int check_dup(int **board, int row, int col, int box)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		if (board[row][i] == box)
-			return (0);
-		if (board[i][col] == box)
-			return (0);
-	}
-	return (1);
 }
 
 int	solve_row(int **board, int box, int r, int **udlr)
@@ -125,17 +117,16 @@ int	solve_row(int **board, int box, int r, int **udlr)
 	int *row = board[r];
 	int lv = udlr[2][r];
 	int rv = udlr[3][r];
+
+
+	if (r == 4)
+	{
+		return (is_valid_board(board, udlr));
+	}
 	if (box == 0)
 	{
-		if (is_valid_row(row, lv, rv) && is_valid_board(board, udlr, r))
-		{
-			// printf("~~~~~~SOLUTION FOUND!!~~~~~~.\n");
-			// printf("Row: ");
-			for (int j = 0; j < 4; j++)
-				printf("%i, ", row[j]);
-			printf("\n");
-			return (1);
-		}
+		if (is_valid_row(row, lv, rv) && no_vertical_duplicates(board, udlr, r))
+			return ((solve_row(board, 4, r+1, udlr)));
 		return (0);
 	}
 	int tries = 0;
@@ -153,10 +144,10 @@ int	solve_row(int **board, int box, int r, int **udlr)
 					// for (int j = 0; j < 4; j++)
 					// 	printf("%i, ", row[j]);
 					// printf("\n");
-					if (!solve_row(board, box - 1, r, udlr))
-						row[i] = 0;
-					else
+					if (solve_row(board, box - 1, r, udlr))
 						return (1);
+					else
+						row[i] = 0;
 				}
 				else
 				{
@@ -171,7 +162,7 @@ int	solve_row(int **board, int box, int r, int **udlr)
 	return (0);
 }
 
-int is_valid_board(int **board, int **udlr, int curr_row)
+int no_vertical_duplicates(int **board, int **udlr, int curr_row)
 {
 	// check for vertical duplicates
 	for (int col = 0; col < 4; col++)
@@ -187,42 +178,64 @@ int is_valid_board(int **board, int **udlr, int curr_row)
 			}
 		}
 	}
-	// check that
 	return (1);
 }
 
-// int is_valid_col(int **board, int col, int up_limit, int down_limit)
-// {
-// 	int top_count;
-// 	int down_count;
-// 	int peak;
+int is_valid_col(int **board, int col, int **udlr)
+{
+	int top_count;
+	int down_count;
+	int peak;
+	int top_limit;
+	int down_limit;
 
-// 	top_count = 0;
-// 	peak = 0;
-// 	for (int i = 0; i < 4; i++)
-// 	{
-// 		if (board[i][col] > peak)
-// 		{
-// 			top_count++;
-// 			peak = board[i][col];
-// 		}
-// 	}
-// 	if (top_count > up_limit)
-// 		return (-1);
-// 	down_count = 0;
-// 	peak = 0;
-// 	for (int i = 3; i >= 0; i--)
-// 	{
-// 		if (board[i][col] > peak)
-// 		{
-// 			down_count++;
-// 			peak = board[i][col];
-// 		}
-// 	}
-// 	if (down_count > down_limit)
-// 		return (-1);
-// 	return (top_count == up_limit && down_count == down_limit);
-// }
+	top_count = 0;
+	top_limit = udlr[0][col];
+	peak = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		if (board[i][col] > peak)
+		{
+			top_count++;
+			peak = board[i][col];
+		}
+	}
+	if (top_count > top_limit)
+	{
+		// printf("top limit is % i, top count is %i\n", top_limit, top_count);
+		return (-1);
+	}
+	down_count = 0;
+	down_limit = udlr[1][col];
+	peak = 0;
+	for (int i = 3; i >= 0; i--)
+	{
+		if (board[i][col] > peak)
+		{
+			down_count++;
+			peak = board[i][col];
+		}
+	}
+	if (down_count > down_limit)
+	{
+		// printf("down limit is % i, down count is %i\n", down_limit, down_count);
+
+		return (-1);
+	}
+	return (top_count == top_limit && down_count == down_limit);
+}
+
+int is_valid_board(int **board, int **udlr)
+{
+	for (int col = 0; col < 4; col++)
+	{
+		if (!is_valid_col(board, col, udlr))
+		{
+			return (0);
+		}
+	}
+	return (1);
+}
 
 int is_valid_row(int *row, int l_limit, int r_limit)
 {
