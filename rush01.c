@@ -16,32 +16,24 @@
 
 int	solve_row(int **board, int box, int row, int **udlr);
 
-int	ft_strlen(char *str)
-{
-	int	length;
-
-	length = 0;
-	while (str[length])
-		length++;
-	return (length);
-}
-
 int	valid_arg(char *str)
 {
 	int	count_nums;
+	int	length;
+	int	limit;
 
-	if (ft_strlen(str) != 8 * SIZE - 1)
-		return (0);
 	count_nums = 0;
-	while (*str)
+	length = 0;
+	limit = SIZE + 48;
+	while (str[length])
 	{
-		if (*str > 48 && *str <= 57)
+		if (str[length] > 48 && str[length] <= limit)
 			count_nums++;
-		else if (*str != 32)
+		else if (str[length] != 32)
 			return (0);
-		str++;
+		length++;
 	}
-	return (count_nums == 4 * SIZE);
+	return ((length == 8 * SIZE - 1) && (count_nums == 4 * SIZE));
 }
 
 int	read_arguments(int argc, char **argv, int **udlr_limits)
@@ -82,6 +74,19 @@ void	print_result(int **board)
 	}
 }
 
+void	free_board(int **board, int **udlr)
+{
+	int	i;
+
+	i = -1;
+	while (++i < SIZE)
+	{
+		free(board[i]);
+		free(udlr[i]);
+	}
+	return ;
+}
+
 int	main(int argc, char **argv)
 {
 	int	*board[SIZE];
@@ -99,13 +104,11 @@ int	main(int argc, char **argv)
 			board[i][j] = 0;
 	}
 	if (!read_arguments(argc, argv, udlr_limits))
-	{
 		write(1, "Error\n", 6);
-		return (0);
-	}
-	if (solve_row(board, SIZE, 0, udlr_limits))
+	else if (solve_row(board, SIZE, 0, udlr_limits))
 		print_result(board);
 	else
 		write(1, "Error\n", 6);
+	free_board(board, udlr_limits);
 	return (0);
 }
