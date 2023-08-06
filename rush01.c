@@ -15,8 +15,9 @@
 #include <stdlib.h>
 
 int solve_board(int **board, int size, int **udlr);
-int	solve_row(int *row, int box, int lv, int rv);
+int	solve_row(int **board, int size, int row, int **udlr);
 int is_valid_row(int *row, int lv, int rv);
+int is_valid_board(int **board, int **udlr);
 
 int ft_strlen(char *str)
 {
@@ -111,7 +112,7 @@ int solve_board(int **board, int size, int **udlr)
 	for (int i = 0; i < size; i++)
 	{	
 		// printf("row: %i  || size: %i || lv: %i || rv: %i\n", i, size, udlr[2][i], udlr[3][i]);
-		solve_row(board[i], size, udlr[2][i], udlr[3][i]);
+		solve_row(board, size, i, udlr);
 	}
 }
 
@@ -127,11 +128,14 @@ int check_dup(int **board, int row, int col, int box)
 	return (1);
 }
 
-int	solve_row(int *row, int box, int lv, int rv)
+int	solve_row(int **board, int box, int r, int **udlr)
 {
+	int *row = board[r];
+	int lv = udlr[2][r];
+	int rv = udlr[3][r];
 	if (box == 0)
 	{
-		if (is_valid_row(row, lv, rv))
+		if (is_valid_row(row, lv, rv) && is_valid_board(board, udlr))
 		{
 			// printf("~~~~~~SOLUTION FOUND!!~~~~~~.\n");
 			// printf("Row: ");
@@ -157,7 +161,7 @@ int	solve_row(int *row, int box, int lv, int rv)
 					// for (int j = 0; j < 4; j++)
 					// 	printf("%i, ", row[j]);
 					// printf("\n");
-					if (!solve_row(row, box - 1, lv, rv))
+					if (!solve_row(board, box - 1, r, udlr))
 						row[i] = 0;
 					else
 						return (1);
@@ -173,6 +177,25 @@ int	solve_row(int *row, int box, int lv, int rv)
 		// printf("%i try for box %i\n", tries, box);
 	}
 	return (0);
+}
+
+int is_valid_board(int **board, int **udlr)
+{
+	// check for vertical duplicates
+	for (int col = 0; col < 4; col++)
+	{
+		for (int row = 0; row < 4; row++)
+		{
+			if (!board[row][col])
+				continue ;
+			for (int i = row + 1; i < 4; i++)
+			{
+				if (board[row][col] == board[i][col])
+					return (0);
+			}
+		}
+	}
+	return (1);
 }
 
 // int is_valid_col(int **board, int col, int up_limit, int down_limit)
