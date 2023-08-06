@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+
 int	check_from_top(int **board, int col);
 int	check_from_bottom(int **board, int col);
 int	check_from_left(int *row, int l_limit);
@@ -61,10 +63,10 @@ int	is_valid_col(int **board, int col, int **udlr)
 
 	top_count = check_from_top(board, col);
 	if (top_count > udlr[0][col])
-		return (-1);
+		return (0);
 	down_count = check_from_bottom(board, col);
 	if (down_count > udlr[1][col])
-		return (-1);
+		return (0);
 	return (top_count == udlr[0][col] && down_count == udlr[1][col]);
 }
 

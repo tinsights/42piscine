@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 int	solve_row(int **board, int box, int row, int **udlr);
