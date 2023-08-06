@@ -16,19 +16,19 @@
 
 int	solve_row(int **board, int box, int row, int **udlr);
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
 	int	length;
 
 	length = 0;
 	while (str[length])
 		length++;
-	return length;
+	return (length);
 }
 
-int valid_arg(char *str)
+int	valid_arg(char *str)
 {
-	int count_nums;
+	int	count_nums;
 
 	if (ft_strlen(str) != 31)
 		return (0);
@@ -44,63 +44,68 @@ int valid_arg(char *str)
 	return (count_nums == 16);
 }
 
+int	read_arguments(int argc, char **argv, int **udlr_limits)
+{
+	int	i;
+
+	if (argc != 2 || !valid_arg(argv[1]))
+		return (0);
+	i = -1;
+	while (++i < 4)
+	{
+		udlr_limits[0][i] = argv[1][2 * i] - 48;
+		udlr_limits[1][i] = argv[1][8 + 2 * i] - 48;
+		udlr_limits[2][i] = argv[1][16 + 2 * i] - 48;
+		udlr_limits[3][i] = argv[1][24 + 2 * i] - 48;
+	}
+	return (1);
+}
+
+void	print_result(int **board)
+{
+	int		i;
+	int		j;
+	char	box;
+
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 4)
+		{
+			box = board[i][j] + 48;
+			write(1, &box, 1);
+			if (j < 3)
+				write(1, " ", 1);
+		}
+		write(1, "\n", 1);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	int	*board[4];
-	int *udlr_limits[4];
-	int left_limits[4];
-	int	right_limits[4];
-	int top_limits[4];
-	int down_limits[4];
+	int	*udlr_limits[4];
+	int	i;
+	int	j;
 
-	// initialise row
-	for (int i = 0; i < 4; i++)
+	i = -1;
+	while (++i < 4)
 	{
 		board[i] = malloc(4 * 4);
 		udlr_limits[i] = malloc(4 * 4);
-		for (int j = 0; j < 4; j++)
+		j = -1;
+		while (++j < 4)
 			board[i][j] = 0;
 	}
-	// ------ ERROR CHECKING ------
-
-	// check for the right number of arguments.
-	// check that string provided has right length
-	// TODO: adjust for final form
-	if (argc != 2 || !valid_arg(argv[1]))
+	if (!read_arguments(argc, argv, udlr_limits))
 	{
-		write(1, "ERROR\n", 6);
-		return (-1);
+		write(1, "Error\n", 6);
+		return (0);
 	}
-	else
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			udlr_limits[0][i] = argv[1][2*i] - 48;
-			udlr_limits[1][i] = argv[1][8 + 2*i] - 48;
-			udlr_limits[2][i] = argv[1][16 + 2*i] - 48;
-			udlr_limits[3][i] = argv[1][24 + 2*i] - 48;
-		}
-	}
-
-	// -------- SOLVING --------
-	
-
-
-	// let's try to print out all possible solutions:
-	// we will start by placing the tallest available box
-	// this box will go to the first available square
-	// starting from the left
-	// which is the square of left_view.
 	if (solve_row(board, 4, 0, udlr_limits))
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-				printf("%i ", board[i][j]);
-			printf("\n");
-		}
-	}
+		print_result(board);
 	else
-		printf("No solution found :(\n");
+		write(1, "Error\n", 6);
 	return (0);
 }
