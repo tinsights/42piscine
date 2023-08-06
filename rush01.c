@@ -17,7 +17,7 @@
 int solve_board(int **board, int size, int **udlr);
 int	solve_row(int **board, int size, int row, int **udlr);
 int is_valid_row(int *row, int lv, int rv);
-int is_valid_board(int **board, int **udlr);
+int is_valid_board(int **board, int **udlr, int curr_row);
 
 int ft_strlen(char *str)
 {
@@ -102,16 +102,8 @@ int	main(int argc, char **argv)
 
 int solve_board(int **board, int size, int **udlr)
 {
-	// for (int i = 2; i < 4; i++)
-	// {
-	// 	printf("printing limit %i:\n", i);
-	// 	for (int j = 0; j < 4; j++)
-	// 		printf("%i, ", udlr[i][j]);
-	// 	printf("\n\n");
-	// }
 	for (int i = 0; i < size; i++)
 	{	
-		// printf("row: %i  || size: %i || lv: %i || rv: %i\n", i, size, udlr[2][i], udlr[3][i]);
 		solve_row(board, size, i, udlr);
 	}
 }
@@ -135,7 +127,7 @@ int	solve_row(int **board, int box, int r, int **udlr)
 	int rv = udlr[3][r];
 	if (box == 0)
 	{
-		if (is_valid_row(row, lv, rv) && is_valid_board(board, udlr))
+		if (is_valid_row(row, lv, rv) && is_valid_board(board, udlr, r))
 		{
 			// printf("~~~~~~SOLUTION FOUND!!~~~~~~.\n");
 			// printf("Row: ");
@@ -179,22 +171,23 @@ int	solve_row(int **board, int box, int r, int **udlr)
 	return (0);
 }
 
-int is_valid_board(int **board, int **udlr)
+int is_valid_board(int **board, int **udlr, int curr_row)
 {
 	// check for vertical duplicates
 	for (int col = 0; col < 4; col++)
 	{
-		for (int row = 0; row < 4; row++)
+		for (int row = 0; row <= curr_row; row++)
 		{
 			if (!board[row][col])
 				continue ;
-			for (int i = row + 1; i < 4; i++)
+			for (int i = row + 1; i <= curr_row; i++)
 			{
 				if (board[row][col] == board[i][col])
 					return (0);
 			}
 		}
 	}
+	// check that
 	return (1);
 }
 
