@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "rush01.h"
+
 int	check_from_top(int **board, int col)
 {
 	int	top_count;
@@ -19,7 +21,7 @@ int	check_from_top(int **board, int col)
 	top_count = 0;
 	peak = 0;
 	i = -1;
-	while (++i < 4)
+	while (++i < SIZE)
 	{
 		if (board[i][col] > peak)
 		{
@@ -38,7 +40,7 @@ int	check_from_bottom(int **board, int col)
 
 	down_count = 0;
 	peak = 0;
-	i = 4;
+	i = SIZE;
 	while (--i >= 0)
 	{
 		if (board[i][col] > peak)
@@ -59,7 +61,7 @@ int	check_from_left(int *row)
 	left_count = 0;
 	peak = 0;
 	i = -1;
-	while (++i < 4)
+	while (++i < SIZE)
 	{
 		if (row[i] > peak)
 		{
@@ -78,7 +80,7 @@ int	check_from_right(int *row)
 
 	right_count = 0;
 	peak = 0;
-	i = 4;
+	i = SIZE;
 	while (--i >= 0)
 	{
 		if (row[i] > peak)

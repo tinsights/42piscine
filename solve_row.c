@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "rush01.h"
+
 int	check_from_top(int **board, int col);
 int	check_from_bottom(int **board, int col);
 int	check_from_left(int *row, int l_limit);
@@ -22,7 +24,7 @@ int	no_vertical_duplicates(int **board, int curr_row)
 	int	i;
 
 	col = -1;
-	while (++col < 4)
+	while (++col < SIZE)
 	{
 		row = -1;
 		while (++row < curr_row)
@@ -73,7 +75,7 @@ int	is_valid_board(int **board, int **udlr)
 	int	col;
 
 	col = -1;
-	while (++col < 4)
+	while (++col < SIZE)
 		if (!is_valid_col(board, col, udlr))
 			return (0);
 	return (1);
@@ -84,16 +86,16 @@ int	solve_row(int **board, int box, int r, int **udlr)
 	int	tries;
 	int	count;
 
-	if (r == 4)
+	if (r == SIZE)
 		return (is_valid_board(board, udlr));
 	if (box == 0 && (is_valid_row(board[r], udlr[2][r], udlr[3][r])
 		&& no_vertical_duplicates(board, r)))
-		return ((solve_row(board, 4, r + 1, udlr)));
+		return ((solve_row(board, SIZE, r + 1, udlr)));
 	tries = -1;
 	while (++tries < box)
 	{
 		count = -1;
-		while (++count < 4)
+		while (++count < SIZE)
 		{
 			if (!board[r][count])
 			{

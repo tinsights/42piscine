@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include "rush01.h"
 
 int	solve_row(int **board, int box, int row, int **udlr);
 
@@ -30,7 +30,7 @@ int	valid_arg(char *str)
 {
 	int	count_nums;
 
-	if (ft_strlen(str) != 31)
+	if (ft_strlen(str) != 8 * SIZE - 1)
 		return (0);
 	count_nums = 0;
 	while (*str)
@@ -41,7 +41,7 @@ int	valid_arg(char *str)
 			return (0);
 		str++;
 	}
-	return (count_nums == 16);
+	return (count_nums == 4 * SIZE);
 }
 
 int	read_arguments(int argc, char **argv, int **udlr_limits)
@@ -51,7 +51,7 @@ int	read_arguments(int argc, char **argv, int **udlr_limits)
 	if (argc != 2 || !valid_arg(argv[1]))
 		return (0);
 	i = -1;
-	while (++i < 4)
+	while (++i < SIZE)
 	{
 		udlr_limits[0][i] = argv[1][2 * i] - 48;
 		udlr_limits[1][i] = argv[1][8 + 2 * i] - 48;
@@ -68,14 +68,14 @@ void	print_result(int **board)
 	char	box;
 
 	i = -1;
-	while (++i < 4)
+	while (++i < SIZE)
 	{
 		j = -1;
-		while (++j < 4)
+		while (++j < SIZE)
 		{
 			box = board[i][j] + 48;
 			write(1, &box, 1);
-			if (j < 3)
+			if (j < SIZE - 1)
 				write(1, " ", 1);
 		}
 		write(1, "\n", 1);
@@ -84,18 +84,18 @@ void	print_result(int **board)
 
 int	main(int argc, char **argv)
 {
-	int	*board[4];
-	int	*udlr_limits[4];
+	int	*board[SIZE];
+	int	*udlr_limits[SIZE];
 	int	i;
 	int	j;
 
 	i = -1;
-	while (++i < 4)
+	while (++i < SIZE)
 	{
-		board[i] = malloc(4 * 4);
-		udlr_limits[i] = malloc(4 * 4);
+		board[i] = malloc(SIZE * 4);
+		udlr_limits[i] = malloc(SIZE * 4);
 		j = -1;
-		while (++j < 4)
+		while (++j < SIZE)
 			board[i][j] = 0;
 	}
 	if (!read_arguments(argc, argv, udlr_limits))
@@ -103,7 +103,7 @@ int	main(int argc, char **argv)
 		write(1, "Error\n", 6);
 		return (0);
 	}
-	if (solve_row(board, 4, 0, udlr_limits))
+	if (solve_row(board, SIZE, 0, udlr_limits))
 		print_result(board);
 	else
 		write(1, "Error\n", 6);
