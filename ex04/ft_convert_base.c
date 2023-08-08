@@ -15,6 +15,7 @@
 int		is_valid(char *base);
 int		ft_atoi_base(char *str, char *base);
 int		is_digit(char c, char *base, int length);
+int		ft_isspace(char c);
 int		prepare_temp(char *temp, long *copy, char *base_to);
 
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
@@ -66,7 +67,7 @@ int	ft_atoi_base(char *str, char *base)
 	if (length <= 1)
 		return (0);
 	polarity = 1;
-	while (*str == 32)
+	while (*str == 32 || (*str >= 9 && *str <= 13))
 		str++;
 	while (*str == '-' || *str == '+')
 		if (*str++ == '-')
@@ -95,7 +96,8 @@ int	is_valid(char *base)
 	i = -1;
 	while (++i < length)
 	{
-		if (base[i] == '+' || base[i] == '-')
+		if (base[i] == '+' || base[i] == '-'
+			|| base[i] == 32 || (base[i] >= 9 && base[i] <= 13))
 			return (0);
 		j = i;
 		while (++j < length)
@@ -122,25 +124,33 @@ int	main(void)
 {
 	char *result;
 
-	result = ft_convert_base("7FFFFFFF", "0123456789ABCDEF", "0123456789" );
-	printf("%s\n", result);
-	free(result);
+	result = ft_convert_base(" \t \n7FFFFFFF", "0123456789ABCDEF", "0123456789" );
+	if (result)
+		printf("%s\n", result);
 
-	result = ft_convert_base("-80000000", "0123456789ABCDEF", "0123456789" );
-	printf("%s\n", result);
-	free(result);
+	result = ft_convert_base(" \r 2147483647", "0123456789", "0123456789ABCDEF" );
+	if (result)
+		printf("%s\n", result);
 
-	result = ft_convert_base("12", "0123456789", "01" );
-	printf("%s\n", result);
-	free(result);
+	result = ft_convert_base(" \r -80000000", "0123456789ABCDEF", "0123456789" );
+	if (result)
+		printf("%s\n", result);
+
+	result = ft_convert_base(" \r -2147483648", "0123456789", "0123456789ABCDEF" );
+	if (result)
+		printf("%s\n", result);
+
+	result = ft_convert_base(" +12 \t", "0123456789", "01" );
+	if (result)
+		printf("%s\n", result);
 
 	result = ft_convert_base("-1100", "01", "0123456789" );
-	printf("%s\n", result);
-	free(result);
+	if (result)
+		printf("%s\n", result);
 
-	result = ft_convert_base("32", "0123456789", "01234567" );
-	printf("%s\n", result);
-	free(result);
+	result = ft_convert_base("+32", "0123456789", "01234567" );
+	if (result)
+		printf("%s\n", result);
 
 }
 */
