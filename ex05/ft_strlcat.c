@@ -33,7 +33,7 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 		}
 		dest[dest_length] = '\0';
 	}
-	return (dest_length + src_length);
+	return (dest_length + src_length - i);
 }
 
 /*
@@ -41,10 +41,15 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 #include <bsd/string.h>
 int	main(void)
 {
-	char	c[] = " meet you! happy to be here.";
-	char	d[120] = "hello world. nice to";
-	// printf("%li\n", strlcat(d, c, 0));
-	printf("%i\n", ft_strlcat(d, c, 0));
+	char	d[50] = "hello world. nice to";
+	char	d1[50] = "hello world. nice to";
+	char	src[100] = " meet you! happy to be here.";
+
+	printf("%i || ", ft_strlcat(d, src, 49));
 	printf("%s\n", d);
+	printf("src: %s\n", src);
+	printf("%li || ", strlcat(d1, src, 49));
+	printf("%s\n", d1);
+	printf("src: %s\n", src);
 }
 */
