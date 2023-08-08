@@ -29,12 +29,12 @@ int	main(int argc, char **argv)
 			if (ft_strcmp(argv[i], argv[j]) > 0)
 				swap_strings(argv, i, j);
 	}
-	while (i-- > 0)
+	i = 0;
+	while (++i < argc)
 	{
-		j = 0;
-		while (argv[argc - i - 1][j])
-			j++;
-		write(1, argv[argc - i - 1], j);
+		j = -1;
+		while (argv[i][++j])
+			write(1, argv[i] + j, 1);
 		write(1, "\n", 1);
 	}
 }
