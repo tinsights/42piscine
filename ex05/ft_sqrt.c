@@ -14,13 +14,10 @@ int	ft_sqrt(int nb)
 {
 	int	sqrt;
 
-	sqrt = 1;
-	while (sqrt <= nb)
-	{
-		if (sqrt * sqrt == nb)
-			return (sqrt);
-		sqrt++;
-	}
+	sqrt = 0;
+	while (++sqrt <= nb)
+		if (sqrt * sqrt >= nb)
+			return ((sqrt * sqrt == nb) * sqrt);
 	return (0);
 }
 
