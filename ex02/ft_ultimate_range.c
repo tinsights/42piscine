@@ -22,6 +22,10 @@ int	ft_ultimate_range(int **range, int min, int max)
 		*range = NULL;
 	else
 		*range = (int *)malloc(sizeof(int) * length);
+	// if null poiner
+	// exit and return -1
+	if (!range)
+		return (-1);
 	i = -1;
 	while (++i < length)
 		(*range)[i] = min++;

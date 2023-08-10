@@ -118,7 +118,7 @@ int	is_digit(char c, char *base, int length)
 	return (-1);
 }
 
-/*
+
 #include <stdio.h>
 int	main(void)
 {
@@ -153,4 +153,3 @@ int	main(void)
 		printf("%s\n", result);
 
 }
-*/

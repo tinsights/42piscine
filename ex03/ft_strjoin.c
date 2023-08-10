@@ -31,7 +31,7 @@ char	*ft_strjoin(int size, char **strs, char *sep)
 	while (++i < size)
 		total_length += ft_strlen(strs[i]);
 	total_length += sep_len * (size - 1) + 1;
-	if (!size)
+	if (size)
 		result = (char *) malloc(total_length);
 	else
 		result = (char *) malloc(1);
@@ -64,28 +64,30 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 
 	dest_length = 0;
 	src_length = 0;
-	while (dest[dest_length])
+	while (dest[dest_length] && dest_length < size)
 		dest_length++;
 	while (src[src_length])
 		src_length++;
 	i = 0;
-	while (src[i] != '\0' && dest_length + 1 < size)
+	if (dest_length < size)
 	{
-		dest[dest_length] = src[i];
-		dest_length++;
-		i++;
+		while (src[i] != '\0' && dest_length + i + 1 < size)
+		{
+			dest[dest_length + i] = src[i];
+			i++;
+		}
+		dest[dest_length + i] = '\0';
 	}
-	dest[dest_length] = '\0';
-	if (size < dest_length)
-		return (src_length + size);
-	return (dest_length);
+	return (dest_length + src_length);
 }
 
 /*
 int	main(void)
 {
 	char *src[3] = {"hello", "world", "howdy"};
-	char *str = ft_strjoin(3, src, ", ");
-	printf("%s\n", str);
+	char *str = ft_strjoin(0, src, ", ");
+	if (str)
+		printf("%s\n", str);
+	free(str);
 }
 */
