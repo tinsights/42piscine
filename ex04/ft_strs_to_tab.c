@@ -17,16 +17,6 @@ char				*ft_strdup(char *src);
 int					ft_strlen(char *str);
 struct s_stock_str	*ft_strs_to_tab(int ac, char **av);
 
-/*
-int main (void)
-{
-	char	*av[3] = {"hello", "world", "howdy"};
-	t_stock_str *result = ft_strs_to_tab(3, av);
-	for (int i = 0; i < 3; i++)
-		free(result[i].copy);
-	free(result);
-}
-*/
 struct s_stock_str	*ft_strs_to_tab(int ac, char **av)
 {
 	t_stock_str	*result;
@@ -40,7 +30,7 @@ struct s_stock_str	*ft_strs_to_tab(int ac, char **av)
 	while (++i < ac)
 	{
 		result[i].size = ft_strlen(av[i]);
-		result[i].str = *av + i;
+		result[i].str = *(av + i);
 		result[i].copy = ft_strdup(av[i]);
 	}
 	return (result);
@@ -71,3 +61,60 @@ int	ft_strlen(char *str)
 		length++;
 	return (length);
 }
+
+/*
+#include <unistd.h>
+void	ft_putstr(char *str)
+{
+	while (*str)
+		write(1, str++, 1);
+}
+
+void	ft_putnbr(int nb)
+{
+	int		count;
+	char	digit[10];
+
+	if (nb < 0)
+	{
+		write(1, "-", 1);
+		if (nb == -2147483648)
+			write(1, "2147483648", 10);
+		nb *= -1;
+	}
+	if (nb == 0)
+		write(1, "0", 1);
+	count = 0;
+	while (nb > 0)
+	{
+		digit[9 - count] = nb % 10 + 48;
+		nb /= 10;
+		count++;
+	}
+	write(1, digit + 10 - count, count);
+}
+
+void	ft_show_tab(struct s_stock_str *par)
+{
+	while (par->str)
+	{
+		ft_putstr(par->str);
+		write(1, "\n", 1);
+		ft_putnbr(par->size);
+		write(1, "\n", 1);
+		ft_putstr(par->copy);
+		write(1, "\n", 1);
+		par++;
+	}
+}
+
+int main (void)
+{
+	char	*av[3] = {"hello", "world", "howdy"};
+	t_stock_str *result = ft_strs_to_tab(3, av);
+	ft_show_tab(result);
+	for (int i = 0; i < 3; i++)
+		free(result[i].copy);
+	free(result);
+}
+*/
