@@ -15,63 +15,123 @@
 
 
 int		ft_strlen(char *str);
-char	**count_separators(char *str, char *charset, int str_len, int num_sep);
+int		count_separators(char *str, char *charset);
+int		char_in_charset(char c, char *charset);
+
+
+char	*ft_strdup(char *src, int i)
+{
+	int		idx;
+	char	*copy;
+
+	copy = malloc(i + 1);
+	idx = -1;
+	while(++idx < i)
+		copy[idx] = src[idx];
+	copy[i] = 0;
+	return (copy);
+}
 
 char	**ft_split(char *str, char *charset)
 {
 	char	**result;
+	int		count;
+	int		flag;
+	int		i;
+	int		j;
 
-	result = count_separators(str, charset, ft_strlen(str), ft_strlen(charset));
+	if (!ft_strlen(str))
+		return (0);
+	// else if (!num_sep)
+	// {
+	// 	result = malloc(sizeof(char *) * 2);
+	// 	result[0] = ft_strdup(str);
+	// 	result[1] = 0;
+	// }
+	count = count_separators(str, charset);
+	result = malloc(sizeof(char *) * (count + 1));
+	result[count] = 0;
+
+	// skip any characters in sep
+	// by moving poiner
+	// if we see a non-sep character
+	// increase index till we see a sep character
+	// duplicate string via malloc and add it to result
+	// increment count
+	i = 0;
+	while (i < count)
+	{
+		while (*str)
+		{
+			if (char_in_charset(*str, charset))
+				str++;
+			else
+			{
+				j = 1;
+				while (!char_in_charset(str[j], charset))
+					j++;
+				result[i] = ft_strdup(str, j);
+				i++;
+				str += j;
+			}
+		}
+	}
 	return (result);
 }
 
-char **count_separators(char *str, char *charset, int str_len, int num_sep)
+int	count_separators(char *str, char *charset)
 {
-	int count;
-	int	i;
-	int	j;
-	int	k;
-	int	flag;
+	int 	count;
+	int		flag;
 
 	count = 1;
 	flag = 0;
-
 	while (*str)
 	{
-		if (flag  && *(str + 1))
+		if (flag && char_in_charset(*str, charset))
 		{
-			i = -1;
-			while (++i < num_sep)
-			{
-				if (*str == charset[i])
-				{
-					count++;
-					flag = 0;
-				}
-			}
+			count++;
+			flag = 0;
 		}
 		else
-		{
-			flag = 1;
-			i = -1;
-			while (++i < num_sep)
-			{
-				if (*str == charset[i])
-				{
-					flag = 0;
-				}
-			}
-		}
+			flag = !(char_in_charset(*str, charset));
+		if (!flag && !*(str+1))
+			count--;
 		str++;
 	}
-
 	printf("%i\n", count);
-	return (malloc(sizeof(char *) * count));
+	return (count);
+}
+
+int	char_in_charset(char c, char *charset)
+{
+	int	num_sep;
+	int	i;
+
+	num_sep = ft_strlen(charset);
+	i = -1;
+	while (++i < num_sep)
+		if (c == charset[i])
+			return (1);
+	return (0);
 }
 
 int	main(void)
 {
-	char **str = ft_split("h!e", ":!$");
+	char **str;
+	int i;
+
+	str = ft_split("!!!h:el:lo!!!", ":!$");
+	if (!str)
+		printf("null\n");
+	i = 0;
+	while (str[i])
+	{
+		printf("%s, ", str[i]);
+		free(str[i]);
+		i++;
+	}
+	printf("\n");
 	free(str);
 }
 
@@ -84,54 +144,4 @@ int	ft_strlen(char *str)
 	while (str[length])
 		length++;
 	return (length);
-}
-
-unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
-{
-	unsigned int	i;
-	unsigned int	dest_length;
-	unsigned int	src_length;
-
-	dest_length = 0;
-	src_length = 0;
-	while (dest[dest_length] && dest_length < size)
-		dest_length++;
-	while (src[src_length])
-		src_length++;
-	i = 0;
-	if (dest_length < size)
-	{
-		while (src[i] != '\0' && dest_length + i + 1 < size)
-		{
-			dest[dest_length + i] = src[i];
-			i++;
-		}
-		dest[dest_length + i] = '\0';
-	}
-	return (dest_length + src_length);
-}
-
-char	*ft_strstr(char *str, char *to_find)
-{
-	int	i;
-
-	if (!(*to_find))
-		return (str);
-	while (*str)
-	{
-		if (*str == *to_find)
-		{
-			i = 0;
-			while (to_find[i] && str[i])
-			{
-				if (str[i] != to_find[i])
-					break ;
-				i++;
-			}
-			if (to_find[i] == '\0')
-				return (str);
-		}
-		str++;
-	}
-	return (0);
 }
