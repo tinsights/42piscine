@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 
 unsigned int	ft_strlcat(char *dest, char *src, unsigned int size);
@@ -27,14 +26,10 @@ char	*ft_strjoin(int size, char **strs, char *sep)
 
 	sep_len = ft_strlen(sep);
 	i = -1;
-	total_length = 0;
+	total_length = 1;
 	while (++i < size)
-		total_length += ft_strlen(strs[i]);
-	total_length += sep_len * (size - 1) + 1;
-	if (size)
-		result = (char *) malloc(total_length);
-	else
-		result = (char *) malloc(1);
+		total_length += ft_strlen(strs[i]) + (i != size -1) * sep_len;
+	result = malloc(total_length);
 	result[0] = '\0';
 	i = -1;
 	while (++i < size)
@@ -82,6 +77,8 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 }
 
 /*
+#include <stdio.h>
+
 int	main(void)
 {
 	char *src[3] = {"hello", "world", "howdy"};

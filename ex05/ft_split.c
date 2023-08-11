@@ -25,7 +25,7 @@ int	main(void)
 	char **str;
 	int i;
 
-	str = ft_split("!$h:!$el!:$lo!$", ":!$");
+	str = ft_split("asd", "");
 	if (!str)
 		printf("null\n");
 	i = 0;
@@ -39,6 +39,7 @@ int	main(void)
 	free(str);
 }
 */
+
 char	**ft_split(char *str, char *charset)
 {
 	char	**result;
@@ -46,18 +47,17 @@ char	**ft_split(char *str, char *charset)
 	int		i;
 	int		j;
 
-	if (!ft_strlen(str))
-		return (0);
 	count = count_separators(str, charset);
-	result = malloc(sizeof(char *) * (count + 1));
+	printf("%i\n", count);
+	result = malloc(sizeof(char *) * (count + (count > 1)));
 	result[count] = 0;
 	i = 0;
-	while (*str && i < count)
+	while (i < count && *str)
 	{
-		while (char_in_charset(*str, charset))
+		while (*str && char_in_charset(*str, charset))
 			str++;
 		j = 1;
-		while (!char_in_charset(str[j], charset))
+		while (str[j] && !char_in_charset(str[j], charset))
 			j++;
 		result[i] = ft_strdup(str, j);
 		i++;
@@ -82,7 +82,7 @@ int	count_separators(char *str, char *charset)
 		}
 		else
 			flag = !(char_in_charset(*str, charset));
-		if (!flag && !*(str + 1))
+		if (!flag && !*(str + 1) && (count > 1))
 			count--;
 		str++;
 	}
