@@ -42,6 +42,11 @@ int	main(int argc, char **argv)
 
 void not_sure_what_to_call_this(char *input, int len)
 {
+	while (*input == '0' && len > 1)
+	{
+		input++;
+		len--;
+	}
 	if ((len < 2)
 		|| (len < 3 && input[0] == '1')
 		|| (len < 3 && input[1] == '0'))
