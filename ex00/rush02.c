@@ -18,6 +18,7 @@ int ft_strlen(char *str);
 int	find_and_print(char *input, int len);
 int multiple_of_ten_pow(char *str);
 void not_sure_what_to_call_this(char *input, int len);
+int ft_isnumeric(char c);
 
 #include <stdio.h>
 
@@ -60,6 +61,7 @@ void not_sure_what_to_call_this(char *input, int len)
 		tens[0] = input[0];
 		tens[1] = '0';
 		find_and_print(tens, 2);
+		write(1, " ", 1);
 		find_and_print(single, 1);
 
 		free(single);
@@ -76,11 +78,15 @@ void not_sure_what_to_call_this(char *input, int len)
 		single[0] = input[0];
 		hundreds[0] = '1';
 		find_and_print(single, 1);
+		write(1, " ", 1);
 		find_and_print(hundreds, len);
 		free(single);
 		free(hundreds);
 		if (!multiple_of_ten_pow(input))
+		{
+			write(1, " ", 1);
 			not_sure_what_to_call_this(input + 1, len - 1);
+		}
 	}
 	else
 	{
@@ -98,11 +104,15 @@ void not_sure_what_to_call_this(char *input, int len)
 			thous[i] = '0';
 
 		not_sure_what_to_call_this(hundreds, bytes_to_print);
+		write(1, " ", 1);
 		find_and_print(thous, len - bytes_to_print + 1);
 		free(hundreds);
 		free(thous);
 		if (!multiple_of_ten_pow(input + bytes_to_print - 1))
+		{
+			write(1, " ", 1);
 			not_sure_what_to_call_this(input + bytes_to_print, len - bytes_to_print);
+		}
 	}
 }
 
@@ -131,17 +141,46 @@ int	find_and_print(char *input, int len)
 
 	while (read(fd, buff, 1))
 	{
+		// if len == 1
+		// the first number we see
+		// must be the number we are lookin for
+		// otherwise, forget about it
+		if (len == 1 && ft_isnumeric(*buff) && *buff != input[i])
+			while(read(fd, buff, 1) && *buff !='\n');
 		if (input[i] && *buff == input[i])
 		{
 			i++;
 			if (i == len)
 			{
-				while(read(fd, buff, 1) && *buff != '\n')
-					if (!(*buff == ':' || *buff ==' '))
-						write(1, buff, 1);
-				write(1, "\n", 1);
-				found = 1;
-				break;
+				// read the next byte, it can be a space or a ':'
+				// but not a number
+				read(fd, buff, 1);
+				if (ft_isnumeric(*buff))
+					i = 0;
+				else
+				{
+					// lets get to the ':'
+					while(*buff != ':' && read(fd, buff, 1))
+						continue ;
+					while(read(fd, buff, 1) && *buff ==  ' ')
+						continue ;
+					write(1, buff, 1);
+					int spacecounter = 0;
+					while(read(fd, buff, 1) && *buff != '\n')
+					{
+						if (*buff == ' ')
+							spacecounter++;
+						else
+						{
+							if (!spacecounter)
+								while(spacecounter-- > 0)
+									write(1, " ", 1);
+							write(1, buff, 1);
+						}
+					}
+					found = 1;
+					break;
+				}
 			}
 		}
 		else
@@ -152,6 +191,11 @@ int	find_and_print(char *input, int len)
 		write(1, "not found\n", 9);
 	free(buff);
 	return (0);
+}
+
+int ft_isnumeric(char c)
+{
+	return (c >=48 && c <= 57);
 }
 
 int ft_strlen(char *str)
