@@ -15,7 +15,8 @@
 #include <stdlib.h>
 
 int ft_strlen(char *str);
-int	find_and_print(char *input, int len);
+void	find_and_print(char *input, int len);
+int	find(char *input, int len);
 int multiple_of_ten_pow(char *str);
 void not_sure_what_to_call_this(char *input, int len);
 int ft_isnumeric(char c);
@@ -40,6 +41,14 @@ int	main(int argc, char **argv)
 	not_sure_what_to_call_this(input, len);
 }
 
+// TODO:
+// WRITE A RECURSIVE FIND FUNCTION
+// THAT TAKES IN THE SAME INPUT, LEN
+// CHECKS TAHT ALL THE REQUIRED KEYS EXITS IN THE DICT
+// RETUNRS 1 IF FINE,
+// IF ANY OF THE KEYS ARE MISSING,
+// RETURNS 0, THEN NO PRINTING OCCURS,
+// ONLY ERROR MESSAGE
 
 void not_sure_what_to_call_this(char *input, int len)
 {
@@ -51,7 +60,16 @@ void not_sure_what_to_call_this(char *input, int len)
 	if ((len < 2)
 		|| (len < 3 && input[0] == '1')
 		|| (len < 3 && input[1] == '0'))
-		find_and_print(input, len);
+	{
+		if (find(input, len))
+			find_and_print(input, len);
+		else
+		{
+			write(1, "Dict Error\n", 11);
+			return ;
+		}
+
+	}
 	else if (len < 3)
 	{
 		char *single = malloc(1);
@@ -60,27 +78,39 @@ void not_sure_what_to_call_this(char *input, int len)
 		single[0] = input[1];
 		tens[0] = input[0];
 		tens[1] = '0';
-		find_and_print(tens, 2);
-		write(1, " ", 1);
-		find_and_print(single, 1);
-
-		free(single);
+		if (find(tens, 2) && find(single, 1))
+		{
+			find_and_print(tens, 2);
+			write(1, " ", 1);
+			find_and_print(single, 1);
+			free(single);
 		free(tens);
+		}
+		else
+		{
+			write(1, "Dict Error\n", 11);
+			free(single);
+			free(tens);
+			return ;
+		}
 	}
 	else if (len < 4)
 	{
-		char *single = malloc(1);
+		char *multiple = malloc(1);
 		char *hundreds = malloc(len);
 
+		multiple[0] = input[0];
+		hundreds[0] = '1';
+		// this can only be hundreds,
+		// i only need to print the multiple of
+		// and then print "hundreds"
 		for (int i = 1; i <= len; i++)
 			hundreds[i] = '0';
 
-		single[0] = input[0];
-		hundreds[0] = '1';
-		find_and_print(single, 1);
+		find_and_print(multiple, 1);
 		write(1, " ", 1);
 		find_and_print(hundreds, len);
-		free(single);
+		free(multiple);
 		free(hundreds);
 		if (!multiple_of_ten_pow(input))
 		{
@@ -131,11 +161,10 @@ int multiple_of_ten_pow(char *str)
 }
 
 
-int	find_and_print(char *input, int len)
+void	find_and_print(char *input, int len)
 {
 	int fd = open("numbers.dict", O_RDONLY);
 	int i = 0;
-	int found = 0;
 	char	*buff = malloc(1);
 
 
@@ -178,7 +207,6 @@ int	find_and_print(char *input, int len)
 							write(1, buff, 1);
 						}
 					}
-					found = 1;
 					break;
 				}
 			}
@@ -187,8 +215,45 @@ int	find_and_print(char *input, int len)
 			i = 0;
 	}
 	close(fd);
-	if (!found)
-		write(1, "not found\n", 9);
+	free(buff);
+}
+
+
+int	find(char *input, int len)
+{
+	int fd = open("numbers.dict", O_RDONLY);
+	int i = 0;
+	char	*buff = malloc(1);
+
+
+	while (read(fd, buff, 1))
+	{
+		// if len == 1
+		// the first number we see
+		// must be the number we are lookin for
+		// otherwise, forget about it
+		if (len == 1 && ft_isnumeric(*buff) && *buff != input[i])
+			while(read(fd, buff, 1) && *buff !='\n');
+		if (input[i] && *buff == input[i])
+		{
+			i++;
+			if (i == len)
+			{
+				// read the next byte, it can be a space or a ':'
+				// but not a number
+				read(fd, buff, 1);
+				if (ft_isnumeric(*buff))
+					i = 0;
+				else
+				{
+					return (1);
+				}
+			}
+		}
+		else
+			i = 0;
+	}
+	close(fd);
 	free(buff);
 	return (0);
 }
