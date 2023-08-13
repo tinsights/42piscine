@@ -20,8 +20,8 @@
 int		ft_strlen(char *str);
 int		check_all_keys(char *dict, char *input, int len);
 int		check_if_key_exists(char *dict, char *input, int len);
-void 	print_words(char *dict, char *input, int len);
-void 	print_line(char *dict, char *input, int len);
+void	print_words(char *dict, char *input, int len);
+void	print_line(char *dict, char *input, int len);
 int		pow_ten(char *str, int len);
 int		ft_isnumeric(char c);
 
