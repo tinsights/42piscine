@@ -12,11 +12,10 @@
 
 #include "rush02.h"
 
-int pow_ten(char *str, int len)
+int	pow_ten(char *str, int len)
 {
 	int	i;
 
-	// printf("%s\n", str);
 	i = 1;
 	while (i < len)
 	{
@@ -27,12 +26,12 @@ int pow_ten(char *str, int len)
 	return (1);
 }
 
-int ft_isnumeric(char c)
+int	ft_isnumeric(char c)
 {
-	return (c >=48 && c <= 57);
+	return (c >= 48 && c <= 57);
 }
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
 	int	length;
 
@@ -46,4 +45,3 @@ int ft_strlen(char *str)
 	}
 	return (length);
 }
-
