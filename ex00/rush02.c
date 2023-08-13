@@ -12,8 +12,6 @@
 
 #include "rush02.h"
 
-char	*valid_dict(int argc, char **argv);
-
 int	main(int argc, char **argv)
 {
 	int		len;

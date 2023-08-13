@@ -14,8 +14,11 @@
 
 int	check_all_keys(char *dict, char *input, int len)
 {
-	while (*input == '0' && len-- > 2)
+	while (*input == '0' && len > 1)
+	{
 		input++;
+		len--;
+	}
 	if ((len < 2)
 		|| (len < 3 && input[0] == '1')
 		|| (len < 3 && input[1] == '0'))

@@ -17,6 +17,11 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
+/** MUST TAKE OUT 
+*/
+#include <stdio.h>
+
+
 int		num_len(char *str);
 int		check_all_keys(char *dict, char *input, int len);
 int		check_key(char *dict, char *input, int len);
@@ -26,6 +31,7 @@ int		pow_ten(char *str, int len);
 int		ft_isnumeric(char c);
 char	*clean_num(char *str, int len);
 int		valid_input(char *str);
+char	*valid_dict(int argc, char **argv);
 void	skip(int fd, char *buff);
 int		exact_num_found(int fd, char *buff);
 int		check_tens(char *dict, char *input);
