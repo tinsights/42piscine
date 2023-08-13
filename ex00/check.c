@@ -69,7 +69,7 @@ int	check_thousands(char *dict, char *input, int len)
 		thous[idx] = '0';
 	if (check_key(dict, thous, len - printed + 1)
 		&& check_all_keys(dict, hundreds, printed))
-		return (recurse_thousands(dict, input + printed, len - printed));
+		result = recurse_thousands(dict, input + printed, len - printed);
 	free(hundreds);
 	free(thous);
 	return (result);
