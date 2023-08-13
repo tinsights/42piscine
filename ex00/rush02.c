@@ -64,22 +64,20 @@ int	main(int argc, char **argv)
 
 void print_words(char *input, int len)
 {
-
-	int flag = 0;
+	int zerocount = 0;
 	while (*input == '0' && len > 1)
-	{
-		flag = 1;
+	{	
+		zerocount++;
 		input++;
 		len--;
 	}
+	if (zerocount > 1)
+		write(1, "and ", 4);
+
 	if ((len < 2)
 		|| (len < 3 && input[0] == '1')
 		|| (len < 3 && input[1] == '0'))
-	{
-		if (flag)
-			write(1, "and ", 4);
 		print_line(input, len);
-	}
 	else if (len < 3)
 	{
 		char *single = malloc(1);
