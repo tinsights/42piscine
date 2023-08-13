@@ -12,6 +12,9 @@
 
 #include "rush02.h"
 
+void	skip(int fd, char *buff);
+int	exact_num_found(int fd, char *buff);
+
 int check_all_keys(char* dict, char *input, int len)
 {
 	while (*input == '0' && len > 1)
@@ -97,58 +100,60 @@ int check_all_keys(char* dict, char *input, int len)
 
 int	check_if_key_exists(char* dict, char *input, int len)
 {
-	int fd = open(dict, O_RDONLY);
-	int i = 0;
+	int 	fd;
+	int 	i;
 	char	*buff = malloc(1);
-	int 	flag = 0;
+	int 	flag;
 
+	fd = open(dict, O_RDONLY);
+	i = 0;
+	flag = 0;
 	while (read(fd, buff, 1))
 	{
 		if (!flag)
-		{
-			// skip all leading whitespace
-			while(*buff == ' ')
-				read(fd, buff, 1);
-			// skip if minus sign
-			if (*buff == '-')
-				while(*buff != '\n')
-					read(fd, buff, 1);
-			// if its a plus sign
-			// next byte needs to be a number
-			// if it is not a number, skip whole line
-			if (*buff == '+')
-				if (read(fd, buff, 1) && !ft_isnumeric(*buff))
-					while(*buff != '\n')
-						read(fd, buff, 1);
-			// if it is a 0
-			// skip all leading 0s,
-			while (*buff == '0')
-				read(fd, buff, 1);
-			// if we hit a ':'
-		}
+			skip(fd, buff);
 		if (input[i] == '0' && len == 1 && (*buff == ' ' || *buff == ':'))
 			return (1);
-		// this is to make sure "1" doesnt trigger the line "10"
 		if (len == 1 && ft_isnumeric(*buff) && *buff != input[i])
 			while(read(fd, buff, 1) && *buff !='\n');
 		if (input[i] && *buff == input[i])
 		{
 			flag = 1;
-			i++;
-			if (i == len)
-			{
-
-				read(fd, buff, 1);
-				if (ft_isnumeric(*buff))
-					i = 0;
-				else
-					return (1);
-			}
+			if (++i == len && exact_num_found(fd, buff))
+				return (1);
 		}
 		else
+		{
+			flag = 0;
 			i = 0;
+		}
 	}
 	close(fd);
 	free(buff);
 	return (0);
+}
+
+
+void	skip(int fd, char *buff)
+{
+	while(*buff == ' ')
+		read(fd, buff, 1);
+	if (*buff == '-')
+		while(*buff != '\n')
+			read(fd, buff, 1);
+	if (*buff == '+')
+		if (read(fd, buff, 1) && !ft_isnumeric(*buff))
+			while(*buff != '\n')
+				read(fd, buff, 1);
+	while (*buff == '0')
+		read(fd, buff, 1);
+}
+
+int	exact_num_found(int fd, char *buff)
+{
+	read(fd, buff, 1);
+	if (ft_isnumeric(*buff))
+		return (0);
+	else
+		return (1);
 }

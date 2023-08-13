@@ -12,6 +12,8 @@
 
 #include "rush02.h"
 
+void	skip(int fd, char *buff);
+
 void print_words(char* dict, char *input, int len)
 {
 	int zerocount = 0;
@@ -93,12 +95,14 @@ void print_words(char* dict, char *input, int len)
 
 void	print_line(char* dict, char *input, int len)
 {
-	int fd = open(dict, O_RDONLY);
-	int i = 0;
+	int 	fd;
+	int 	i;
 	char	*buff = malloc(1);
-	int 	flag = 0;
+	int 	flag;
 
-
+	fd = open(dict, O_RDONLY);
+	i = 0;
+	flag = 0;
 	while (read(fd, buff, 1))
 	{
 		if (!flag)
@@ -194,7 +198,10 @@ void	print_line(char* dict, char *input, int len)
 			}
 		}
 		else
+		{
 			i = 0;
+			flag = 0;
+		}
 	}
 	close(fd);
 	free(buff);
