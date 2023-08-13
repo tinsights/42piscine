@@ -12,138 +12,61 @@
 
 #include "rush02.h"
 
-void	skip(int fd, char *buff);
-int	exact_num_found(int fd, char *buff);
-
-int check_all_keys(char* dict, char *input, int len)
+int	check_all_keys(char *dict, char *input, int len)
 {
-	while (*input == '0' && len > 1)
-	{
+	while (*input == '0' && len-- > 2)
 		input++;
-		len--;
-	}
 	if ((len < 2)
 		|| (len < 3 && input[0] == '1')
 		|| (len < 3 && input[1] == '0'))
-			return check_if_key_exists(dict, input, len);
+		return (check_key(dict, input, len));
 	else if (len < 3)
-	{
-		char *single = malloc(1);
-		char *tens = malloc(2);
-
-		single[0] = input[1];
-		tens[0] = input[0];
-		tens[1] = '0';
-
-		if (check_if_key_exists(dict, tens, 2)
-		 	&& check_if_key_exists(dict, single, 1))
-		{
-			free(single);
-			free(tens);
-			return (1);
-		}
-		else
-		{
-			free(single);
-			free(tens);
-			return (0);
-		}
-	}
+		return (check_tens(dict, input));
 	else if (len < 4)
-	{
-		char *multiple = malloc(1);
-		char *hundreds = malloc(len);
-
-		multiple[0] = input[0];
-		hundreds[0] = '1';
-		// this can only be hundreds,
-		// i only need to print the multiple of
-		// and then print "hundreds"
-		for (int i = 1; i <= len; i++)
-			hundreds[i] = '0';
-
-		if (check_if_key_exists(dict, multiple, 1) && check_if_key_exists(dict, hundreds, len))
-		{
-			free(multiple);
-			free(hundreds);
-			if (!pow_ten(input, len))
-				return check_all_keys(dict, input + 1, len - 1);
-			else
-				return (1);
-		}
-	}
+		return (check_hundreds(dict, input, len));
 	else
-	{
-		int bytes_to_print = (len - 1) % 3 + 1;
-		char *thous = malloc(len - bytes_to_print);
-		char *hundreds = malloc(bytes_to_print);
-		for (int i = 0; i < bytes_to_print; i++)
-			hundreds[i] = input[i];
-		thous[0] = '1';
-		for (int i = 1; i <= len - bytes_to_print; i ++)
-			thous[i] = '0';
-
-		if (check_if_key_exists(dict, thous, len - bytes_to_print + 1)
-			&& check_all_keys(dict, hundreds, bytes_to_print))
-		{
-			free(hundreds);
-			free(thous);
-			if (!pow_ten(input + bytes_to_print - 1, len - bytes_to_print + 1))
-				return check_all_keys(dict, input + bytes_to_print, len - bytes_to_print);
-			else
-				return (1);
-		}
-	}
-	// should this line ever be hit?
+		return (check_thousands(dict, input, len));
 	return (0);
 }
 
-int	check_if_key_exists(char* dict, char *input, int len)
+int	check_key(char *dict, char *input, int len)
 {
-	int 	fd;
-	int 	i;
-	char	*buff = malloc(1);
-	int 	flag;
+	int		fd;
+	int		i;
+	char	buff[1];
 
 	fd = open(dict, O_RDONLY);
 	i = 0;
-	flag = 0;
 	while (read(fd, buff, 1))
 	{
-		if (!flag)
-			skip(fd, buff);
+		i = 0;
+		skip(fd, buff);
 		if (input[i] == '0' && len == 1 && (*buff == ' ' || *buff == ':'))
 			return (1);
 		if (len == 1 && ft_isnumeric(*buff) && *buff != input[i])
-			while(read(fd, buff, 1) && *buff !='\n');
-		if (input[i] && *buff == input[i])
+			while (read(fd, buff, 1) && *buff != '\n')
+				continue ;
+		while (input[i] && *buff == input[i])
 		{
-			flag = 1;
+			read(fd, buff, 1);
 			if (++i == len && exact_num_found(fd, buff))
 				return (1);
 		}
-		else
-		{
-			flag = 0;
-			i = 0;
-		}
 	}
 	close(fd);
-	free(buff);
 	return (0);
 }
 
-
 void	skip(int fd, char *buff)
 {
-	while(*buff == ' ')
+	while (*buff == ' ')
 		read(fd, buff, 1);
 	if (*buff == '-')
-		while(*buff != '\n')
+		while (*buff != '\n')
 			read(fd, buff, 1);
 	if (*buff == '+')
 		if (read(fd, buff, 1) && !ft_isnumeric(*buff))
-			while(*buff != '\n')
+			while (*buff != '\n')
 				read(fd, buff, 1);
 	while (*buff == '0')
 		read(fd, buff, 1);
