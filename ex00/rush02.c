@@ -35,11 +35,15 @@ int	main(int argc, char **argv)
 		return (-1);
 	}
 	dict = "numbers.dict";
-	input = argv[1];
+	input = argv[argc - 1];
 	if (argc ==  3)
-	{
 		dict = argv[1];
-		input = argv[2];
+	int fd = open(dict, O_RDONLY);
+	if (fd == -1)
+	{
+		write(1, "Dict Error\n", 11);
+		close(fd);
+		return (-1);
 	}
 	len = ft_strlen(input);
 	if (!len)
