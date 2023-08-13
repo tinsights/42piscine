@@ -11,14 +11,20 @@ OBJECTS = $(SOURCES:.c=.o)
 
 CFLAGS += -Wall -Wextra -Werror
 
+all: $(NAME) 
+
 $(NAME): $(OBJECTS)
 	cc -o $(NAME) $(OBJECTS)
 
 $(OBJECTS): $(SOURCES)
 	cc -c $(SOURCES)
 
-clean: $(OBJECTS)
+clean:
 	rm -f $(OBJECTS)
 
 fclean: clean
 	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
