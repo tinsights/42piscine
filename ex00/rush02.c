@@ -21,15 +21,17 @@ int	main(int argc, char **argv)
 	char	*dict;
 
 	dict = valid_dict(argc, argv);
+	len = 0;
 	if (dict)
 	{
 		input = argv[argc - 1];
-		len = ft_strlen(input);
+		if (valid_input(input))
+			len = num_len(input);
 		if (!len)
 			write(1, "Error", 5);
-		else if (check_all_keys(dict, input, len))
+		else if (check_all_keys(dict, clean_num(input, len), len))
 			// write(1, "Valid Dict", 10);
-			print_words(dict, input, len);
+			print_words(dict, clean_num(input, len), len);
 		else
 			write(1, "Dict Error", 10);
 	}
