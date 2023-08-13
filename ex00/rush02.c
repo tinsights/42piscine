@@ -14,27 +14,34 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-int ft_strlen(char *str);
-void	find_and_print(char *input, int len);
-int	find(char *input, int len);
-int multiple_of_ten_pow(char *str);
-void print_words(char *input, int len);
-int ft_isnumeric(char c);
-int check_all_keys(char *input, int len);
-int	check_if_key_exists(char *input, int len);
+int		ft_strlen(char *str);
+int		check_all_keys(char *input, int len);
+int		check_if_key_exists(char *input, int len);
+void 	print_words(char *input, int len);
+void 	print_line(char *input, int len);
+int		pow_ten(char *str, int len);
+int		ft_isnumeric(char c);
 
 #include <stdio.h>
 
 int	main(int argc, char **argv)
 {
-	if (argc != 2)
+	char	*input;
+	char	*dict;
+	int		len;
+	if (argc != 2 && argc != 3)
 	{
 		write(1, "Error\n", 6);
 		return (-1);
 	}
-
-	char	*input = argv[1];
-	int		len = ft_strlen(input);
+	dict = "numbers.dict";
+	input = argv[1];
+	if (argc ==  3)
+	{
+		dict = argv[1];
+		input = argv[2];
+	}
+	len = ft_strlen(input);
 	if (!len)
 	{
 		write(1, "Error\n", 6);
@@ -57,15 +64,22 @@ int	main(int argc, char **argv)
 
 void print_words(char *input, int len)
 {
+
+	int flag = 0;
 	while (*input == '0' && len > 1)
 	{
+		flag = 1;
 		input++;
 		len--;
 	}
 	if ((len < 2)
 		|| (len < 3 && input[0] == '1')
 		|| (len < 3 && input[1] == '0'))
-			find_and_print(input, len);
+	{
+		if (flag)
+			write(1, "and ", 4);
+		print_line(input, len);
+	}
 	else if (len < 3)
 	{
 		char *single = malloc(1);
@@ -75,9 +89,9 @@ void print_words(char *input, int len)
 		tens[0] = input[0];
 		tens[1] = '0';
 
-		find_and_print(tens, 2);
-		write(1, " ", 1);
-		find_and_print(single, 1);
+		print_line(tens, 2);
+		write(1, "-", 1);
+		print_line(single, 1);
 		free(single);
 		free(tens);
 	}
@@ -94,14 +108,14 @@ void print_words(char *input, int len)
 		for (int i = 1; i <= len; i++)
 			hundreds[i] = '0';
 
-		find_and_print(multiple, 1);
+		print_line(multiple, 1);
 		write(1, " ", 1);
-		find_and_print(hundreds, len);
+		print_line(hundreds, len);
 		free(multiple);
 		free(hundreds);
-		if (!multiple_of_ten_pow(input))
+		if (!pow_ten(input, len))
 		{
-			write(1, " ", 1);
+			write(1, " and ", 5);
 			print_words(input + 1, len - 1);
 		}
 	}
@@ -118,23 +132,24 @@ void print_words(char *input, int len)
 
 		print_words(hundreds, bytes_to_print);
 		write(1, " ", 1);
-		find_and_print(thous, len - bytes_to_print + 1);
+		print_line(thous, len - bytes_to_print + 1);
 		free(hundreds);
 		free(thous);
-		if (!multiple_of_ten_pow(input + bytes_to_print - 1))
+		if (!pow_ten(input + bytes_to_print - 1, len - bytes_to_print + 1))
 		{
-			write(1, " ", 1);
+			write(1, ", ", 2);
 			print_words(input + bytes_to_print, len - bytes_to_print);
 		}
 	}
 }
 
-int multiple_of_ten_pow(char *str)
+int pow_ten(char *str, int len)
 {
 	int	i;
 
+	// printf("%s\n", str);
 	i = 1;
-	while (str[i])
+	while (i < len)
 	{
 		if (str[i] != '0')
 			return (0);
@@ -144,7 +159,7 @@ int multiple_of_ten_pow(char *str)
 }
 
 
-void	find_and_print(char *input, int len)
+void	print_line(char *input, int len)
 {
 	int fd = open("numbers.dict", O_RDONLY);
 	int i = 0;
@@ -253,7 +268,7 @@ int check_all_keys(char *input, int len)
 		{
 			free(multiple);
 			free(hundreds);
-			if (!multiple_of_ten_pow(input))
+			if (!pow_ten(input, len))
 				return check_all_keys(input + 1, len - 1);
 			else
 				return (1);
@@ -275,7 +290,7 @@ int check_all_keys(char *input, int len)
 		{
 			free(hundreds);
 			free(thous);
-			if (!multiple_of_ten_pow(input + bytes_to_print - 1))
+			if (!pow_ten(input + bytes_to_print - 1, len - bytes_to_print + 1))
 				return check_all_keys(input + bytes_to_print, len - bytes_to_print);
 			else
 				return (1);
