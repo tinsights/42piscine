@@ -17,11 +17,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-/** MUST TAKE OUT 
-*/
-#include <stdio.h>
-
-
 int		num_len(char *str);
 int		check_all_keys(char *dict, char *input, int len);
 int		check_key(char *dict, char *input, int len);
