@@ -9,15 +9,15 @@ SOURCES = rush02.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS += -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME) 
 
 $(NAME): $(OBJECTS)
-	cc -o $(NAME) $(OBJECTS)
+	cc $(CFLAGS) $(OBJECTS) -o $(NAME)
 
 $(OBJECTS): $(SOURCES)
-	cc -c $(SOURCES)
+	cc $(CFLAGS) -c $(SOURCES)
 
 clean:
 	rm -f $(OBJECTS)
