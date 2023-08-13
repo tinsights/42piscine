@@ -6,7 +6,7 @@
 /*   By: tjegades <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 11:15:44 by tjegades          #+#    #+#             */
-/*   Updated: 2023/08/13 11:15:45 by tjegades         ###   ########.fr       */
+/*   Updated: 2023/08/13 12:13:16 by zng              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,11 @@ void	print_line(char* dict, char *input, int len)
 						else
 						{
 							if (spacecounter)
-								while(spacecounter-- > 0)
+								while(spacecounter > 0)
+								{
 									write(1, " ", 1);
+									spacecounter--;
+								}
 							write(1, buff, 1);
 						}
 					}
