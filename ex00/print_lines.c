@@ -96,10 +96,58 @@ void	print_line(char* dict, char *input, int len)
 	int fd = open(dict, O_RDONLY);
 	int i = 0;
 	char	*buff = malloc(1);
+	int 	flag = 0;
 
 
 	while (read(fd, buff, 1))
 	{
+		if (!flag)
+		{
+			// skip all leading whitespace
+			while(*buff == ' ')
+				read(fd, buff, 1);
+			// skip if minus sign
+			if (*buff == '-')
+				while(*buff != '\n')
+					read(fd, buff, 1);
+			// if its a plus sign
+			// next byte needs to be a number
+			// if it is not a number, skip whole line
+			if (*buff == '+')
+				if (read(fd, buff, 1) && !ft_isnumeric(*buff))
+					while(*buff != '\n')
+						read(fd, buff, 1);
+			// if it is a 0
+			// skip all leading 0s,
+			while (*buff == '0')
+				read(fd, buff, 1);
+			// if we hit a ':'
+		}
+		if (input[i] == '0' && len == 1 && (*buff == ' ' || *buff == ':'))
+		{
+			while(*buff != ':' && read(fd, buff, 1))
+				continue ;
+			while(read(fd, buff, 1) && *buff ==  ' ')
+				continue ;
+			write(1, buff, 1);
+			int spacecounter = 0;
+			while(read(fd, buff, 1) && *buff != '\n')
+			{
+				if (*buff == ' ')
+					spacecounter++;
+				else
+				{
+					if (spacecounter)
+						while(spacecounter > 0)
+						{
+							write(1, " ", 1);
+							spacecounter--;
+						}
+					write(1, buff, 1);
+				}
+			}
+			break;
+		}
 		// if len == 1
 		// the first number we see
 		// must be the number we are lookin for
@@ -108,6 +156,7 @@ void	print_line(char* dict, char *input, int len)
 			while(read(fd, buff, 1) && *buff !='\n');
 		if (input[i] && *buff == input[i])
 		{
+			flag = 1;
 			i++;
 			if (i == len)
 			{

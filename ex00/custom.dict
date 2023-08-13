@@ -1,11 +1,11 @@
-100   :    hundred
-0: zero
+000100   :    hundred
++00000   :   zero
 60     :   sixty           
 
-1:one 124 tty                       
+1:one                    
 3:three
  
-4     :    four   
+    +0004     :    four   
 5: five
 1000000000000000000: quintillion              
 6: six
@@ -14,7 +14,7 @@
 1000000000: billion   
 30: thirty   
 
-8: eight   
+   +8: eight   
 9: nine  
 1000000000000000000000000000: octillion            
 11: eleven
@@ -30,7 +30,7 @@
 16:sixteen
 2          :   two            
 
-17: seventeen
+00017: seventeen
 18: eighteen
 19: nineteen
 20: twenty
@@ -45,7 +45,7 @@
 1000000: million
 
 1000000000000     :     trillion             
-70:seventy
+70 : seventy
 1000000000000000    :   quadrillion     
 
 10: ten

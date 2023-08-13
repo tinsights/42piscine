@@ -28,6 +28,7 @@ int	main(int argc, char **argv)
 		if (!len)
 			write(1, "Error", 5);
 		else if (check_all_keys(dict, input, len))
+			// write(1, "Valid Dict", 10);
 			print_words(dict, input, len);
 		else
 			write(1, "Dict Error", 10);
