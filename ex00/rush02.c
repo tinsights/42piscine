@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 	int		len;
 	if (argc != 2 && argc != 3)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error", 5);
 		return (-1);
 	}
 	dict = "numbers.dict";
@@ -41,20 +41,22 @@ int	main(int argc, char **argv)
 	int fd = open(dict, O_RDONLY);
 	if (fd == -1)
 	{
-		write(1, "Dict Error\n", 11);
+		write(1, "Dict Error", 10);
 		close(fd);
 		return (-1);
 	}
 	len = ft_strlen(input);
 	if (!len)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error", 5);
 		return(-1);
 	}
 	if (check_all_keys(dict, input, len))
 		print_words(dict, input, len);
 	else
-		write(1, "Dict Error\n", 11);
+		write(1, "Dict Error", 10);
+	write(1, "\n", 1);
+	return (0);
 }
 
 // TODO:
