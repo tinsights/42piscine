@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "rush02.h"
-#include <stdio.h>
 
 int check_all_keys(char* dict, char *input, int len)
 {
@@ -151,6 +150,5 @@ int	check_if_key_exists(char* dict, char *input, int len)
 	}
 	close(fd);
 	free(buff);
-	printf("%s is invalid key\n", input);
 	return (0);
 }

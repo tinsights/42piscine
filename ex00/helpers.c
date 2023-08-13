@@ -80,13 +80,15 @@ int valid_input(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_isnumeric(str[i]) && str[i] != ' ')
+		if (!ft_isnumeric(str[i]) && (str[i] != ' ' && str[i] != '+'))
 			return (0);
 		i++;
 	}
 	i = 0;
 	while (str[i] == ' ')
 		i++;
+	if (str[i] == '+')
+		str++;
 	if (!str[i])
 		return (0);
 	while (ft_isnumeric(str[i]))

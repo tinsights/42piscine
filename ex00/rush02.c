@@ -26,14 +26,19 @@ int	main(int argc, char **argv)
 	{
 		input = argv[argc - 1];
 		if (valid_input(input))
+		{
 			len = num_len(input);
-		if (!len)
-			write(1, "Error", 5);
-		else if (check_all_keys(dict, clean_num(input, len), len))
-			// write(1, "Valid Dict", 10);
-			print_words(dict, clean_num(input, len), len);
+			if (!len)
+				write(1, "Error", 5);
+			else if (check_all_keys(dict, clean_num(input, len), len))
+				// write(1, "Valid Dict", 10);
+				print_words(dict, clean_num(input, len), len);
+			else
+				write(1, "Dict Error", 10);
+		}
 		else
-			write(1, "Dict Error", 10);
+			write(1, "Error", 5);
+		
 	}
 	write(1, "\n", 1);
 	return (0);
@@ -45,7 +50,10 @@ char *valid_dict(int argc, char **argv)
 	int		fd;
 
 	if (argc != 2 && argc != 3)
+	{
 		write(1, "Error", 5);
+		return (0);
+	}
 	else if (argc == 2)
 		dict = "numbers.dict";
 	else if (argc == 3)
