@@ -33,7 +33,7 @@ int	ft_isnumeric(char c)
 	return (c >= 48 && c <= 57);
 }
 
-char *clean_num(char *str, int len)
+char	*clean_num(char *str, int len)
 {
 	while (*str && *str == ' ')
 		str++;
@@ -44,7 +44,7 @@ char *clean_num(char *str, int len)
 	if (*str < 48 || *str > 57)
 		str--;
 	str[len] = '\0';
-	return str;
+	return (str);
 }
 
 int	num_len(char *str)
@@ -63,7 +63,7 @@ int	num_len(char *str)
 	while (*str)
 	{
 		if (*str == ' ')
-			return length;
+			return (length);
 		else if (!ft_isnumeric(*str))
 			return (0);
 		length++;
@@ -72,8 +72,7 @@ int	num_len(char *str)
 	return (length);
 }
 
-
-int valid_input(char *str)
+int	valid_input(char *str)
 {
 	int	i;
 
@@ -96,7 +95,7 @@ int valid_input(char *str)
 	while (str[i])
 	{
 		if (str[i] != ' ')
-			return(0);
+			return (0);
 		i++;
 	}
 	return (1);

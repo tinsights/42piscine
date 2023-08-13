@@ -25,7 +25,6 @@ void	print_line(char *dict, char *input, int len);
 int		pow_ten(char *str, int len);
 int		ft_isnumeric(char c);
 char	*clean_num(char *str, int len);
-int 	valid_input(char *str);
-
+int		valid_input(char *str);
 
 #endif

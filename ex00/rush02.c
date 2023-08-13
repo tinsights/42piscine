@@ -12,7 +12,7 @@
 
 #include "rush02.h"
 
-char *valid_dict(int argc, char **argv);
+char	*valid_dict(int argc, char **argv);
 
 int	main(int argc, char **argv)
 {
@@ -31,20 +31,18 @@ int	main(int argc, char **argv)
 			if (!len)
 				write(1, "Error", 5);
 			else if (check_all_keys(dict, clean_num(input, len), len))
-				// write(1, "Valid Dict", 10);
 				print_words(dict, clean_num(input, len), len);
 			else
 				write(1, "Dict Error", 10);
 		}
 		else
 			write(1, "Error", 5);
-		
 	}
 	write(1, "\n", 1);
 	return (0);
 }
 
-char *valid_dict(int argc, char **argv)
+char	*valid_dict(int argc, char **argv)
 {
 	char	*dict;
 	int		fd;
@@ -58,7 +56,6 @@ char *valid_dict(int argc, char **argv)
 		dict = "numbers.dict";
 	else if (argc == 3)
 		dict = argv[1];
-
 	fd = open(dict, O_RDONLY);
 	if (fd == -1)
 	{
