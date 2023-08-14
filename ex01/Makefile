@@ -9,7 +9,7 @@ SOURCES = \
 
 OBJECTS = $(patsubst $(DIR)/%.c,%.o,$(SOURCES))
 
-CC_FLAGS = -Wall -Wextra -Werror -I./include
+CFLAGS = -Wall -Wextra -Werror -I./includes
 
 NAME = libft.a
 
