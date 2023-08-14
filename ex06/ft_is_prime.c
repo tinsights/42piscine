@@ -17,7 +17,7 @@ int	ft_is_prime(int nb)
 	if (nb <= 1)
 		return (0);
 	i = 2;
-	while (i * i <= nb)
+	while (i <= nb / i)
 		if (nb % i++ == 0)
 			return (0);
 	return (1);
@@ -25,14 +25,11 @@ int	ft_is_prime(int nb)
 
 /*
 #include <stdio.h>
+#include <limits.h>
 int	main(void)
 {	
-	for(int i = -2; i < 300; i++)
-	{
-		if (ft_is_prime(i))
-			printf("%i is prime.\n", i);
-		// else
-		// 	printf("%i is not prime.\n", i);
-	}
+	int	i = INT_MAX;
+	if (ft_is_prime(i))
+		printf("%i is prime.\n", i);
 }
 */
