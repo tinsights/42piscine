@@ -14,8 +14,8 @@ int	ft_is_prime(int nb);
 
 int	ft_find_next_prime(int nb)
 {
-	while (!(ft_is_prime(nb)))
-		nb++;
+	if (!(ft_is_prime(nb)))
+		return (ft_find_next_prime(nb + 1));
 	return (nb);
 }
 
@@ -26,7 +26,7 @@ int	ft_is_prime(int nb)
 	if (nb <= 1)
 		return (0);
 	i = 2;
-	while (i * i <= nb)
+	while (i <= nb / i)
 		if (nb % i++ == 0)
 			return (0);
 	return (1);
@@ -36,7 +36,7 @@ int	ft_is_prime(int nb)
 #include <stdio.h>
 int	main(void)
 {
-	for (int i = 200; i < 300; i++)
-		printf("the next greatest prime after %i is %i\n", i, ft_find_next_prime(i));	
+	for (int i = 200000; i < 9999999; i++)
+		printf("the next prime after %i is %i\n", i, ft_find_next_prime(i));	
 }
 */
