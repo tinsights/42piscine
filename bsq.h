@@ -16,6 +16,17 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <stdio.h>
 
+typedef struct s_metadata
+{
+	int 	**map;
+	int 	rows;
+	int 	cols;
+	char	empty;
+	char	obstacle;
+	char	filled;
+
+}	t_data;
 
 # endif
