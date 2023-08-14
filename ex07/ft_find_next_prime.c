@@ -34,9 +34,10 @@ int	ft_is_prime(int nb)
 
 /*
 #include <stdio.h>
+#include <limits.h>
 int	main(void)
 {
-	for (int i = 200000; i < 9999999; i++)
-		printf("the next prime after %i is %i\n", i, ft_find_next_prime(i));	
+	int i = INT_MAX - 1;
+	printf("the next prime after %i is %i\n", i, ft_find_next_prime(i));	
 }
 */
