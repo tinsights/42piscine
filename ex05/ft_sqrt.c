@@ -16,16 +16,17 @@ int	ft_sqrt(int nb)
 
 	sqrt = 0;
 	while (++sqrt <= nb)
-		if (sqrt * sqrt >= nb)
+		if (sqrt >= nb / sqrt)
 			return ((sqrt * sqrt == nb) * sqrt);
 	return (0);
 }
 
 /*
 #include <stdio.h>
+#include <limits.h>
 int	main(void)
 {
-	for (int i = -1; i <= 16; i++)
+	int i = 2147395600;
 		printf("the sqrt of %i is %i.\n", i, ft_sqrt(i));
 }
 */
