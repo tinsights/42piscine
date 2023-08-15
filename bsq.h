@@ -37,5 +37,8 @@ typedef struct s_sol
 }	t_sol;
 
 t_sol	solve_bsq(int **map, int rnum, int cnum);
+char	*valid_args(int argc, char **argv);
+void	read_map(char *map, t_data *metadata);
+t_data	map_converter(char *map);
 
 # endif

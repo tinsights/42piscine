@@ -12,41 +12,6 @@
 
 #include "bsq.h"
 
-char	*valid_args(int argc, char **argv);
-void	read_map(char *map, t_data *metadata);
-t_data	map_converter(char *map);
-
-int	main(int argc, char **argv)
-{
-	char		*map;
-	t_data	output;
-	t_sol sol;
-
-	map = valid_args(argc, argv);
-	if (map)
-	{
-		output = map_converter(map);
-			int	i = 0;
-		int j = 0;
-		while(i < output.rows)
-		{
-			j = 0;
-			while (j < output.cols)
-			{
-				printf("%i", output.map[i][j]);
-				j++;
-			}
-			printf("\n");
-			i++;
-		}
-		free (output.map);
-	}
-	sol = solve_bsq(output.map, output.rows, output.cols);
-	printf("\nsize=%d x=%d y=%d", sol.size, sol.x, sol.y);
-	free (output.map);
-	write(1, "\n", 1);
-}
-
 t_data	map_converter(char *map)
 {
 	char	buff[1];
