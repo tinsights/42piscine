@@ -18,36 +18,35 @@ t_data	map_converter(char *map);
 int	main(int argc, char **argv)
 {
 	char		*map;
-	int			fd;
 	t_data	output;
 
 	map = valid_args(argc, argv);
 	if (map)
-		output = map_converter(map);
-	int	i = 0;
-	int j = 0;
-	while(i < output.rows)
 	{
-		j = 0;
-		while (j < output.cols)
+		output = map_converter(map);
+			int	i = 0;
+		int j = 0;
+		while(i < output.rows)
 		{
-			printf("%i, ", output.map[i][j]);
-			j++;
+			j = 0;
+			while (j < output.cols)
+			{
+				printf("%i, ", output.map[i][j]);
+				j++;
+			}
+			printf("\n");
+			i++;
 		}
-		printf("\n");
-		i++;
+		free (output.map);
 	}
-	free (output.map);
 	write(1, "\n", 1);
 }
 
 t_data	map_converter(char *map)
 {
 	int 	**matrix;
-	int		rowNums;
-	int		colNums;
 	char	buff[1];
-	char	firstline[4];
+	char	*firstline;
 	int		fd;
 	int		i;
 	int		j;
@@ -56,29 +55,41 @@ t_data	map_converter(char *map)
 
 	i = 0;
 	fd = open(map, O_RDONLY); // assume opens fine
-	while(read(fd, buff, 1) && *buff != '\n' && i < 4)
+	while(read(fd, buff, 1) && *buff != '\n')
+		i++;
+	close(fd);
+	firstline = malloc(sizeof(char) * i);
+	firstline[i] = '\0';
+
+	fd = open(map, O_RDONLY); // assume opens fine
+		read(fd, firstline, i + 1);
+
+	// TODO validate that firstline has no repeating chars
+	output.empty = firstline[i-3];
+	output.obstacle = firstline[i-2];
+	output.filled = firstline[i-1];
+	output.rows = 0;
+	i = 0;
+	while (firstline[i] != output.empty)
 	{
-		firstline[i] = *buff;
+		output.rows *= 10;
+		output.rows += firstline[i] - 48;
 		i++;
 	}
-	// TODO" validate that firstline has no repeating chars
-
-	rowNums = firstline[0] - 48;
-	colNums = 0;
+	output.cols = 0;
 	while(read(fd, buff, 1) && *buff != '\n')
-		colNums++;
+		output.cols++;
 
-	printf("%s\n", firstline);
-	printf("%i, %i\n", rowNums, colNums);
+	printf("%i, %i\n", output.rows, output.cols);
 	close(fd);
-	matrix = malloc(sizeof(int *) * rowNums);
+	matrix = malloc(sizeof(int *) * output.rows);
 
 	i = 0;
-	while(i < rowNums)
+	while(i < output.rows)
 	{
-		matrix[i] = malloc(sizeof(int) * colNums);
+		matrix[i] = malloc(sizeof(int) * output.cols);
 		j = 0;
-		while (j < colNums)
+		while (j < output.cols)
 		{
 			matrix[i][j] = 0;
 			j++;
@@ -92,11 +103,11 @@ t_data	map_converter(char *map)
 
 	i = 0;
 	j = 0;
-	while (read(fd, buff, 1) && i < rowNums)
+	while (read(fd, buff, 1) && i < output.rows)
 	{
-		if (*buff == firstline[1])
+		if (*buff == output.empty)
 			matrix[i][j] = 0;
-		else if (*buff == firstline[2])
+		else if (*buff == output.obstacle)
 			matrix[i][j] = 1;
 		j++;
 		if (*buff == '\n')
@@ -106,37 +117,9 @@ t_data	map_converter(char *map)
 		}
 	}
 
-	// i = 0;
-	// j = 0;
-	// while(i < rowNums)
-	// {
-	// 	j = 0;
-	// 	while (j < colNums)
-	// 	{
-	// 		printf("%i, ", matrix[i][j]);
-	// 		j++;
-	// 	}
-	// 	printf("\n");
-	// 	i++;
-	// }
-
-	// i = 0;
-	// while (i < rowNums)
-	// {
-	// 	free(matrix[i]);
-	// 	i++;
-	// }
-	// free(matrix);
-
-
 	output.map = matrix;
-	output.rows = rowNums;
-	output.cols = colNums;
-	output.empty = firstline[1];
-	output.obstacle = firstline[2];
-	output.filled = firstline[3];
+	output.cols = output.cols;
 	return (output);
-
 }
 
 char	*valid_args(int argc, char **argv)
