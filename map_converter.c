@@ -13,96 +13,62 @@
 #include "bsq.h"
 
 char	*valid_args(int argc, char **argv);
+void	read_map(char *map, t_data *metadata);
 t_data	map_converter(char *map);
 
 int	main(int argc, char **argv)
 {
 	char		*map;
-	int			fd;
 	t_data	output;
 	t_sol sol;
 
 	map = valid_args(argc, argv);
 	if (map)
-		output = map_converter(map);
-	int	i = 0;
-	int j = 0;
-	while(i < output.rows)
 	{
-		j = 0;
-		while (j < output.cols)
+		output = map_converter(map);
+			int	i = 0;
+		int j = 0;
+		while(i < output.rows)
 		{
-			printf("%i, ", output.map[i][j]);
-			j++;
+			j = 0;
+			while (j < output.cols)
+			{
+				printf("%i", output.map[i][j]);
+				j++;
+			}
+			printf("\n");
+			i++;
 		}
-		printf("\n");
-		i++;
+		free (output.map);
 	}
-
 	sol = solve_bsq(output.map, output.rows, output.cols);
 	printf("\nsize=%d x=%d y=%d", sol.size, sol.x, sol.y);
-
 	free (output.map);
 	write(1, "\n", 1);
 }
 
 t_data	map_converter(char *map)
 {
-	int 	**matrix;
-	int		rowNums;
-	int		colNums;
 	char	buff[1];
-	char	firstline[4];
 	int		fd;
 	int		i;
 	int		j;
 	t_data	output;
 
-
-	i = 0;
+	// populate t_data struct
+	read_map(map, &output);
 	fd = open(map, O_RDONLY); // assume opens fine
-	while(read(fd, buff, 1) && *buff != '\n' && i < 4)
-	{
-		firstline[i] = *buff;
-		i++;
-	}
-	// TODO" validate that firstline has no repeating chars
-
-	rowNums = firstline[0] - 48;
-	colNums = 0;
-	while(read(fd, buff, 1) && *buff != '\n')
-		colNums++;
-
-	printf("%s\n", firstline);
-	printf("%i, %i\n", rowNums, colNums);
-	close(fd);
-	matrix = malloc(sizeof(int *) * rowNums);
-
-	i = 0;
-	while(i < rowNums)
-	{
-		matrix[i] = malloc(sizeof(int) * colNums);
-		j = 0;
-		while (j < colNums)
-		{
-			matrix[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-
-	fd = open(map, O_RDONLY); // assume opens fine
+	// skip first line, already read.
 	while (read(fd, buff, 1) && *buff != '\n')
 		continue ;
-
 	i = 0;
 	j = 0;
-	while (read(fd, buff, 1) && i < rowNums)
+	while (read(fd, buff, 1) && i < output.rows)
 	{
-		if (*buff == firstline[1])
-			matrix[i][j] = 0;
-		else if (*buff == firstline[2])
-			matrix[i][j] = 1;
+		if (*buff == output.empty)
+			output.map[i][j] = 0;
+		else if (*buff == output.obstacle)
+			output.map[i][j] = 1;
 		j++;
 		if (*buff == '\n')
 		{
@@ -110,38 +76,49 @@ t_data	map_converter(char *map)
 			j = 0;
 		}
 	}
-
-	// i = 0;
-	// j = 0;
-	// while(i < rowNums)
-	// {
-	// 	j = 0;
-	// 	while (j < colNums)
-	// 	{
-	// 		printf("%i, ", matrix[i][j]);
-	// 		j++;
-	// 	}
-	// 	printf("\n");
-	// 	i++;
-	// }
-
-	// i = 0;
-	// while (i < rowNums)
-	// {
-	// 	free(matrix[i]);
-	// 	i++;
-	// }
-	// free(matrix);
-
-
-	output.map = matrix;
-	output.rows = rowNums;
-	output.cols = colNums;
-	output.empty = firstline[1];
-	output.obstacle = firstline[2];
-	output.filled = firstline[3];
 	return (output);
+}
 
+void	read_map(char *map, t_data *metadata)
+{	
+	char	*firstline;
+	char	buff[1];
+	int		i;
+	int		fd;
+
+	// read length of first line to get rows, empty, filled
+	i = 0;
+	fd = open(map, O_RDONLY); // assume opens fine
+	while(read(fd, buff, 1) && *buff != '\n')
+		i++;
+	close(fd);
+	firstline = malloc(sizeof(char) * i);
+	firstline[i] = '\0';
+
+	fd = open(map, O_RDONLY); // assume opens fine
+		read(fd, firstline, i + 1);
+
+	// TODO validate that firstline has no repeating chars
+	metadata->empty = firstline[i-3];
+	metadata->obstacle = firstline[i-2];
+	metadata->filled = firstline[i-1];
+	metadata->rows = 0;
+	i = 0;
+	// does atoi to the digits seen in the first row
+	while (firstline[i] != metadata->empty)
+	{
+		metadata->rows *= 10;
+		metadata->rows += firstline[i] - 48;
+		i++;
+	}
+	metadata->cols = 0;
+	while(read(fd, buff, 1) && *buff != '\n')
+		metadata->cols++;
+	close(fd);
+	metadata->map = malloc(sizeof(int *) * metadata->rows);
+	i = -1;
+	while(++i < metadata->rows)
+		metadata->map[i] = malloc(sizeof(int) * metadata->cols);
 }
 
 char	*valid_args(int argc, char **argv)
