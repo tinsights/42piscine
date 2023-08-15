@@ -13,6 +13,7 @@
 #include "bsq.h"
 
 char	*valid_args(int argc, char **argv);
+void	read_map(char *map, t_data *metadata);
 t_data	map_converter(char *map);
 
 int	main(int argc, char **argv)
@@ -31,7 +32,7 @@ int	main(int argc, char **argv)
 			j = 0;
 			while (j < output.cols)
 			{
-				printf("%i, ", output.map[i][j]);
+				printf("%i", output.map[i][j]);
 				j++;
 			}
 			printf("\n");
@@ -44,15 +45,44 @@ int	main(int argc, char **argv)
 
 t_data	map_converter(char *map)
 {
-	int 	**matrix;
 	char	buff[1];
-	char	*firstline;
 	int		fd;
 	int		i;
 	int		j;
 	t_data	output;
 
+	// populate t_data struct
+	read_map(map, &output);
+	fd = open(map, O_RDONLY); // assume opens fine
+	// skip first line, already read.
+	while (read(fd, buff, 1) && *buff != '\n')
+		continue ;
+	i = 0;
+	j = 0;
+	while (read(fd, buff, 1) && i < output.rows)
+	{
+		if (*buff == output.empty)
+			output.map[i][j] = 0;
+		else if (*buff == output.obstacle)
+			output.map[i][j] = 1;
+		j++;
+		if (*buff == '\n')
+		{
+			i++;
+			j = 0;
+		}
+	}
+	return (output);
+}
 
+void	read_map(char *map, t_data *metadata)
+{	
+	char	*firstline;
+	char	buff[1];
+	int		i;
+	int		fd;
+
+	// read length of first line to get rows, empty, filled
 	i = 0;
 	fd = open(map, O_RDONLY); // assume opens fine
 	while(read(fd, buff, 1) && *buff != '\n')
@@ -65,61 +95,26 @@ t_data	map_converter(char *map)
 		read(fd, firstline, i + 1);
 
 	// TODO validate that firstline has no repeating chars
-	output.empty = firstline[i-3];
-	output.obstacle = firstline[i-2];
-	output.filled = firstline[i-1];
-	output.rows = 0;
+	metadata->empty = firstline[i-3];
+	metadata->obstacle = firstline[i-2];
+	metadata->filled = firstline[i-1];
+	metadata->rows = 0;
 	i = 0;
-	while (firstline[i] != output.empty)
+	// does atoi to the digits seen in the first row
+	while (firstline[i] != metadata->empty)
 	{
-		output.rows *= 10;
-		output.rows += firstline[i] - 48;
+		metadata->rows *= 10;
+		metadata->rows += firstline[i] - 48;
 		i++;
 	}
-	output.cols = 0;
+	metadata->cols = 0;
 	while(read(fd, buff, 1) && *buff != '\n')
-		output.cols++;
-
-	printf("%i, %i\n", output.rows, output.cols);
+		metadata->cols++;
 	close(fd);
-	matrix = malloc(sizeof(int *) * output.rows);
-
-	i = 0;
-	while(i < output.rows)
-	{
-		matrix[i] = malloc(sizeof(int) * output.cols);
-		j = 0;
-		while (j < output.cols)
-		{
-			matrix[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-
-	fd = open(map, O_RDONLY); // assume opens fine
-	while (read(fd, buff, 1) && *buff != '\n')
-		continue ;
-
-	i = 0;
-	j = 0;
-	while (read(fd, buff, 1) && i < output.rows)
-	{
-		if (*buff == output.empty)
-			matrix[i][j] = 0;
-		else if (*buff == output.obstacle)
-			matrix[i][j] = 1;
-		j++;
-		if (*buff == '\n')
-		{
-			i++;
-			j = 0;
-		}
-	}
-
-	output.map = matrix;
-	output.cols = output.cols;
-	return (output);
+	metadata->map = malloc(sizeof(int *) * metadata->rows);
+	i = -1;
+	while(++i < metadata->rows)
+		metadata->map[i] = malloc(sizeof(int) * metadata->cols);
 }
 
 char	*valid_args(int argc, char **argv)
