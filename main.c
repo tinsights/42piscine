@@ -14,30 +14,39 @@
 
 int	main(int argc, char **argv)
 {
-	char		*map;
-	t_data	output;
+	char	*map;
+	t_data	data;
 	t_sol sol;
 
 	map = valid_args(argc, argv);
 	if (map)
 	{
-		output = map_converter(map);
-			int	i = 0;
-		int j = 0;
-		while(i < output.rows)
-		{
-			j = 0;
-			while (j < output.cols)
-			{
-				printf("%i", output.map[i][j]);
-				j++;
-			}
-			printf("\n");
-			i++;
-		}
+		data = map_converter(map);
+		sol = solve_bsq(data.map, data.rows, data.cols);
+		write_soln(sol, data);
+		free (data.map);
 	}
-	sol = solve_bsq(output.map, output.rows, output.cols);
-	printf("\nsize=%d x=%d y=%d", sol.size, sol.x, sol.y);
-	free (output.map);
+
 	write(1, "\n", 1);
+}
+
+
+void	print_map(t_data data)
+{		
+	int	i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while(i < data.rows)
+	{
+		j = 0;
+		while (j < data.cols)
+		{
+			printf("%i", data.map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
 }

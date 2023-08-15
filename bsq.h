@@ -40,5 +40,7 @@ t_sol	solve_bsq(int **map, int rnum, int cnum);
 char	*valid_args(int argc, char **argv);
 void	read_map(char *map, t_data *metadata);
 t_data	map_converter(char *map);
+void	write_soln(t_sol sol, t_data data);
+void	print_map(t_data data);
 
 # endif
