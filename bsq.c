@@ -49,8 +49,7 @@ int	min(int top, int left, int topleft)
 		return (top);
 	else if (left <= top && left <= topleft)
 		return (left);
-	else if (topleft <= top && topleft <= left)
-		return (topleft);
+	return (topleft);
 }
 
 int	min_sq(int **map, int **sol_matrix, int x, int y)

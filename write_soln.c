@@ -14,20 +14,19 @@
 
 void	write_soln(t_sol sol, t_data data)
 {
-
-	print_map(data);
-	// i need the mapfile name to be stored in data
 	int	i;
 	int	j;
 
+	print_map(data);
 	i = 0;
-	while(i < data.rows)
+	printf("%d, %d %d", sol.size, sol.x, sol.y);
+	while (i < data.rows)
 	{
 		j = 0;
 		while (j < data.cols)
 		{
-			if ((i > sol.y && i <= sol.y+sol.size) &&
-				(j > sol.x && j <= sol.x +sol.size))
+			if ((i >= sol.x && i < sol.x+sol.size) &&
+				(j >= sol.y && j < sol.y +sol.size))
 				write(1, &data.filled, 1);
 			else if (data.map[i][j])
 				write(1, &data.obstacle, 1);

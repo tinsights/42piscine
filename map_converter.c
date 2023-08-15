@@ -45,7 +45,7 @@ t_data	map_converter(char *map)
 }
 
 void	read_map(char *map, t_data *metadata)
-{	
+{
 	char	*firstline;
 	char	buff[1];
 	int		i;
@@ -91,7 +91,7 @@ char	*valid_args(int argc, char **argv)
 	char	*map;
 	int		fd;
 
-	if (argc != 2)
+	if (argc == 1)
 	{
 		write(1, "Error", 5);
 		return (0);
