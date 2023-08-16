@@ -12,13 +12,13 @@
 
 #include "bsq.h"
 
-int	readfile(char *map)
+int	readfile(char *file)
 {
 	int		fd;
 	t_data	data;
 	t_sol	sol;
 
-	fd = open(map, O_RDONLY);
+	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
 		write(1, "Map Error", 9);
@@ -26,13 +26,17 @@ int	readfile(char *map)
 		return (0);
 	}
 	data.valid = 1;
-	// if (is_map_valid(map))
-	data = map_converter(map);
-	// if (is_data_valid(map))
-	sol = solve_bsq(data.map, data.rows, data.cols);
-	// if (is_sol_valid(map))
-	write_soln(sol, data);
-	free (data.map);
+	data.map = 0;
+	data = map_converter(file);
+	if (data.valid)
+	{
+		sol = solve_bsq(data.map, data.rows, data.cols);
+		write_soln(sol, data);
+	}
+	else
+		write(1, "Map Error\n", 10);
+	if (data.map)
+		free(data.map);
 	return (1);
 }
 

@@ -12,8 +12,10 @@
 
 #include "bsq.h"
 char	*read_from_stdin(void);
+int		checkFirstLine(t_data *data);
 
-t_data	map_converter(char *map)
+
+t_data	map_converter(char *file)
 {
 	char	buff[1];
 	int		fd;
@@ -23,31 +25,32 @@ t_data	map_converter(char *map)
 
 	// populate t_data struct
 	// return 0 if invalid, 1 if valid
-	read_map(map, &data); // return value should be same as data.valid
-
-	fd = open(map, O_RDONLY); // assume opens fine
-	// skip first line, already read.
-	while (read(fd, buff, 1) && *buff != '\n')
-		continue ;
-	i = 0;
-	j = 0;
-	while (read(fd, buff, 1) && i < data.rows)
+	if(read_map(file, &data))
 	{
-		if (*buff == data.empty)
-			data.map[i][j] = 0;
-		else if (*buff == data.obstacle)
-			data.map[i][j] = 1;
-		j++;
-		if (*buff == '\n')
+		fd = open(file, O_RDONLY); // assume opens fine
+		// skip first line, already read.
+		while (read(fd, buff, 1) && *buff != '\n')
+			continue ;
+		i = 0;
+		j = 0;
+		while (read(fd, buff, 1) && i < data.rows)
 		{
-			i++;
-			j = 0;
+			if (*buff == data.empty)
+				data.map[i][j] = 0;
+			else if (*buff == data.obstacle)
+				data.map[i][j] = 1;
+			j++;
+			if (*buff == '\n')
+			{
+				i++;
+				j = 0;
+			}
 		}
 	}
 	return (data);
 }
 
-void	read_map(char *map, t_data *data)
+int	read_map(char *file, t_data *data)
 {
 	char	*firstline;
 	char	buff[1];
@@ -56,14 +59,14 @@ void	read_map(char *map, t_data *data)
 
 	// read length of first line to get rows, empty, filled
 	i = 0;
-	fd = open(map, O_RDONLY); // assume opens fine
+	fd = open(file, O_RDONLY); // assume opens fine
 	while(read(fd, buff, 1) && *buff != '\n')
 		i++;
 	close(fd);
 	firstline = malloc(sizeof(char) * i);
 	firstline[i] = '\0';
 
-	fd = open(map, O_RDONLY); // assume opens fine
+	fd = open(file, O_RDONLY); // assume opens fine
 		read(fd, firstline, i + 1);
 
 	// TODO validate that firstline has no repeating chars
@@ -71,6 +74,8 @@ void	read_map(char *map, t_data *data)
 	data->empty = firstline[i-3];
 	data->obstacle = firstline[i-2];
 	data->filled = firstline[i-1];
+	if (!checkFirstLine(data))
+		return (0);
 	data->rows = 0;
 	i = 0;
 	// does atoi to the digits seen in the first row
@@ -88,17 +93,18 @@ void	read_map(char *map, t_data *data)
 	i = -1;
 	while(++i < data->rows)
 		data->map[i] = malloc(sizeof(int) * data->cols);
+	return (data->valid);
 }
 
 char	*valid_args(int argc, char **argv)
 {
-	char	*map;
+	char	*file;
 	int		fd;
 
 	if (argc == 1)
 		return (read_from_stdin());
-	map = argv[1];
-	fd = open(map, O_RDONLY);
+	file = argv[1];
+	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
 		write(1, "Map Error", 9);
@@ -106,7 +112,7 @@ char	*valid_args(int argc, char **argv)
 		return (0);
 	}
 	else
-		return (map);
+		return (file);
 }
 
 char	*read_from_stdin(void)
@@ -119,4 +125,13 @@ char	*read_from_stdin(void)
 		write(fd, buff, 1);
 	close(fd);
 	return ("tempmap");
+}
+
+int	checkFirstLine(t_data *data)
+{
+	if (data->empty == data->filled
+		|| data->filled == data->obstacle
+		|| data->empty == data->obstacle)
+		data->valid = 0;
+	return (data->valid);
 }
