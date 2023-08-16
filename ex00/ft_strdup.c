@@ -20,7 +20,9 @@ char	*ft_strdup(char *src)
 	idx = 0;
 	while (src[idx])
 		idx++;
-	copy = malloc(idx);
+	copy = malloc(idx + 1);
+	if (!copy)
+		return (0);
 	idx = 0;
 	while (*src)
 		copy[idx++] = *src++;
@@ -30,6 +32,7 @@ char	*ft_strdup(char *src)
 
 /*
 #include <stdio.h>
+
 int	main(void)
 {
 	char *s = ft_strdup("Hello, world");

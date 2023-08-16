@@ -48,7 +48,6 @@ char	**ft_split(char *str, char *charset)
 	int		j;
 
 	count = count_separators(str, charset);
-	printf("%i\n", count);
 	result = malloc(sizeof(char *) * (count + (count > 1)));
 	result[count] = 0;
 	i = 0;

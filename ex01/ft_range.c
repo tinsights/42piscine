@@ -21,6 +21,8 @@ int	*ft_range(int min, int max)
 	if (length <= 0)
 		return (NULL);
 	arr = malloc(sizeof(int) * length);
+	if (!arr)
+		return (NULL);
 	while (min < max)
 		*arr++ = min++;
 	return (arr - length);
@@ -30,9 +32,14 @@ int	*ft_range(int min, int max)
 #include <stdio.h>
 int	main(void)
 {
-	int *t = ft_range(1, 7);
-	for (int i = 0; i < 5; i++)
-		printf("%i, ", t[i]);
+	int *t = ft_range(6, 6);
+	for (int i = 0; i < 6; i++)
+	{
+		if (t)
+			printf("%i, ", t[i]);
+		else
+			printf("%p\n", t);
+	}
 	free(t);
 }
 */
