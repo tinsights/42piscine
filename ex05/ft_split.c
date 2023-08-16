@@ -49,6 +49,8 @@ char	**ft_split(char *str, char *charset)
 
 	count = count_separators(str, charset);
 	result = malloc(sizeof(char *) * (count + (count > 1)));
+	if (!result)
+		return (NULL);
 	result[count] = 0;
 	i = 0;
 	while (i < count && *str)
@@ -94,6 +96,8 @@ char	*ft_strdup(char *src, int i)
 	char	*copy;
 
 	copy = malloc(i + 1);
+	if (!copy)
+		return (NULL);
 	idx = -1;
 	while (++idx < i)
 		copy[idx] = src[idx];
