@@ -17,9 +17,10 @@ int	readfile(char *file)
 	int		fd;
 	t_data	data;
 	t_sol	sol;
+	char	buff[1];
 
 	fd = open(file, O_RDONLY);
-	if (fd == -1)
+	if (fd == -1 || read(fd, buff, 1) == -1)
 	{
 		write(1, "Map Error\n", 10);
 		return (0);
@@ -54,12 +55,10 @@ int	main(int argc, char **argv)
 			readfile(argv[i]);
 			if (i < argc - 1)
 				write(1, "\n", 1);
-			// if (is_readfile_valid(*))
 			i++;
 		}
 	}
 }
-
 
 void	print_map(t_data data)
 {
@@ -68,7 +67,7 @@ void	print_map(t_data data)
 
 	i = 0;
 	j = 0;
-	while(i < data.rows)
+	while (i < data.rows)
 	{
 		j = 0;
 		while (j < data.cols)

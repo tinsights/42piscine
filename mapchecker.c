@@ -11,12 +11,8 @@
 /* ************************************************************************** */
 
 #include "bsq.h"
-// open the map
-// read first line lenght
-// check that length is >= 4
-// read symbols into data
 
-int	checkFirstLine(t_data *data)
+int	check_first_line(t_data *data)
 {
 	if (data->empty == data->filled
 		|| data->filled == data->obstacle
@@ -25,75 +21,27 @@ int	checkFirstLine(t_data *data)
 	return (data->valid);
 }
 
-int	readFirstLine(t_data *data, char *file)
+int	check_map_validity(t_data *data, char *file)
+{
+	int		fd;
+
+	fd = process_first_line(file, data);
+	if (data->valid)
+		check_rows_and_cols(fd, data);
+	close(fd);
+	return (data->valid);
+}
+
+void	check_rows_and_cols(int fd, t_data *data)
 {
 	int		i;
 	int		j;
-	int		fd;
 	char	buff[1];
-	char	*firstline;
-
-
-	// read length of first line to get rows, empty, filled
-	i = 0;
-	fd = open(file, O_RDONLY); // assume opens fine
-	while(read(fd, buff, 1) && *buff != '\n')
-		i++;
-	close(fd);
-	// check len of line
-	if (i < 4)
-	{
-		data->valid = 0;
-		return (0);
-	}
-
-	firstline = malloc(sizeof(char) * i + 1);
-
-	fd = open(file, O_RDONLY); // assume opens fine
-	read(fd, firstline, i + 1); // moves buffer to next line
-	firstline[i] = '\0';
-
-	// TODO validate that firstline has no repeating chars
-	// IF INVALID SET DATA.VALID to 0;
-	data->empty = firstline[i-3];
-	data->obstacle = firstline[i-2];
-	data->filled = firstline[i-1];
-	if (!checkFirstLine(data))
-	{
-		free(firstline);
-		return (0);
-	}
-	printf("firstline: %s\n", firstline);
-
-	data->rows = 0;
-	i = 0;
-	// does "atoi" to the digits seen in the first row
-	while (firstline[i] != data->empty)
-	{
-		if (firstline[i] >= '0' && firstline[i] <= '9')
-		{
-			data->rows *= 10;
-			data->rows += firstline[i] - 48;
-		}
-		else
-		{
-			printf("invalid firstline\n");
-			data->valid = 0;
-			return (0);
-		}
-		i++;
-	}
-	// havent checked that cols are all same length
-
-	// 1. check that all squares are of empty or obstacle
-	// 2. check that there are "rows" number of newlines
-	// 3. check that all lines are same lenght.
-	// 4. data.row data.col cannot be 0;
 
 	i = 0;
 	j = 0;
 	data->cols = 0;
-	while(read(fd, buff, 1))
+	while (read(fd, buff, 1))
 	{
 		if (*buff == '\n')
 		{
@@ -108,12 +56,55 @@ int	readFirstLine(t_data *data, char *file)
 			&& *buff != data->empty)
 			data->valid = 0;
 		j++;
-		
 	}
-	if (data->rows != i)
+	if (data->rows != i || !data->rows || !data->cols)
 		data->valid = 0;
-	if (!data->rows || !data->cols)
-		data->valid = 0;
+}
+
+int	process_first_line(char *file, t_data *data)
+{
+	int		len;
+	char	buff[1];
+	int		fd;
+	char	*firstline;
+
+	len = 0;
+	fd = open(file, O_RDONLY);
+	while (read(fd, buff, 1) && *buff != '\n')
+		len++;
 	close(fd);
-	return (data->valid);
+	if (len < 4)
+		data->valid = 0;
+	if (data->valid)
+	{
+		firstline = malloc(sizeof(char) * len + 1);
+		fd = open(file, O_RDONLY);
+		read(fd, firstline, len + 1);
+		data->empty = firstline[len - 3];
+		data->obstacle = firstline[len - 2];
+		data->filled = firstline[len - 1];
+		check_first_line(data);
+		first_line_atoi(data, firstline);
+		free(firstline);
+	}
+	return (fd);
+}
+
+void	first_line_atoi(t_data *data, char *firstline)
+{
+	int	i;
+
+	data->rows = 0;
+	i = 0;
+	while (firstline[i] != data->empty)
+	{
+		if (firstline[i] >= '0' && firstline[i] <= '9')
+		{
+			data->rows *= 10;
+			data->rows += firstline[i] - 48;
+		}
+		else
+			data->valid = 0;
+		i++;
+	}
 }

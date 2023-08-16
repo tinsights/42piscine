@@ -9,27 +9,8 @@
 /*   Updated: 2023/08/14 15:00:10 by cwijaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "bsq.h"
-
-
-// void	print_arr(int **arr, int rnum, int cnum)
-// {
-// 	int	j;
-// 	int i = 0;
-// 		printf("\n\n");
-// 	while (i < rnum)
-// 	{
-// 		j = 0;
-// 		while (j < cnum)
-// 		{
-// 			printf("%d, ",arr[i][j]);
-// 			j++;
-// 		}
-// 		printf("\n");
-// 		i++;
-// 	}
-// 		printf("\n");
-// }
 
 int	**gen_matrix(int rnum, int cnum)
 {

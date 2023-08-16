@@ -17,8 +17,6 @@ void	write_soln(t_sol sol, t_data data)
 	int	i;
 	int	j;
 
-	// print_map(data);
-	// printf("%d, %d %d", sol.size, sol.x, sol.y);
 	if (data.valid)
 	{
 		i = 0;
@@ -27,8 +25,8 @@ void	write_soln(t_sol sol, t_data data)
 			j = 0;
 			while (j < data.cols)
 			{
-				if ((i >= sol.x && i < sol.x+sol.size) &&
-					(j >= sol.y && j < sol.y +sol.size))
+				if ((i >= sol.x && i < sol.x + sol.size)
+					&& (j >= sol.y && j < sol.y + sol.size))
 					write(1, &data.filled, 1);
 				else if (data.map[i][j])
 					write(1, &data.obstacle, 1);

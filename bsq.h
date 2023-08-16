@@ -17,15 +17,11 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-/****** REMOVE BEFOER SUBMISSION *******/
-# include <stdio.h>
-/****** REMOVE BEFOER SUBMISSION *******/
-
 typedef struct s_metadata
 {
-	int 	**map;
-	int 	rows;
-	int 	cols;
+	int		**map;
+	int		rows;
+	int		cols;
 	int		valid;
 	char	empty;
 	char	obstacle;
@@ -47,8 +43,10 @@ void	map_converter(char *file, t_data *data);
 void	write_soln(t_sol sol, t_data data);
 void	print_map(t_data data);
 char	*read_from_stdin(void);
-int		checkFirstLine(t_data *data);
-int		readFirstLine(t_data *data, char *file);
+int		process_first_line(char *file, t_data *data);
+int		check_map_validity(t_data *data, char *file);
+void	convert_symbols(char *file, t_data *data);
+void	first_line_atoi(t_data *data, char *firstline);
+void	check_rows_and_cols(int fd, t_data *data);
 
-
-# endif
+#	endif
