@@ -43,7 +43,7 @@ typedef struct s_sol
 t_sol	solve_bsq(int **map, int rnum, int cnum);
 char	*valid_args(int argc, char **argv);
 int		read_map(char *map, t_data *data);
-t_data	map_converter(char *map);
+void	map_converter(char *file, t_data *data);
 void	write_soln(t_sol sol, t_data data);
 void	print_map(t_data data);
 

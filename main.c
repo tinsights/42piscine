@@ -21,13 +21,13 @@ int	readfile(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		write(1, "Map Error", 9);
+		write(1, "Map Error\n", 10);
 		close(fd);
 		return (0);
 	}
 	data.valid = 1;
-	data.map = 0;
-	data = map_converter(file);
+	data.map = NULL;
+	map_converter(file, &data);
 	if (data.valid)
 	{
 		sol = solve_bsq(data.map, data.rows, data.cols);
@@ -35,8 +35,8 @@ int	readfile(char *file)
 	}
 	else
 		write(1, "Map Error\n", 10);
-	// if (data.map)
-	// 	free(data.map);
+	if (data.map)
+		free(data.map);
 	return (1);
 }
 
@@ -50,6 +50,8 @@ int	main(int argc, char **argv)
 		while (i < argc)
 		{
 			readfile(argv[i]);
+			if (i < argc - 1)
+				write(1, "\n", 1);
 			// if (is_readfile_valid(*))
 			i++;
 		}

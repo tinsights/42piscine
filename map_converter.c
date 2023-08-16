@@ -15,17 +15,16 @@ char	*read_from_stdin(void);
 int		checkFirstLine(t_data *data);
 
 
-t_data	map_converter(char *file)
+void	map_converter(char *file, t_data *data)
 {
 	char	buff[1];
 	int		fd;
 	int		i;
 	int		j;
-	t_data	data;
 
 	// populate t_data struct
 	// return 0 if invalid, 1 if valid
-	if(read_map(file, &data))
+	if(read_map(file, data))
 	{
 		fd = open(file, O_RDONLY); // assume opens fine
 		// skip first line, already read.
@@ -33,12 +32,12 @@ t_data	map_converter(char *file)
 			continue ;
 		i = 0;
 		j = 0;
-		while (read(fd, buff, 1) && i < data.rows)
+		while (read(fd, buff, 1) && i < data->rows)
 		{
-			if (*buff == data.empty)
-				data.map[i][j] = 0;
-			else if (*buff == data.obstacle)
-				data.map[i][j] = 1;
+			if (*buff == data->empty)
+				data->map[i][j] = 0;
+			else if (*buff == data->obstacle)
+				data->map[i][j] = 1;
 			j++;
 			if (*buff == '\n')
 			{
@@ -47,7 +46,6 @@ t_data	map_converter(char *file)
 			}
 		}
 	}
-	return (data);
 }
 
 int	read_map(char *file, t_data *data)
@@ -75,7 +73,10 @@ int	read_map(char *file, t_data *data)
 	data->obstacle = firstline[i-2];
 	data->filled = firstline[i-1];
 	if (!checkFirstLine(data))
+	{
+		free(firstline);
 		return (0);
+	}
 	data->rows = 0;
 	i = 0;
 	// does atoi to the digits seen in the first row
@@ -89,10 +90,15 @@ int	read_map(char *file, t_data *data)
 	while(read(fd, buff, 1) && *buff != '\n')
 		data->cols++;
 	close(fd);
-	data->map = malloc(sizeof(int *) * data->rows);
-	i = -1;
-	while(++i < data->rows)
-		data->map[i] = malloc(sizeof(int) * data->cols);
+	if (data->valid)
+	{
+		data->map = malloc(sizeof(int *) * data->rows);
+		i = -1;
+		while(++i < data->rows)
+			data->map[i] = malloc(sizeof(int) * data->cols);
+	}
+
+	free(firstline);
 	return (data->valid);
 }
 
