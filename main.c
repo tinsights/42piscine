@@ -22,9 +22,9 @@ int	readfile(char *file)
 	if (fd == -1)
 	{
 		write(1, "Map Error\n", 10);
-		close(fd);
 		return (0);
 	}
+	close(fd);
 	data.valid = 1;
 	data.map = NULL;
 	map_converter(file, &data);

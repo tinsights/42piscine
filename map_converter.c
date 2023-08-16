@@ -42,6 +42,7 @@ void	map_converter(char *file, t_data *data)
 				j = 0;
 			}
 		}
+		close(fd);
 	}
 }
 
@@ -114,12 +115,3 @@ char	*read_from_stdin(void)
 	return ("tempmap");
 }
 
-int	checkFirstLine(t_data *data)
-{
-	if (data->empty == data->filled
-		|| data->filled == data->obstacle
-		|| data->empty == data->obstacle
-		|| data->rows <= 0 )
-		data->valid = 0;
-	return (data->valid);
-}

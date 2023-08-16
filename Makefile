@@ -4,7 +4,8 @@ SOURCES = \
 		$(DIR)/main.c \
 		$(DIR)/bsq.c \
 		$(DIR)/map_converter.c \
-		$(DIR)/write_soln.c
+		$(DIR)/write_soln.c \
+		$(DIR)/mapchecker.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
