@@ -11,7 +11,7 @@ OBJECTS = $(patsubst $(DIR)/%.c,%.o,$(SOURCES))
 
 CFLAGS = -Wall -Wextra -Werror -I./includes
 
-NAME = libft.a
+NAME = bsq
 
 all: $(NAME) 
 

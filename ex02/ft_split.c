@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 
 int		ft_strlen(char *str);
 int		count_separators(char *str, char *charset);
@@ -20,12 +19,13 @@ char	*ft_strdup(char *src, int i);
 char	**ft_split(char *str, char *charset);
 
 /*
+#include <stdio.h>
 int	main(void)
 {
 	char **str;
 	int i;
 
-	str = ft_split("asd", "");
+	str = ft_split("asdasd", "s");
 	if (!str)
 		printf("null\n");
 	i = 0;
@@ -48,8 +48,9 @@ char	**ft_split(char *str, char *charset)
 	int		j;
 
 	count = count_separators(str, charset);
-	printf("%i\n", count);
-	result = malloc(sizeof(char *) * (count + (count > 1)));
+	result = malloc(sizeof(char *) * (count + 1));
+	if (!result)
+		return (NULL);
 	result[count] = 0;
 	i = 0;
 	while (i < count && *str)
@@ -95,6 +96,8 @@ char	*ft_strdup(char *src, int i)
 	char	*copy;
 
 	copy = malloc(i + 1);
+	if (!copy)
+		return (NULL);
 	idx = -1;
 	while (++idx < i)
 		copy[idx] = src[idx];
@@ -124,4 +127,3 @@ int	ft_strlen(char *str)
 		length++;
 	return (length);
 }
-
