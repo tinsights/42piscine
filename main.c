@@ -45,7 +45,9 @@ int	main(int argc, char **argv)
 	int		i;
 
 	i = 1;
-	if (argc > 1)
+	if (argc == 1)
+		readfile(read_from_stdin());
+	else
 	{
 		while (i < argc)
 		{

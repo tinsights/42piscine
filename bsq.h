@@ -46,5 +46,6 @@ int		read_map(char *map, t_data *data);
 void	map_converter(char *file, t_data *data);
 void	write_soln(t_sol sol, t_data data);
 void	print_map(t_data data);
+char	*read_from_stdin(void);
 
 # endif
