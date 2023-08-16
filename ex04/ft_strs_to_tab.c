@@ -44,10 +44,13 @@ char	*ft_strdup(char *src)
 	idx = 0;
 	while (src[idx])
 		idx++;
-	copy = malloc(idx);
+	copy = malloc(idx + 1);
 	idx = 0;
-	while (*src)
-		copy[idx++] = *src++;
+	while (src[idx])
+	{
+		copy[idx] = src[idx];
+		idx++;
+	}
 	copy[idx] = '\0';
 	return (copy);
 }
