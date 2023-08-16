@@ -1,7 +1,7 @@
 NAME = bsq
 DIR = $(shell pwd)
 SOURCES = \
-		$(DIR)/main2.c \
+		$(DIR)/main.c \
 		$(DIR)/bsq.c \
 		$(DIR)/map_converter.c \
 		$(DIR)/write_soln.c

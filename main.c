@@ -12,29 +12,50 @@
 
 #include "bsq.h"
 
+int	readfile(char *map)
+{
+	int		fd;
+	t_data	data;
+	t_sol	sol;
+
+	fd = open(map, O_RDONLY);
+	if (fd == -1)
+	{
+		write(1, "Map Error", 9);
+		close(fd);
+		return (0);
+	}
+	// if (is_map_valid(map))
+	data = map_converter(map);
+	// if (is_data_valid(map))
+	sol = solve_bsq(data.map, data.rows, data.cols);
+	// if (is_sol_valid(map))
+	write_soln(sol, data);
+	free (data.map);
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
-	char	*map;
-	t_data	data;
-	t_sol sol;
+	int		i;
 
-	map = valid_args(argc, argv);
-	if (map)
+	i = 1;
+	if (argc > 1)
 	{
-		data = map_converter(map);
-		sol = solve_bsq(data.map, data.rows, data.cols);
-		write_soln(sol, data);
-		free (data.map);
+		while (i < argc)
+		{
+			readfile(argv[i]);
+			// if (is_readfile_valid(*))
+			i++;
+		}
 	}
-
-	write(1, "\n", 1);
 }
 
 
 void	print_map(t_data data)
-{		
+{
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;
