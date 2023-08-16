@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "bsq.h"
-char	*read_from_stdin(void);
-int		checkFirstLine(t_data *data);
-
 
 void	map_converter(char *file, t_data *data)
 {
@@ -82,8 +79,11 @@ int	read_map(char *file, t_data *data)
 	// does atoi to the digits seen in the first row
 	while (firstline[i] != data->empty)
 	{
-		data->rows *= 10;
-		data->rows += firstline[i] - 48;
+		if (firstline[i] >= '0' && firstline[i] <= '9')
+		{
+			data->rows *= 10;
+			data->rows += firstline[i] - 48;
+		}
 		i++;
 	}
 	data->cols = 0;
@@ -102,25 +102,6 @@ int	read_map(char *file, t_data *data)
 	return (data->valid);
 }
 
-char	*valid_args(int argc, char **argv)
-{
-	char	*file;
-	int		fd;
-
-	if (argc == 1)
-		return (read_from_stdin());
-	file = argv[1];
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-	{
-		write(1, "Map Error", 9);
-		close(fd);
-		return (0);
-	}
-	else
-		return (file);
-}
-
 char	*read_from_stdin(void)
 {
 	int		fd;
@@ -137,7 +118,8 @@ int	checkFirstLine(t_data *data)
 {
 	if (data->empty == data->filled
 		|| data->filled == data->obstacle
-		|| data->empty == data->obstacle)
+		|| data->empty == data->obstacle
+		|| data->rows <= 0 )
 		data->valid = 0;
 	return (data->valid);
 }
