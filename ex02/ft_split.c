@@ -25,17 +25,18 @@ int	main(void)
 	char **str;
 	int i;
 
-	str = ft_split("asdasd", "s");
+	str = ft_split("!#@!a@!@#s#d", "!@#");
 	if (!str)
 		printf("null\n");
 	i = 0;
+	if (!str[i])
+			printf("null\n");
 	while (str[i])
 	{
 		printf("%s || ", str[i]);
 		free(str[i]);
 		i++;
 	}
-	printf("\n");
 	free(str);
 }
 */
@@ -70,21 +71,13 @@ char	**ft_split(char *str, char *charset)
 int	count_separators(char *str, char *charset)
 {
 	int	count;
-	int	flag;
 
-	count = 1;
-	flag = 0;
+	count = 0;
 	while (*str)
 	{
-		if (flag && char_in_charset(*str, charset))
-		{
+		if (char_in_charset(*str, charset)
+			&& *(str + 1) && !char_in_charset(*(str + 1), charset))
 			count++;
-			flag = 0;
-		}
-		else
-			flag = !(char_in_charset(*str, charset));
-		if (!flag && !*(str + 1) && (count > 1))
-			count--;
 		str++;
 	}
 	return (count);
