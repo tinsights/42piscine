@@ -19,22 +19,24 @@ t_data	map_converter(char *map)
 	int		fd;
 	int		i;
 	int		j;
-	t_data	output;
+	t_data	data;
 
 	// populate t_data struct
-	read_map(map, &output);
+	// return 0 if invalid, 1 if valid
+	read_map(map, &data); // return value should be same as data.valid
+
 	fd = open(map, O_RDONLY); // assume opens fine
 	// skip first line, already read.
 	while (read(fd, buff, 1) && *buff != '\n')
 		continue ;
 	i = 0;
 	j = 0;
-	while (read(fd, buff, 1) && i < output.rows)
+	while (read(fd, buff, 1) && i < data.rows)
 	{
-		if (*buff == output.empty)
-			output.map[i][j] = 0;
-		else if (*buff == output.obstacle)
-			output.map[i][j] = 1;
+		if (*buff == data.empty)
+			data.map[i][j] = 0;
+		else if (*buff == data.obstacle)
+			data.map[i][j] = 1;
 		j++;
 		if (*buff == '\n')
 		{
@@ -42,10 +44,10 @@ t_data	map_converter(char *map)
 			j = 0;
 		}
 	}
-	return (output);
+	return (data);
 }
 
-void	read_map(char *map, t_data *metadata)
+void	read_map(char *map, t_data *data)
 {
 	char	*firstline;
 	char	buff[1];
@@ -65,26 +67,27 @@ void	read_map(char *map, t_data *metadata)
 		read(fd, firstline, i + 1);
 
 	// TODO validate that firstline has no repeating chars
-	metadata->empty = firstline[i-3];
-	metadata->obstacle = firstline[i-2];
-	metadata->filled = firstline[i-1];
-	metadata->rows = 0;
+	// IF INVALID SET DATA.VALID to 0;
+	data->empty = firstline[i-3];
+	data->obstacle = firstline[i-2];
+	data->filled = firstline[i-1];
+	data->rows = 0;
 	i = 0;
 	// does atoi to the digits seen in the first row
-	while (firstline[i] != metadata->empty)
+	while (firstline[i] != data->empty)
 	{
-		metadata->rows *= 10;
-		metadata->rows += firstline[i] - 48;
+		data->rows *= 10;
+		data->rows += firstline[i] - 48;
 		i++;
 	}
-	metadata->cols = 0;
+	data->cols = 0;
 	while(read(fd, buff, 1) && *buff != '\n')
-		metadata->cols++;
+		data->cols++;
 	close(fd);
-	metadata->map = malloc(sizeof(int *) * metadata->rows);
+	data->map = malloc(sizeof(int *) * data->rows);
 	i = -1;
-	while(++i < metadata->rows)
-		metadata->map[i] = malloc(sizeof(int) * metadata->cols);
+	while(++i < data->rows)
+		data->map[i] = malloc(sizeof(int) * data->cols);
 }
 
 char	*valid_args(int argc, char **argv)

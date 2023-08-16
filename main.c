@@ -25,6 +25,7 @@ int	readfile(char *map)
 		close(fd);
 		return (0);
 	}
+	data.valid = 1;
 	// if (is_map_valid(map))
 	data = map_converter(map);
 	// if (is_data_valid(map))

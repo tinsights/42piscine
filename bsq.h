@@ -16,13 +16,17 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+
+/****** REMOVE BEFOER SUBMISSION *******/
 # include <stdio.h>
+/****** REMOVE BEFOER SUBMISSION *******/
 
 typedef struct s_metadata
 {
 	int 	**map;
 	int 	rows;
 	int 	cols;
+	int		valid;
 	char	empty;
 	char	obstacle;
 	char	filled;
