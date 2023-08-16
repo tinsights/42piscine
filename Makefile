@@ -1,27 +1,29 @@
 NAME = bsq
+DIR = $(shell pwd)
+SOURCES = \
+		$(DIR)/main.c \
+		$(DIR)/bsq.c \
+		$(DIR)/map_converter.c \
+		$(DIR)/write_soln.c
+
+OBJECTS = $(SOURCES:.c=.o)
+
 CFLAGS = -Wall -Wextra -Werror
 
-# Directories
-SRCDIR = srcs
-INCDIR = includes
-OBJDIR = $(SRCDIR)
+all: $(NAME) 
 
+$(NAME): $(OBJECTS)
+	cc $(CFLAGS) $(OBJECTS) -o $(NAME)
 
-SRC = map_converter.c write_soln.c bsq.c main.c
-
-.PHONY: clean fclean re
-
-all: *.o
-	cc $(CFLAGS) *.o -o $(NAME)
-
-*.o: $(SRC)
-	cc -c $(CFLAGS) $(SRC)
+$(OBJECTS): $(SOURCES)
+	cc $(CFLAGS) -c $(SOURCES)
 
 clean:
-	rm -f *.o
+	rm -f $(OBJECTS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
+.PHONY: all clean fclean re

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "bsq.h"
+char	*read_from_stdin(void);
 
 t_data	map_converter(char *map)
 {
@@ -92,10 +93,7 @@ char	*valid_args(int argc, char **argv)
 	int		fd;
 
 	if (argc == 1)
-	{
-		write(1, "Error", 5);
-		return (0);
-	}
+		return (read_from_stdin());
 	map = argv[1];
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
@@ -106,4 +104,16 @@ char	*valid_args(int argc, char **argv)
 	}
 	else
 		return (map);
+}
+
+char	*read_from_stdin(void)
+{
+	int		fd;
+	char	buff[1];
+
+	fd = open("tempmap", O_WRONLY | O_TRUNC);
+	while(read(0, buff, 1))
+		write(fd, buff, 1);
+	close(fd);
+	return ("tempmap");
 }
