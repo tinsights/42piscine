@@ -35,7 +35,7 @@ int	readfile(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1 || read(fd, buff, 1) == -1)
 	{
-		write(1, "Map Error\n", 10);
+		write(1, "map error\n", 10);
 		return (0);
 	}
 	close(fd);
@@ -48,7 +48,7 @@ int	readfile(char *file)
 		write_soln(sol, data);
 	}
 	else
-		write(1, "Map Error\n", 10);
+		write(1, "map error\n", 10);
 	free_map(data);
 	return (1);
 }
