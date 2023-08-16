@@ -28,6 +28,7 @@ int	checkFirstLine(t_data *data)
 int	readFirstLine(t_data *data, char *file)
 {
 	int		i;
+	int		j;
 	int		fd;
 	char	buff[1];
 	char	*firstline;
@@ -62,6 +63,8 @@ int	readFirstLine(t_data *data, char *file)
 		free(firstline);
 		return (0);
 	}
+	printf("firstline: %s\n", firstline);
+
 	data->rows = 0;
 	i = 0;
 	// does "atoi" to the digits seen in the first row
@@ -72,12 +75,45 @@ int	readFirstLine(t_data *data, char *file)
 			data->rows *= 10;
 			data->rows += firstline[i] - 48;
 		}
+		else
+		{
+			printf("invalid firstline\n");
+			data->valid = 0;
+			return (0);
+		}
 		i++;
 	}
 	// havent checked that cols are all same length
+
+	// 1. check that all squares are of empty or obstacle
+	// 2. check that there are "rows" number of newlines
+	// 3. check that all lines are same lenght.
+	// 4. data.row data.col cannot be 0;
+
+	i = 0;
+	j = 0;
 	data->cols = 0;
-	while(read(fd, buff, 1) && *buff != '\n')
-		data->cols++;
+	while(read(fd, buff, 1))
+	{
+		if (*buff == '\n')
+		{
+			if (i == 0)
+				data->cols = j;
+			else if (--j != data->cols)
+				data->valid = 0;
+			i++;
+			j = 0;
+		}
+		else if (*buff != data->obstacle
+			&& *buff != data->empty)
+			data->valid = 0;
+		j++;
+		
+	}
+	if (data->rows != i)
+		data->valid = 0;
+	if (!data->rows || !data->cols)
+		data->valid = 0;
 	close(fd);
-	return (1);
+	return (data->valid);
 }
