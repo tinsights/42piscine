@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 		while (i < argc)
 		{
 			readfile(argv[i]);
-			if (i < argc - 1)
+			if (argc > 2)
 				write(1, "\n", 1);
 			i++;
 		}
