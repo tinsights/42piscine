@@ -48,5 +48,7 @@ void	write_soln(t_sol sol, t_data data);
 void	print_map(t_data data);
 char	*read_from_stdin(void);
 int		checkFirstLine(t_data *data);
+int		readFirstLine(t_data *data, char *file);
+
 
 # endif
