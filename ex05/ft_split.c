@@ -25,7 +25,7 @@ int	main(void)
 	char **str;
 	int i;
 
-	str = ft_split("asd", "");
+	str = ft_split("", "");
 	if (!str)
 		printf("null\n");
 	i = 0;
@@ -48,7 +48,7 @@ char	**ft_split(char *str, char *charset)
 	int		j;
 
 	count = count_separators(str, charset);
-	result = malloc(sizeof(char *) * (count + (count > 1)));
+	result = malloc(sizeof(char *) * (count + 1));
 	if (!result)
 		return (NULL);
 	result[count] = 0;
