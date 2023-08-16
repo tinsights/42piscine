@@ -12,9 +12,9 @@
 
 #include "bsq.h"
 
-int	readfile(char **map)
+int	readfile(char *map)
 {
-	int		*fd;
+	int		fd;
 	t_data	data;
 	t_sol	sol;
 
@@ -37,10 +37,6 @@ int	readfile(char **map)
 
 int	main(int argc, char **argv)
 {
-	char	*map;
-	t_data	data;
-	t_sol	sol;
-	int		fd;
 	int		i;
 
 	i = 1;

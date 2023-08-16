@@ -1,7 +1,7 @@
 NAME = bsq
 DIR = $(shell pwd)
 SOURCES = \
-		$(DIR)/main.c \
+		$(DIR)/main2.c \
 		$(DIR)/bsq.c \
 		$(DIR)/map_converter.c \
 		$(DIR)/write_soln.c
@@ -10,7 +10,7 @@ OBJECTS = $(SOURCES:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror
 
-all: $(NAME) 
+all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	cc $(CFLAGS) $(OBJECTS) -o $(NAME)
