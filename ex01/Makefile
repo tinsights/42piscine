@@ -1,4 +1,4 @@
-DIR = $(shell pwd)/srcs
+DIR = ./srcs
 
 SOURCES = \
 	$(DIR)/ft_putchar.c \
