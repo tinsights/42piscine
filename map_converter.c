@@ -66,7 +66,7 @@ char	*read_from_stdin(void)
 	int		fd;
 	char	buff[1];
 
-	fd = open("tempmap", O_WRONLY | O_TRUNC);
+	fd = open("tempmap", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	while (read(0, buff, 1))
 		write(fd, buff, 1);
 	close(fd);

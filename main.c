@@ -12,6 +12,19 @@
 
 #include "bsq.h"
 
+void	free_map(t_data data)
+{
+	int	i;
+
+	if (data.map)
+	{
+		i = -1;
+		while (++i < data.rows)
+			free(data.map[i]);
+		free(data.map);
+	}
+}
+
 int	readfile(char *file)
 {
 	int		fd;
@@ -36,8 +49,7 @@ int	readfile(char *file)
 	}
 	else
 		write(1, "Map Error\n", 10);
-	if (data.map)
-		free(data.map);
+	free_map(data);
 	return (1);
 }
 
@@ -57,25 +69,5 @@ int	main(int argc, char **argv)
 				write(1, "\n", 1);
 			i++;
 		}
-	}
-}
-
-void	print_map(t_data data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (i < data.rows)
-	{
-		j = 0;
-		while (j < data.cols)
-		{
-			printf("%i", data.map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
 	}
 }

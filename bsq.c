@@ -53,29 +53,6 @@ int	min_sq(int **map, int **sol_matrix, int x, int y)
 	return (min(top, left, topleft) + 1);
 }
 
-// int	populate_bsq(int **map, int **sol_matrix, int rnum, int cnum)
-// {
-// 	int	maxsize;
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	maxsize = 0;
-// 	while (i < rnum)
-// 	{
-// 		j = 0;
-// 		while (j < cnum)
-// 		{
-// 			sol_matrix[i][j] = min_sq(map, sol_matrix, i, j);
-// 			if (sol_matrix[i][j] > maxsize)
-// 				maxsize = sol_matrix[i][j];
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	return (maxsize);
-// }
-
 t_sol	solve_bsq(int **map, int rnum, int cnum)
 {
 	int		i;
@@ -84,12 +61,12 @@ t_sol	solve_bsq(int **map, int rnum, int cnum)
 	t_sol	solution;
 
 	sol_matrix = gen_matrix(rnum, cnum);
-	i = 0;
+	i = -1;
 	solution.size = 0;
-	while (i < rnum)
+	while (++i < rnum)
 	{
-		j = 0;
-		while (j < cnum)
+		j = -1;
+		while (++j < cnum)
 		{
 			sol_matrix[i][j] = min_sq(map, sol_matrix, i, j);
 			if (sol_matrix[i][j] > solution.size)
@@ -98,23 +75,21 @@ t_sol	solve_bsq(int **map, int rnum, int cnum)
 				solution.x = i - solution.size + 1;
 				solution.y = j - solution.size + 1;
 			}
-			j++;
 		}
-		i++;
 	}
+	free_sol(sol_matrix, rnum);
 	return (solution);
 }
 
-// print_arr(sol_matrix, rnum,cnum);
-// 	printf("\n%d %d %d", solution.size, solution.x, solution.y);
-// int	main()
-// {
-// 	int	arr[4][5] = {
-// 					{1, 1, 1, 0, 0},
-// 					{1, 1, 1, 0, 0},
-// 					{1, 1, 1, 0, 0},
-// 					{0, 0, 0, 0, 0},
-// 					};
-// 	t_sol sol = solve_bsq(arr, 4, 5);
-// 	printf("\n%d %d %d", sol.size, sol.x, sol.y);
-// }
+void	free_sol(int **sol_matrix, int rnum)
+{
+	int	i;
+
+	i = 0;
+	while (i < rnum)
+	{
+		free(sol_matrix[i]);
+		i++;
+	}
+	free(sol_matrix);
+}
