@@ -35,8 +35,8 @@ int	readfile(char *file)
 	}
 	else
 		write(1, "Map Error\n", 10);
-	if (data.map)
-		free(data.map);
+	// if (data.map)
+	// 	free(data.map);
 	return (1);
 }
 
