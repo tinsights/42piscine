@@ -18,28 +18,26 @@ int		char_in_charset(char c, char *charset);
 char	*ft_strdup(char *src, int i);
 char	**ft_split(char *str, char *charset);
 
-/*
-#include <stdio.h>
-int	main(void)
-{
-	char **str;
-	int i;
+// #include <stdio.h>
+// int	main(void)
+// {
+// 	char **str;
+// 	int i;
 
-	str = ft_split("!#@!a@!@#s#d", "!@#");
-	if (!str)
-		printf("null\n");
-	i = 0;
-	if (!str[i])
-			printf("null\n");
-	while (str[i])
-	{
-		printf("%s || ", str[i]);
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-*/
+// 	str = ft_split("", "");
+// 	if (!str)
+// 		printf("null\n");
+// 	i = 0;
+// 	if (!str[i])
+// 			printf("null\n");
+// 	while (str[i])
+// 	{
+// 		printf("%s || ", str[i]);
+// 		free(str[i]);
+// 		i++;
+// 	}
+// 	free(str);
+// }
 
 char	**ft_split(char *str, char *charset)
 {
@@ -72,7 +70,11 @@ int	count_separators(char *str, char *charset)
 {
 	int	count;
 
+	while (char_in_charset(*str, charset))
+		str++;
 	count = 0;
+	if (*str)
+		count = 1;
 	while (*str)
 	{
 		if (char_in_charset(*str, charset)
