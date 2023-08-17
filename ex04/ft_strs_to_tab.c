@@ -45,6 +45,8 @@ char	*ft_strdup(char *src)
 	while (src[idx])
 		idx++;
 	copy = malloc(idx + 1);
+	if (!copy)
+		return (0);
 	idx = 0;
 	while (src[idx])
 	{
@@ -113,7 +115,7 @@ void	ft_show_tab(struct s_stock_str *par)
 
 int main (void)
 {
-	char	*av[3] = {"hello", "world", "howdy"};
+	char	*av[3] = {"hey", "world", "howdy!!"};
 	t_stock_str *result = ft_strs_to_tab(3, av);
 	ft_show_tab(result);
 	for (int i = 0; i < 3; i++)
