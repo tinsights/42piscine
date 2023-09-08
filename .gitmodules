@@ -1,0 +1,48 @@
+[submodule "shell00"]
+	path = shell00
+	url = https://github.com/tinsights/42piscine
+	branch = shell00
+[submodule "shell01"]
+	path = shell01
+	url = https://github.com/tinsights/42piscine
+	branch = shell01
+[submodule "c00"]
+	path = c00
+	url = https://github.com/tinsights/42piscine
+	branch = c00
+[submodule "c01"]
+	path = c01
+	url = https://github.com/tinsights/42piscine
+	branch = c01
+[submodule "c02"]
+	path = c02
+	url = https://github.com/tinsights/42piscine
+	branch = c02
+[submodule "c03"]
+	path = c03
+	url = https://github.com/tinsights/42piscine
+	branch = c03
+[submodule "c04"]
+	path = c04
+	url = https://github.com/tinsights/42piscine
+	branch = c04
+[submodule "c05"]
+	path = c05
+	url = https://github.com/tinsights/42piscine
+	branch = c05
+[submodule "c06"]
+	path = c06
+	url = https://github.com/tinsights/42piscine
+	branch = c06
+[submodule "c07"]
+	path = c07
+	url = https://github.com/tinsights/42piscine
+	branch = c07
+[submodule "c08"]
+	path = c08
+	url = https://github.com/tinsights/42piscine
+	branch = c08
+[submodule "c09"]
+	path = c09
+	url = https://github.com/tinsights/42piscine
+	branch = c09
