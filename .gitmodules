@@ -46,3 +46,19 @@
 	path = c09
 	url = https://github.com/tinsights/42piscine
 	branch = c09
+[submodule "rush00"]
+	path = rush00
+	url = https://github.com/tinsights/42piscine
+	branch = rush00
+[submodule "rush01"]
+	path = rush01
+	url = https://github.com/tinsights/42piscine
+	branch = rush01
+[submodule "rush02"]
+	path = rush02
+	url = https://github.com/tinsights/42piscine
+	branch = rush02
+[submodule "bsq"]
+	path = bsq
+	url = https://github.com/tinsights/42piscine
+	branch = bsq
